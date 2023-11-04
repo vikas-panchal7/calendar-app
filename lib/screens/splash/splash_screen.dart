@@ -2,11 +2,13 @@ part of 'splash.dart';
 
 class SplashScreenUI extends StatelessWidget {
   static const String routeName = "/splash";
+
   static Widget builder(BuildContext context) {
     return ChangeNotifierProvider<SplashProvider>(
-      create: (context) => SplashProvider(context: context),
+      create: (context) => SplashProvider(context: context)..init(),
+      // child: Consumer<SplashProvider>(builder: (context, value, child) => const SplashScreenUI(),),
       builder: (context, child) {
-        return const SplashScreenUI();
+        return Consumer<SplashProvider>(builder: (context, value, child) => const SplashScreenUI(),);
       },
     );
   }
@@ -16,7 +18,12 @@ class SplashScreenUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Splash screen",style: context.textTheme.bodyLarge,)),
+      body: Center(
+        child: Text(
+          "Splash screen",
+          style: context.textTheme.bodyLarge,
+        ),
+      ),
     );
   }
 }

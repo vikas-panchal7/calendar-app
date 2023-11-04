@@ -20,7 +20,11 @@ class RouteManger {
         );
       default:
         return MaterialPageRoute(
-          builder: (context) => const Scaffold(body: Center(child: Text("Page Not Found"),),),
+          builder: (context) => const Scaffold(
+            body: Center(
+              child: Text("Page Not Found"),
+            ),
+          ),
         );
     }
   }
