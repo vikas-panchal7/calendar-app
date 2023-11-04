@@ -15,6 +15,8 @@ class SplashScreenUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(child: Text("Splash screen",style: context.textTheme.bodyLarge,)),
+    );
   }
 }

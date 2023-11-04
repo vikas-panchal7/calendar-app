@@ -1,4 +1,5 @@
 import 'package:calendar_app/screens/dashboard/dashboard.dart';
+import 'package:calendar_app/screens/login/login.dart';
 import 'package:calendar_app/screens/splash/splash.dart';
 import 'package:calendar_app/utils/configs.dart';
 
@@ -12,6 +13,14 @@ class RouteManger {
       case DashBoardUI.routeName:
         return MaterialPageRoute(
           builder: DashBoardUI.builder,
+        );
+      case LoginScreenUI.routeName:
+        return MaterialPageRoute(
+          builder: LoginScreenUI.builder,
+        );
+      default:
+        return MaterialPageRoute(
+          builder: (context) => const Scaffold(body: Center(child: Text("Page Not Found"),),),
         );
     }
   }
