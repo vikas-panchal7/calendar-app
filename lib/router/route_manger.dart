@@ -1,33 +1,20 @@
+
 import 'package:calendar_app/screens/dashboard/dashboard.dart';
-import 'package:calendar_app/screens/login/login.dart';
+
 import 'package:calendar_app/screens/splash/splash.dart';
-import 'package:calendar_app/utils/configs.dart';
+import 'package:flutter/material.dart';
 
 class RouteManger {
-  static Route<dynamic>? generatedRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case SplashScreenUI.routeName:
-        return MaterialPageRoute(
-          builder: SplashScreenUI.builder,
-        );
-      case DashBoardUI.routeName:
-        return MaterialPageRoute(
-          builder: DashBoardUI.builder,
-        );
-      case LoginScreenUI.routeName:
-        return MaterialPageRoute(
-          builder: LoginScreenUI.builder,
-        );
-      default:
-        return MaterialPageRoute(
-          builder: (context) => const Scaffold(
-            body: Center(
-              child: Text("Page Not Found"),
-            ),
-          ),
-        );
-    }
+  static Map<String, Widget Function(BuildContext)> routes() {
+    return {
+          SplashScreenUI.routeName: SplashScreenUI.builder,
+          DashBoardUI.routeName: DashBoardUI.builder,
+         
+      
+      };
   }
 
-  static initRoute() => SplashScreenUI.routeName;
+  
+
+  static String initRoute() => SplashScreenUI.routeName;
 }

@@ -1,4 +1,4 @@
-part of 'book_list_ui.dart';
+part of 'book_list.dart';
 
 class BookListProvider extends BaseProvider {
   BookListProvider({required super.context});

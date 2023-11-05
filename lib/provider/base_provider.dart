@@ -1,5 +1,5 @@
 import 'package:calendar_app/services/preference_helper/pref_service.dart';
-import 'package:calendar_app/utils/configs.dart';
+import 'package:flutter/material.dart';
 
 class BaseProvider<T extends Object?> extends ChangeNotifier {
   BaseProvider({required this.context});

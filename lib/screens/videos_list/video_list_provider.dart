@@ -1,4 +1,4 @@
-part of 'video_list_ui.dart';
+part of 'video_list.dart';
 
 class VideoListProvider extends BaseProvider{
   VideoListProvider({required super.context});

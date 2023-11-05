@@ -9,7 +9,7 @@ class CalendarPreference {
     prefs = await SharedPreferences.getInstance();
   }
 
-  bool get userIsLogin => prefs?.getBool(PreferenceKey.userIsLogin) ?? false;
+  bool get userIsLogin => prefs?.getBool(PreferenceKey.userIsLogin) ?? true;
 
   set userIsLogin(bool status) =>
       prefs?.setBool(PreferenceKey.userIsLogin, status);

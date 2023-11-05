@@ -1,9 +1,9 @@
 part of 'dashboard.dart';
 
 class DashboardProvider extends BaseProvider {
-  DashboardProvider({required super.context, required this.demo});
+  DashboardProvider({required super.context,});
 
-  final int demo;
+
 
   int _currentSelectedIndex = 0;
 

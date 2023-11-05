@@ -1,14 +1,21 @@
-import 'package:calendar_app/utils/configs.dart';
 
-part 'video_list_provider.dart';
+
+part of 'video_list.dart';
 
 class VideoListUI extends StatelessWidget {
+    static Widget builder(BuildContext context) {
+    return ChangeNotifierProvider<VideoListProvider>(
+      create: (context) => VideoListProvider(context: context),
+      builder: (context, child) => const VideoListUI(),
+    );
+  }
   const VideoListUI({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("Video List")),
+    return Scaffold(
+          appBar: AppBar(title: const Text(AppStrings.videos),),
+
     );
   }
 }

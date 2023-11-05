@@ -9,11 +9,47 @@
 
 import 'package:flutter/widgets.dart';
 
-class $AssetsLogoGen {
-  const $AssetsLogoGen();
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
 
-  /// File path: assets/logo/app-logo.png
-  AssetGenImage get appLogo => const AssetGenImage('assets/logo/app-logo.png');
+  /// File path: assets/icons/ic_books.png
+  AssetGenImage get icBooks => const AssetGenImage('assets/icons/ic_books.png');
+
+  /// File path: assets/icons/ic_calendar.png
+  AssetGenImage get icCalendar =>
+      const AssetGenImage('assets/icons/ic_calendar.png');
+
+  /// File path: assets/icons/ic_edit.png
+  AssetGenImage get icEdit => const AssetGenImage('assets/icons/ic_edit.png');
+
+  /// File path: assets/icons/ic_google.png
+  AssetGenImage get icGoogle =>
+      const AssetGenImage('assets/icons/ic_google.png');
+
+  /// File path: assets/icons/ic_videos.png
+  AssetGenImage get icVideos =>
+      const AssetGenImage('assets/icons/ic_videos.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values =>
+      [icBooks, icCalendar, icEdit, icGoogle, icVideos];
+}
+
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/book.png
+  AssetGenImage get book => const AssetGenImage('assets/images/book.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [book];
+}
+
+class $AssetsTempGen {
+  const $AssetsTempGen();
+
+  /// File path: assets/temp/app-logo.png
+  AssetGenImage get appLogo => const AssetGenImage('assets/temp/app-logo.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [appLogo];
@@ -22,7 +58,9 @@ class $AssetsLogoGen {
 class Assets {
   Assets._();
 
-  static const $AssetsLogoGen logo = $AssetsLogoGen();
+  static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsTempGen temp = $AssetsTempGen();
 }
 
 class AssetGenImage {
