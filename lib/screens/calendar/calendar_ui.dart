@@ -13,16 +13,38 @@ class CalenderUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppStrings.calendar),
-      ),
-      body: TableCalendar(
-        firstDay: DateTime.utc(2010, 10, 16),
-        lastDay: DateTime.utc(2030, 3, 14),
-        focusedDay: DateTime.now(),
-        calendarFormat: CalendarFormat.month,
-      
-      ),
+      extendBody: false,
+      body: Builder(builder: (context) {
+        return CalendarControllerProvider(
+          controller: EventController(),
+          child: MonthView(
+            safeAreaOption: const SafeAreaOption(top: false),
+            cellBuilder: (date, event, isToday, isInMonth) {
+              return Container(
+
+                decoration: BoxDecoration(
+                    color: isInMonth ? context.colorScheme.onPrimary : context.colorScheme.surface.withOpacity(0.1),
+                    border: Border.all(width: 0.2, color: context.colorScheme.primary.withOpacity(0.2))),
+                child: Center(
+                    child: Container(
+                  padding: const EdgeInsets.all(11),
+                  decoration: BoxDecoration(
+                    color: isToday ? context.colorScheme.primary : null,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '${date.day}',
+                    style: context.textTheme.bodyLarge!.copyWith(
+                        color: isToday
+                            ? context.colorScheme.onBackground
+                            : (isInMonth ? null : context.colorScheme.onSurface.withOpacity(0.5))),
+                  ),
+                )),
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }

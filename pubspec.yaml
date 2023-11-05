@@ -41,7 +41,8 @@ dependencies:
   equatable: ^2.0.5
 
   # calendar
-  table_calendar: ^3.0.9 
+  calendar_view:
+      path: ./calender_view
 
   # Firebase
   cloud_firestore: ^4.12.2
