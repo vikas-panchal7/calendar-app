@@ -19,12 +19,24 @@ class CalenderUI extends StatelessWidget {
           controller: EventController(),
           child: MonthView(
             safeAreaOption: const SafeAreaOption(top: false),
+            onCellTap: (events, date) {
+              DateDetailsDialog.show(
+                  context: context,
+                  date: date,
+                  title: 'title title',
+                  data:
+                      "This will generate Dart libraries, one per locale, which contain the translated versions. Your Dart libraries can import the primary file, named <prefix>messages_all.dart, and then call the initialization for a specific locale. Once that's done, any Intl.message calls made in the context of that locale will automatically print the translated version instead of the original."
+              );
+            },
             cellBuilder: (date, event, isToday, isInMonth) {
               return Container(
-
                 decoration: BoxDecoration(
-                    color: isInMonth ? context.colorScheme.onPrimary : context.colorScheme.surface.withOpacity(0.1),
-                    border: Border.all(width: 0.2, color: context.colorScheme.primary.withOpacity(0.2))),
+                    color: isInMonth
+                        ? context.colorScheme.onPrimary
+                        : context.colorScheme.surface.withOpacity(0.1),
+                    border: Border.all(
+                        width: 0.2,
+                        color: context.colorScheme.primary.withOpacity(0.2))),
                 child: Center(
                     child: Container(
                   padding: const EdgeInsets.all(11),
@@ -37,7 +49,10 @@ class CalenderUI extends StatelessWidget {
                     style: context.textTheme.bodyLarge!.copyWith(
                         color: isToday
                             ? context.colorScheme.onBackground
-                            : (isInMonth ? null : context.colorScheme.onSurface.withOpacity(0.5))),
+                            : (isInMonth
+                                ? null
+                                : context.colorScheme.onSurface
+                                    .withOpacity(0.5))),
                   ),
                 )),
               );

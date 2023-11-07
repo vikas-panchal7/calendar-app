@@ -26,13 +26,16 @@ class $AssetsIconsGen {
   AssetGenImage get icGoogle =>
       const AssetGenImage('assets/icons/ic_google.png');
 
+  /// File path: assets/icons/ic_paste.png
+  AssetGenImage get icPaste => const AssetGenImage('assets/icons/ic_paste.png');
+
   /// File path: assets/icons/ic_videos.png
   AssetGenImage get icVideos =>
       const AssetGenImage('assets/icons/ic_videos.png');
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [icBooks, icCalendar, icEdit, icGoogle, icVideos];
+      [icBooks, icCalendar, icEdit, icGoogle, icPaste, icVideos];
 }
 
 class $AssetsImagesGen {
@@ -41,8 +44,15 @@ class $AssetsImagesGen {
   /// File path: assets/images/book.png
   AssetGenImage get book => const AssetGenImage('assets/images/book.png');
 
+  /// File path: assets/images/no_data_found.png
+  AssetGenImage get noDataFound =>
+      const AssetGenImage('assets/images/no_data_found.png');
+
+  /// File path: assets/images/video.png
+  AssetGenImage get video => const AssetGenImage('assets/images/video.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [book];
+  List<AssetGenImage> get values => [book, noDataFound, video];
 }
 
 class $AssetsTempGen {

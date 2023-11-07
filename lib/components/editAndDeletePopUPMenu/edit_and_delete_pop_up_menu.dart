@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class EditAndDeletePopUPMenu extends StatelessWidget {
-  const EditAndDeletePopUPMenu({super.key});
+  final String type;
+  final  VoidCallback  onDelete;
+  final VoidCallback onEdit;
+  const EditAndDeletePopUPMenu({super.key, required this.type, required this.onDelete, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +20,11 @@ class EditAndDeletePopUPMenu extends StatelessWidget {
         if (value == AppStrings.delete) {
           DeleteDialog.show(
             context: context,
-            type: "type",
-            onDelete: () {},
+            type: type,
+            onDelete: onDelete,
           );
+        }else{
+          onEdit();
         }
       },
       itemBuilder: (context) {

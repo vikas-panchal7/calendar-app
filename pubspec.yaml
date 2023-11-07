@@ -39,6 +39,14 @@ dependencies:
   gap: ^3.0.1
   shared_preferences: ^2.2.2
   equatable: ^2.0.5
+  # pik file
+  file_picker: ^6.1.1
+  #  formater
+  intl: ^0.18.1
+  # image picker
+  image_picker: ^1.0.4
+  # open file
+  open_file: ^3.3.2
 
   # calendar
   calendar_view:
@@ -48,6 +56,10 @@ dependencies:
   cloud_firestore: ^4.12.2
   firebase_storage: ^11.4.1
   firebase_core: ^2.21.0
+
+  # google sign in
+  google_sign_in: ^6.1.5
+  firebase_auth: ^4.12.1
 
 dev_dependencies:
 

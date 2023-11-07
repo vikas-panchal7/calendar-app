@@ -27,7 +27,7 @@ class UserRepository {
 
     return true;
   }
-
+  String getUserDetailId() => userCollectionRef.doc().id;
   Future<UserInfo> getUserDetails({required String gmail}) async {
     var query =
         userRef.where(Filter(UserInfoDocumentFields.gmail, isEqualTo: gmail));

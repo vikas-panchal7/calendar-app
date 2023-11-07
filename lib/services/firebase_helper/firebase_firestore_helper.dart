@@ -1,16 +1,23 @@
+import 'package:calendar_app/services/firebase_helper/admin_document.dart';
 import 'package:calendar_app/services/firebase_helper/book_document.dart';
 import 'package:calendar_app/services/firebase_helper/calendar_document.dart';
 import 'package:calendar_app/services/firebase_helper/user_document.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseFireStoreHelper {
-  static const _userCollectionPath = "user";
-  static const _bookCollectionPath = "bookList"; // collection name
-  static const _calendarCollectionPath = "calendarList";
+  static const _userCollectionPath = 'user';
+  static const _bookCollectionPath = 'bookList'; // collection name
+  static const _calendarCollectionPath = 'calendarList';
+  static const _adminCollectionPath = 'adminList';
 
-  static final userCollectionRef = FirebaseFirestore.instance.collection(_userCollectionPath);
-  static final bookCollectionRef = FirebaseFirestore.instance.collection(_bookCollectionPath); // collection reference
-  static final calendarCollectionRef = FirebaseFirestore.instance.collection(_calendarCollectionPath);
+  static final userCollectionRef =
+      FirebaseFirestore.instance.collection(_userCollectionPath);
+  static final bookCollectionRef = FirebaseFirestore.instance
+      .collection(_bookCollectionPath); // collection reference
+  static final calendarCollectionRef =
+      FirebaseFirestore.instance.collection(_calendarCollectionPath);
+  static final adminCollectionRef =
+      FirebaseFirestore.instance.collection(_adminCollectionPath);
 
   static final userRef = userCollectionRef.withConverter<UserInfo>(
     fromFirestore: (snapshot, options) {
@@ -21,7 +28,8 @@ class FirebaseFireStoreHelper {
         userName: snapshot.get(UserInfoDocumentFields.userName) as String,
         gmail: snapshot.get(UserInfoDocumentFields.gmail) as String,
         loginType: LoginType.values
-            .where((element) => (element.name == (snapshot.get(UserInfoDocumentFields.gmail) as String)))
+            .where((element) => (element.name ==
+                (snapshot.get(UserInfoDocumentFields.gmail) as String)))
             .first,
       );
     },
@@ -36,6 +44,20 @@ class FirebaseFireStoreHelper {
       };
     },
   );
+  static final adminRef = adminCollectionRef.withConverter<AdminInfo>(
+    fromFirestore: (snapshot, options) {
+      return AdminInfo(
+        id: snapshot.id,
+        gmail: snapshot.get(UserInfoDocumentFields.gmail) as String,
+      );
+    },
+    toFirestore: (value, options) {
+      return {
+        UserInfoDocumentFields.id: value.id,
+        UserInfoDocumentFields.gmail: value.gmail,
+      };
+    },
+  );
 
   // collection ref with object
   static final bookRef = bookCollectionRef.withConverter<BookInfo>(
@@ -47,7 +69,8 @@ class FirebaseFireStoreHelper {
         fileUrl: snapshot.get(BookInfoDocumentFields.fileUrl) as String,
         title: snapshot.get(BookInfoDocumentFields.title) as Map,
         fileType: FileType.values
-            .where((element) => (element.name == (snapshot.get(BookInfoDocumentFields.fileType) as String)))
+            .where((element) => (element.name ==
+                (snapshot.get(BookInfoDocumentFields.fileType) as String)))
             .first,
       );
     },
@@ -63,15 +86,20 @@ class FirebaseFireStoreHelper {
     },
   );
 
-  static final calendarRef = calendarCollectionRef.withConverter<CalendarDateInfo>(
+  static final calendarRef =
+      calendarCollectionRef.withConverter<CalendarDateInfo>(
     fromFirestore: (snapshot, options) {
       return CalendarDateInfo(
         id: snapshot.id,
-        createdAt: snapshot.get(CalendarDateInfoDocumentFields.createdAt) as DateTime,
-        updatedAt: snapshot.get(CalendarDateInfoDocumentFields.updatedAt) as DateTime,
-        calendarDate: snapshot.get(CalendarDateInfoDocumentFields.calendarDate) as DateTime,
+        createdAt:
+            snapshot.get(CalendarDateInfoDocumentFields.createdAt) as DateTime,
+        updatedAt:
+            snapshot.get(CalendarDateInfoDocumentFields.updatedAt) as DateTime,
+        calendarDate: snapshot.get(CalendarDateInfoDocumentFields.calendarDate)
+            as DateTime,
         title: snapshot.get(CalendarDateInfoDocumentFields.title) as Map,
-        description: snapshot.get(CalendarDateInfoDocumentFields.description) as Map,
+        description:
+            snapshot.get(CalendarDateInfoDocumentFields.description) as Map,
       );
     },
     toFirestore: (value, options) {

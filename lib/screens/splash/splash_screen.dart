@@ -103,7 +103,7 @@ class _SplashScreenUIState extends State<SplashScreenUI>
                           child: CommonButton.cupertino(
                             padding: EdgeInsets.symmetric(
                                 horizontal: context.width * .08),
-                            onTap: () {},
+                            onTap: splashProvider.handleGoogleSignIn,
                             child: Container(
                               padding: EdgeInsets.all(
                                    context.width * .025),

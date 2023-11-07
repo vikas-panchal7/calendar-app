@@ -86,7 +86,7 @@ class _IconButton extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       child: IconButton(
           // constraints: const BoxConstraints(),
-          // splashRadius: 5,
+          // splashRadius: 2,
           alignment: Alignment.center,
           padding: padding ?? EdgeInsets.zero,
           highlightColor: context.colorScheme.surface,

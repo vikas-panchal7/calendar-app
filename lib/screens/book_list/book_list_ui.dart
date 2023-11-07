@@ -15,6 +15,14 @@ class BookListUI extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.books),
+        actions: [
+          CommonButton.cupertino(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              onTap: () {
+                context.navigator.pushNamed(AddBookScreenUI.routeName);
+
+          }, child: Text(AppStrings.addBook,style:  context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600,color: context.colorScheme.onBackground),))
+        ],
       ),
       body: ListView.builder(
         padding:
@@ -22,7 +30,9 @@ class BookListUI extends StatelessWidget {
         itemCount: 20,
         itemBuilder: (context, index) {
           return CommonButton.cupertino(
-            onTap: () {},
+            onTap: () {
+
+            },
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Container(
               padding: const EdgeInsets.all(16),
@@ -50,7 +60,11 @@ class BookListUI extends StatelessWidget {
                           ?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  const EditAndDeletePopUPMenu()
+                   EditAndDeletePopUPMenu(type: 'book',onDelete: () {
+context.navigator.pop();
+                   },onEdit: () {
+                     context.navigator.pushNamed(AddBookScreenUI.routeName,arguments: AddBookArguments(forUpdate: true));
+                   },)
                 ],
               ),
             ),

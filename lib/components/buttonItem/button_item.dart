@@ -134,7 +134,7 @@ class _FilledButton extends StatelessWidget {
       radius: radius ?? 8,
       child: Container(
         height: height ?? context.height * .06,
-        width: width ?? context.width,
+        width: width ??double.infinity,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             color: isEnable? color ?? context.colorScheme.primary:context.colorScheme.surface,
@@ -181,7 +181,7 @@ class _OutlineBorderButton extends StatelessWidget {
       radius: radius ?? 8,
       child: Container(
         height: height ?? context.height * .06,
-        width: width ?? context.width,
+        width: width ??double.infinity,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             border: Border.all(color:isEnable? color ?? context.colorScheme.primary:context.colorScheme.surface),
@@ -228,7 +228,7 @@ class _TextButton extends StatelessWidget {
       radius: radius ?? 8,
       child: Container(
         height: height ?? context.height * .06,
-        width: width ?? context.width,
+        width: width ??double.infinity,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(

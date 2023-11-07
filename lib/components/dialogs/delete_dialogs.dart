@@ -42,7 +42,7 @@ class DeleteDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ButtonItem.outline(
-                  onTap: () {},
+                  onTap: onDelete,
                   text: AppStrings.delete,
                   width: context.width * .3,
                   fontSize: 16,

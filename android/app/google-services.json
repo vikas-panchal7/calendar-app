@@ -12,7 +12,20 @@
           "package_name": "com.calendar.details.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "153090284883-hhlbqb3qlfj4orm0rise7bnemgdrk97c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.calendar.details.app",
+            "certificate_hash": "cf5dbd6817a6fa5bab29ea7acef7e2b774ed8904"
+          }
+        },
+        {
+          "client_id": "153090284883-ijkjh512uup682es6qu9gbg98l03siri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD6LMW6r_Nhfh08I3KcEFvQmZNGI0dIsHc"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153090284883-ijkjh512uup682es6qu9gbg98l03siri.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "153090284883-os0v1v6e7om0l5sm4bgi85tnlls5pik1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.calendarApp"
+              }
+            }
+          ]
         }
       }
     }
