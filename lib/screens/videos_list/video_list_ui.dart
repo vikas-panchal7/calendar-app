@@ -12,26 +12,27 @@ class VideoListUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CalendarPreference preference = CalendarPreference();
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.videos),
         actions: [
-          CommonButton.cupertino(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              onTap: () {
-                AddVideoDialog.show(context: context);
-              },
-              child: Text(
-                AppStrings.addVideo,
-                style: context.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: context.colorScheme.onBackground),
-              ))
+          if (preference.isAdminLogin) ...[
+            CommonButton.cupertino(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                onTap: () {
+                  AddVideoDialog.show(context: context);
+                },
+                child: Text(
+                  AppStrings.addVideo,
+                  style: context.textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onBackground),
+                ))
+          ]
         ],
       ),
       body: ListView.builder(
-        padding:
-            EdgeInsets.symmetric(horizontal: context.width * .04, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: context.width * .04, vertical: 10),
         itemCount: 20,
         itemBuilder: (context, index) {
           return CommonButton.cupertino(
@@ -62,30 +63,28 @@ class VideoListUI extends StatelessWidget {
                           'video title ',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.w600),
+                          style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                         ),
                         Text(
                           'http:/usbdu sdjhbn ds sd.com',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.labelMedium
-                              ?.copyWith(color: context.colorScheme.onSurface),
+                          style: context.textTheme.labelMedium?.copyWith(color: context.colorScheme.onSurface),
                         ),
                       ],
                     ),
                   ),
-                  EditAndDeletePopUPMenu(
-                    type: AppStrings.video,
-                    onDelete: () {
-                      context.navigator.pop();
-
-                    },
-                    onEdit: () {
-
-                      AddVideoDialog.show(context: context,addVideoArguments: AddVideoArguments(forUpdate: true));
-                    },
-                  )
+                  if (preference.isAdminLogin) ...[
+                    EditAndDeletePopUPMenu(
+                      type: AppStrings.video,
+                      onDelete: () {
+                        context.navigator.pop();
+                      },
+                      onEdit: () {
+                        AddVideoDialog.show(context: context, addVideoArguments: AddVideoArguments(forUpdate: true));
+                      },
+                    )
+                  ]
                 ],
               ),
             ),

@@ -12,27 +12,31 @@ class BookListUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CalendarPreference preference = CalendarPreference();
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.books),
         actions: [
-          CommonButton.cupertino(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              onTap: () {
-                context.navigator.pushNamed(AddBookScreenUI.routeName);
-
-          }, child: Text(AppStrings.addBook,style:  context.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600,color: context.colorScheme.onBackground),))
+          if (preference.isAdminLogin) ...[
+            CommonButton.cupertino(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                onTap: () {
+                  context.navigator.pushNamed(AddBookScreenUI.routeName);
+                },
+                child: Text(
+                  AppStrings.addBook,
+                  style: context.textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onBackground),
+                ))
+          ]
         ],
       ),
       body: ListView.builder(
-        padding:
-            EdgeInsets.symmetric(horizontal: context.width * .04, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: context.width * .04, vertical: 10),
         itemCount: 20,
         itemBuilder: (context, index) {
           return CommonButton.cupertino(
-            onTap: () {
-
-            },
+            onTap: () {},
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Container(
               padding: const EdgeInsets.all(16),
@@ -56,15 +60,22 @@ class BookListUI extends StatelessWidget {
                       'Book Title \nin2 lines',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.w600),
+                      style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
-                   EditAndDeletePopUPMenu(type: 'book',onDelete: () {
-context.navigator.pop();
-                   },onEdit: () {
-                     context.navigator.pushNamed(AddBookScreenUI.routeName,arguments: AddBookArguments(forUpdate: true));
-                   },)
+                  if(preference.isAdminLogin)...[
+                    EditAndDeletePopUPMenu(
+                      type: 'book',
+                      onDelete: () {
+                        context.navigator.pop();
+                      },
+                      onEdit: () {
+                        context.navigator
+                            .pushNamed(AddBookScreenUI.routeName, arguments: AddBookArguments(forUpdate: true));
+                      },
+                    )
+                  ]
+
                 ],
               ),
             ),
@@ -74,4 +85,3 @@ context.navigator.pop();
     );
   }
 }
-

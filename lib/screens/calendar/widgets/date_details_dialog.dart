@@ -2,20 +2,13 @@ part of '../calendar.dart';
 
 class DateDetailsDialog extends StatelessWidget {
   static void show(
-      {required BuildContext context,
-      required DateTime date,
-      String? imagePath,
-      String? data,
-      String? title}) {
+      {required BuildContext context, required DateTime date, String? imagePath, String? data, String? title}) {
     showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-            insetPadding: EdgeInsets.symmetric(
-                horizontal: context.width * .05,
-                vertical: context.height * 0.1),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            insetPadding: EdgeInsets.symmetric(horizontal: context.width * .05, vertical: context.height * 0.1),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: DateDetailsDialog(
               date: date,
               title: title ?? '',
@@ -41,6 +34,7 @@ class DateDetailsDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CalendarPreference preference = CalendarPreference();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -50,13 +44,11 @@ class DateDetailsDialog extends StatelessWidget {
             width: context.width,
             decoration: BoxDecoration(
                 color: context.colorScheme.primary,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(16))),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(16))),
             child: Text(
               date.toDDMMMYYYY,
-              style: context.textTheme.bodyLarge?.copyWith(
-                  color: context.colorScheme.onBackground,
-                  fontWeight: FontWeight.w600),
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(color: context.colorScheme.onBackground, fontWeight: FontWeight.w600),
             )),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -67,13 +59,12 @@ class DateDetailsDialog extends StatelessWidget {
                 Assets.images.noDataFound.image(height: context.height * .2),
                 Text(
                   AppStrings.noDataAvailable,
-                  style: context.textTheme.titleSmall
-                      ?.copyWith(color: context.colorScheme.onSurface),
+                  style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onSurface),
                 ),
 
                 /// add data button
                 Padding(
-                  padding: const EdgeInsets.only(top:10),
+                  padding: const EdgeInsets.only(top: 10),
                   child: ButtonItem.filled(
                     onTap: () {
                       context.navigator.pushNamed(AddCalendarDataScreenUI.routeName);
@@ -87,28 +78,27 @@ class DateDetailsDialog extends StatelessWidget {
                 Gap(context.height * .01),
 
                 ///edit button
-                Align(
-                    alignment: Alignment.centerRight,
-                    child: CommonButton.material(
-                        radius: 5,
-                        onTap: () {
-                          //dialog close
-                          context.navigator.pop();
+                if (preference.isAdminLogin) ...[
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: CommonButton.material(
+                          radius: 5,
+                          onTap: () {
+                            //dialog close
+                            context.navigator.pop();
 
-                          context.navigator.pushNamed(
-                              AddCalendarDataScreenUI.routeName,
-                              arguments:
-                                  AddCalendarDataArguments(forUpdate: true));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Text(
-                            AppStrings.edit,
-                            style: context.textTheme.bodySmall?.copyWith(
-                                color: context.colorScheme.primary,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ))),
+                            context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,
+                                arguments: AddCalendarDataArguments(forUpdate: true));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: Text(
+                              AppStrings.edit,
+                              style: context.textTheme.bodySmall
+                                  ?.copyWith(color: context.colorScheme.primary, fontWeight: FontWeight.w600),
+                            ),
+                          ))),
+                ],
 
                 Gap(context.height * .01),
 
@@ -116,8 +106,7 @@ class DateDetailsDialog extends StatelessWidget {
                 Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: context.textTheme.bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w700),
+                  style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
                 ),
                 Gap(context.height * .015),
 
