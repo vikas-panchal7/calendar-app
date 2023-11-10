@@ -51,18 +51,6 @@ class SplashProvider extends BaseProvider {
             GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
         await FirebaseAuth.instance.signInWithCredential(credential);
         checkWhoISLogin(currentUser);
-
-        // Preference.setAuthHeader(authHeader: await currentUser.authHeaders);
-        // var parameters = {
-        //   "name": '${currentUser.displayName}',
-        //   "email": currentUser.email,
-        //   "uid": currentUser.id,
-        //   "social_type": LoginFrom.google.toString().split(".").last,
-        //   "profileImg": currentUser.photoUrl!,
-        // };
-        // await Preference.setLoginFrom(loginFrom: LoginFrom.google);
-        // Get.put(LoginController());
-        // Get.find<LoginController>().handleSocialLogin(parameters: parameters);
       }
     } catch (error) {
       print("error: $error");

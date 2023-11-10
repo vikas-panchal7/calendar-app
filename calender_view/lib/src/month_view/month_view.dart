@@ -452,21 +452,24 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
   /// Default month view header builder
   Widget _defaultHeaderBuilder(DateTime date) {
     return MonthPageHeader(
-      onTitleTapped: () async {
-        if (widget.onHeaderTitleTap != null) {
-          widget.onHeaderTitleTap!(date);
-        } else {
-          final selectedDate = await showDatePicker(
-            context: context,
-            initialDate: date,
-            firstDate: _minDate,
-            lastDate: _maxDate,
-          );
+      onTitleTapped: null,
 
-          if (selectedDate == null) return;
-          jumpToMonth(selectedDate);
-        }
-      },
+      //
+      //     () async {
+      //   if (widget.onHeaderTitleTap != null) {
+      //     widget.onHeaderTitleTap!(date);
+      //   } else {
+      //     final selectedDate = await showDatePicker(
+      //       context: context,
+      //       initialDate: date,
+      //       firstDate: _minDate,
+      //       lastDate: _maxDate,
+      //     );
+      //
+      //     if (selectedDate == null) return;
+      //     jumpToMonth(selectedDate);
+      //   }
+      // },
       onPreviousMonth: previousPage,
       date: date,
       dateStringBuilder: (date, {secondaryDate}) {

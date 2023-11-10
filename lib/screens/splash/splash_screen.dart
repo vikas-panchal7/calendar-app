@@ -52,10 +52,10 @@ class _SplashScreenUIState extends State<SplashScreenUI>
       builder: (context, splashProvider, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.dark,
               systemNavigationBarColor:
                   splashProvider.logoContainerHeight == context.height * 0.8
-                      ? context.colorScheme.onBackground
+                      ? context.colorScheme.background
                       : context.colorScheme.primary),
           child: Scaffold(
             backgroundColor: context.colorScheme.primary,
@@ -83,7 +83,7 @@ class _SplashScreenUIState extends State<SplashScreenUI>
                         Text(
                           AppStrings.calendarApp,
                           style: context.textTheme.displaySmall?.copyWith(
-                              color: context.colorScheme.onBackground,
+                              color: context.colorScheme.onSecondary,
                               fontWeight: FontWeight.w600),
                         )
                       ],
@@ -93,7 +93,7 @@ class _SplashScreenUIState extends State<SplashScreenUI>
                     child: Container(
                       width: context.width,
                       decoration: BoxDecoration(
-                          color: context.colorScheme.onBackground,
+                          color: context.colorScheme.background,
                           borderRadius: const BorderRadius.vertical(
                               top: Radius.circular(24))),
                       child: AnimatedOpacity(
@@ -110,7 +110,7 @@ class _SplashScreenUIState extends State<SplashScreenUI>
                               
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: const Color(0xff4183F3)),
+                                  color: context.colorScheme.onBackground),
                               child: Row(
                                 children: [
                                   Container(
@@ -118,7 +118,7 @@ class _SplashScreenUIState extends State<SplashScreenUI>
                                       padding: const EdgeInsets.all(8),
                                       decoration: BoxDecoration(
                                           color:
-                                              context.colorScheme.onBackground,
+                                              context.colorScheme.background,
                                           shape: BoxShape.circle),
                                       child: Assets.icons.icGoogle.image()),
                                   Gap(context.width * .05),
@@ -128,7 +128,7 @@ class _SplashScreenUIState extends State<SplashScreenUI>
                                       style: context.textTheme.bodyLarge
                                           ?.copyWith(
                                               color: context
-                                                  .colorScheme.onBackground,
+                                                  .colorScheme.onSecondary,
                                               fontWeight: FontWeight.w600),
                                     ),
                                   )

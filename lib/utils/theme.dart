@@ -10,7 +10,7 @@ ThemeData lightTheme = ThemeData(
         const DialogTheme(elevation: 0, shadowColor: Colors.transparent),
     // appbar theme
     appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF445CFE),
+        backgroundColor: Color(0xFFFBA9A9),
         elevation: 0,
         scrolledUnderElevation: 3,
         iconTheme: IconThemeData(color: Colors.white),
@@ -28,53 +28,41 @@ ThemeData lightTheme = ThemeData(
         ),
 
 //scaffold color
-    scaffoldBackgroundColor: const Color(0xFFFBFBFB),
+    scaffoldBackgroundColor: _colorScheme.background,
     fontFamily: FontFamily.inter,
-    colorScheme: ColorScheme(
-        background: const Color(0xFFFBFBFB),
-        primary: const Color(0xFF445CFE),
-        onPrimary: const Color(0xFFE7F2FF),
-        brightness: Brightness.light,
-        secondary: const Color(0xFF8E9FFF),
-        onSecondary: const Color(0xFFFA5FA1),
-        error: Colors.red,
-        onError: Colors.red,
-        onBackground: Colors.white,
-        surface: const Color(0xFF787880).withOpacity(0.20),
-        onSurface: const Color(0xFF787880).withOpacity(0.8),
-        onTertiary: Colors.black),
+    colorScheme: _colorScheme,
 
-    textTheme: const TextTheme(
+    textTheme:  TextTheme(
       labelSmall: TextStyle(
-          fontSize: 11, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 11, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       labelMedium: TextStyle(
-          fontSize: 12, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 12, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       bodySmall: TextStyle(
-          fontSize: 13, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 13, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       bodyMedium: TextStyle(
-          fontSize: 14, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 14, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       titleSmall: TextStyle(
-          fontSize: 14, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 14, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       bodyLarge: TextStyle(
-          fontSize: 16, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 16, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       titleMedium: TextStyle(
-          fontSize: 18, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 18, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       labelLarge: TextStyle(
-          fontSize: 20, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 20, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       titleLarge: TextStyle(
-          fontSize: 22, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 22, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       displaySmall: TextStyle(
-          fontSize: 24, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 24, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       displayMedium: TextStyle(
-          fontSize: 26, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 26, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       displayLarge: TextStyle(
-          fontSize: 28, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 28, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       headlineSmall: TextStyle(
-          fontSize: 30, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 30, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       headlineMedium: TextStyle(
-          fontSize: 32, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 32, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
       headlineLarge: TextStyle(
-          fontSize: 34, fontFamily: FontFamily.inter, color: Colors.black),
+          fontSize: 34, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
     ),
     dialogBackgroundColor: Colors.white,
     popupMenuTheme: const PopupMenuThemeData(
@@ -106,3 +94,20 @@ ThemeData lightTheme = ThemeData(
 
 );
 ThemeData darkTheme = ThemeData.dark();
+///#  FBA9A9
+/// #  26282C
+///  #   454A53
+///
+ColorScheme get _colorScheme => ColorScheme(
+       background: const Color(0xff454a53),
+       primary: const Color(0xFFFBA9A9),
+       onPrimary: const Color(0xFFE7F2FF),
+       brightness: Brightness.light,
+       secondary: const Color(0xFFFAC6C6),
+       onSecondary: const Color(0xFF26282C),
+       error: Colors.red,
+       onError: Colors.red,
+       onBackground: Colors.white,
+       surface: const Color(0xFF787880).withOpacity(0.20),
+       onSurface: const Color(0xFF787880).withOpacity(0.8),
+       onTertiary: Colors.black);
