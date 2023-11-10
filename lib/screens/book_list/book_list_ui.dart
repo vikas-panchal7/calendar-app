@@ -26,22 +26,21 @@ class BookListUI extends StatelessWidget {
                 child: Text(
                   AppStrings.addBook,
                   style: context.textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onBackground),
+                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onSecondary),
                 ))
           ]
         ],
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: context.width * .04, vertical: 10),
+      body: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: context.width * .02, vertical: 7),
         itemCount: 20,
         itemBuilder: (context, index) {
           return CommonButton.cupertino(
             onTap: () {},
-            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                  color: context.colorScheme.onBackground,
+                  color: context.colorScheme.onSecondary,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
@@ -80,7 +79,7 @@ class BookListUI extends StatelessWidget {
               ),
             ),
           );
-        },
+        }, separatorBuilder: (BuildContext context, int index) { return const Gap(5); },
       ),
     );
   }

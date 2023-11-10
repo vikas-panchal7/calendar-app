@@ -23,14 +23,12 @@ class DashBoardUI extends StatelessWidget {
     final provider = context.read<DashboardProvider>();
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-          systemNavigationBarColor: context.colorScheme.onBackground),
+          statusBarIconBrightness: Brightness.light, systemNavigationBarColor: context.colorScheme.primary),
       child: WillPopScope(
-        onWillPop:()=> onWillPop(context) ,
+        onWillPop: () => onWillPop(context),
         child: Scaffold(
             body: Selector<DashboardProvider, int>(
-              selector: (context, dashboardProvider) =>
-                  dashboardProvider.currentSelectedIndex,
+              selector: (context, dashboardProvider) => dashboardProvider.currentSelectedIndex,
               builder: (context, currentSelectedIndex, child) {
                 switch (currentSelectedIndex) {
                   case 0:
@@ -38,14 +36,13 @@ class DashBoardUI extends StatelessWidget {
                   case 1:
                     return BookListUI.builder(context);
                   case 2:
-                  return VideoListUI.builder(context);
+                    return VideoListUI.builder(context);
                 }
                 return const SizedBox();
               },
             ),
             bottomNavigationBar: Selector<DashboardProvider, int>(
-              selector: (context, dashboardProvider) =>
-                  dashboardProvider.currentSelectedIndex,
+              selector: (context, dashboardProvider) => dashboardProvider.currentSelectedIndex,
               builder: (context, currentIndex, child) {
                 return Theme(
                   data: ThemeData(
@@ -57,21 +54,37 @@ class DashBoardUI extends StatelessWidget {
                     showSelectedLabels: true,
                     currentIndex: currentIndex,
                     onTap: provider.onBottomNavigationBarTap,
-                    backgroundColor: context.colorScheme.onBackground,
-                    selectedItemColor: context.colorScheme.primary,
-                    unselectedItemColor: context.colorScheme.onSurface,
+                    backgroundColor: context.colorScheme.primary,
+                    selectedItemColor: context.colorScheme.background,
+                    unselectedItemColor: context.colorScheme.background.withOpacity(.7),
+                    selectedFontSize: 12,
+                    unselectedFontSize: 12,
                     elevation: 8,
-                    items:  [
+                    items: [
                       BottomNavigationBarItem(
-                          icon: Assets.icons.icCalendar.image(height: 30,color: currentIndex ==0? context.colorScheme.primary:context.colorScheme.onSurface), label: AppStrings.calendar),
+                          icon: Assets.icons.icCalendar.image(
+                              height: 30,
+                              color: currentIndex == 0
+                                  ? context.colorScheme.background
+                                  : context.colorScheme.background.withOpacity(.7)),
+                          label: AppStrings.calendar),
                       BottomNavigationBarItem(
-                          icon:Assets.icons.icBooks.image(height: 30,color: currentIndex ==1? context.colorScheme.primary:context.colorScheme.onSurface), label: AppStrings.books),
+                          icon: Assets.icons.icBooks.image(
+                              height: 30,
+                              color: currentIndex == 1
+                                  ? context.colorScheme.background
+                                  : context.colorScheme.background.withOpacity(.7)),
+                          label: AppStrings.books),
                       BottomNavigationBarItem(
                           icon: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Assets.icons.icVideos.image(height: 25,color: currentIndex ==2? context.colorScheme.primary:context.colorScheme.onSurface),
+                            child: Assets.icons.icVideos.image(
+                                height: 25,
+                                color: currentIndex == 2
+                                    ? context.colorScheme.background
+                                    : context.colorScheme.background.withOpacity(.7)),
                           ),
-                          label: AppStrings.videos),
+                          label: 'Videos'),
                     ],
                   ),
                 );
@@ -81,8 +94,10 @@ class DashBoardUI extends StatelessWidget {
     );
   }
 
-  Future<bool> onWillPop(BuildContext context) async{
-    ExitDialog.show(context: context,);
+  Future<bool> onWillPop(BuildContext context) async {
+    ExitDialog.show(
+      context: context,
+    );
     return false;
   }
 }

@@ -18,7 +18,7 @@ class AddBookProvider extends BaseProvider {
 
   Future<void> chooseBook() async {
 
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom,allowedExtensions: ['pdf','docx']);
 
     if (result != null) {
       File file = File(result.files.single.path!);
@@ -27,11 +27,10 @@ class AddBookProvider extends BaseProvider {
         _bookFile = file;
         notifyListeners();
       } else {
-        // ignore: use_build_context_synchronously
-        showSnackBar(
-            context: context,
-            msg: AppStrings.fileFormatNotMatch,
-            type: SnackBarType.error);
+
+        if(context.mounted) {
+          context.showErrorSnackBar(message: AppStrings.fileFormatNotMatch);
+        }
       }
     }
   }

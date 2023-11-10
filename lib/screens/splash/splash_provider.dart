@@ -43,8 +43,9 @@ class SplashProvider extends BaseProvider {
       GoogleSignInAccount? currentUser = await GoogleSignIn().signIn();
 
       if (currentUser == null) {
-        // ignore: use_build_context_synchronously
-        showSnackBar(context: context, msg: 'failed', type: SnackBarType.error);
+        if(context.mounted){
+          context.showErrorSnackBar(message: 'failed');
+        }
       } else {
         GoogleSignInAuthentication? googleAuth = await currentUser.authentication;
         final credential =

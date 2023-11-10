@@ -7,14 +7,18 @@ import 'package:gap/gap.dart';
 
 class EditAndDeletePopUPMenu extends StatelessWidget {
   final String type;
-  final  VoidCallback  onDelete;
+  final VoidCallback onDelete;
   final VoidCallback onEdit;
+
   const EditAndDeletePopUPMenu({super.key, required this.type, required this.onDelete, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      color: context.colorScheme.onPrimary,
+
+      position: PopupMenuPosition.under,
+      constraints: BoxConstraints(maxWidth: context.width * .45),
+      color: context.colorScheme.background,
       padding: EdgeInsets.zero,
       onSelected: (value) {
         if (value == AppStrings.delete) {
@@ -23,7 +27,7 @@ class EditAndDeletePopUPMenu extends StatelessWidget {
             type: type,
             onDelete: onDelete,
           );
-        }else{
+        } else {
           onEdit();
         }
       },
@@ -34,13 +38,11 @@ class EditAndDeletePopUPMenu extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Assets.icons.icEdit
-                      .image(height: 25, color: context.colorScheme.primary),
+                  Assets.icons.icEdit.image(height: 25, color: context.colorScheme.primary),
                   const Gap(10),
                   Text(
                     AppStrings.edit,
-                    style: context.textTheme.bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.w600),
+                    style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                   )
                 ],
               )),
@@ -56,8 +58,7 @@ class EditAndDeletePopUPMenu extends StatelessWidget {
                   const Gap(10),
                   Text(
                     AppStrings.delete,
-                    style: context.textTheme.bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.w600),
+                    style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                   )
                 ],
               ))

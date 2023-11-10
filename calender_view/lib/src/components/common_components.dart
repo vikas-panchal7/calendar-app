@@ -4,6 +4,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../constants.dart';
 import '../style/header_style.dart';
@@ -49,6 +50,7 @@ class CalendarPageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -64,7 +66,7 @@ class CalendarPageHeader extends StatelessWidget {
                     Icon(
                       Icons.chevron_left_rounded,
                       size: 30,
-                      color: Colors.white,
+                      color: const Color(0xFF26282C),
                     ),
               ),
             Expanded(
@@ -73,7 +75,7 @@ class CalendarPageHeader extends StatelessWidget {
                 child: Text(
                   dateStringBuilder(date, secondaryDate: secondaryDate),
                   textAlign: headerStyle.titleAlign,
-                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                  style: TextStyle(color: const Color(0xFF26282C), fontSize: 16, fontWeight: FontWeight.w700),
                 ),
               ),
             ),
@@ -89,7 +91,7 @@ class CalendarPageHeader extends StatelessWidget {
                     Icon(
                       Icons.chevron_right_rounded,
                       size: 30,
-                      color: Colors.white,
+                      color: const Color(0xFF26282C),
                     ),
               ),
           ],

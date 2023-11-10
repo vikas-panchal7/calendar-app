@@ -48,33 +48,31 @@ class DateDetailsDialog extends StatelessWidget {
             child: Text(
               date.toDDMMMYYYY,
               style: context.textTheme.bodyLarge
-                  ?.copyWith(color: context.colorScheme.onBackground, fontWeight: FontWeight.w600),
+                  ?.copyWith(color: context.colorScheme.onSecondary, fontWeight: FontWeight.w600),
             )),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             children: [
-              if (title.isEmpty && data.isEmpty && imagePath.isEmpty) ...{
+              if (title.isEmpty && data.isEmpty && imagePath.isEmpty) ...[
                 ///show empty
-                Assets.images.noDataFound.image(height: context.height * .2),
-                Text(
+
+                Padding(padding: const EdgeInsets.symmetric(vertical: 40),child: Text(
                   AppStrings.noDataAvailable,
-                  style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onSurface),
-                ),
+                  style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onBackground),
+                ),),
 
                 /// add data button
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: ButtonItem.filled(
-                    onTap: () {
-                      context.navigator.pushNamed(AddCalendarDataScreenUI.routeName);
-                    },
-                    text: AppStrings.addData,
-                    height: 45,
-                    fontSize: 14,
-                  ),
+                ButtonItem.filled(
+                  onTap: () {
+                    context.navigator.pushNamed(AddCalendarDataScreenUI.routeName);
+                  },
+                  text: AppStrings.addData,
+                  height: 45,
+                  fontSize: 14,
+
                 )
-              } else ...{
+              ] else ...[
                 Gap(context.height * .01),
 
                 ///edit button
@@ -116,7 +114,7 @@ class DateDetailsDialog extends StatelessWidget {
                   textAlign: TextAlign.start,
                   style: context.textTheme.bodySmall,
                 ),
-              }
+              ]
             ],
           ),
         )

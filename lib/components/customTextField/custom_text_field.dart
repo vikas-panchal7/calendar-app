@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String title;
+  final String? title;
   final TextEditingController controller;
   final String hintText;
   final Widget? suffix;
@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
 
   const CustomTextField(
       {super.key,
-      required this.title,
+       this.title,
       required this.controller,
       required this.hintText,
       this.suffix,
@@ -27,13 +27,16 @@ class CustomTextField extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: context.textTheme.bodySmall?.copyWith(
-              color: context.colorScheme.onSurface,
-              fontWeight: FontWeight.w600),
-        ),
-        const Gap(8),
+        if(title !=null)...[
+          Text(
+            title??'',
+            style: context.textTheme.bodySmall?.copyWith(
+                color: context.colorScheme.onSurface,
+                fontWeight: FontWeight.w600),
+          ),
+          const Gap(8),
+        ],
+
         TextFormField(
 
           controller: controller,

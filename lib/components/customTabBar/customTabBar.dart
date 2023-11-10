@@ -27,7 +27,7 @@ class CustomTabBar extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-          color: context.colorScheme.surface,
+          color: context.colorScheme.onSecondary,
           borderRadius: BorderRadius.circular(36)),
       child: Stack(
         children: [
@@ -42,7 +42,7 @@ class CustomTabBar extends StatelessWidget {
             child: Container(
               width: (width - (2 * padding)) / tabList.length,
               decoration: BoxDecoration(
-                  color: context.colorScheme.background,
+                  color: context.colorScheme.primary,
                   borderRadius: BorderRadius.circular(56)),
             ),
           ),
@@ -60,8 +60,8 @@ class CustomTabBar extends StatelessWidget {
                               style: context.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: selectedTab == index
-                                      ? context.colorScheme.primary
-                                      : null),
+                                      ? context.colorScheme.onSecondary
+                                      : context.colorScheme.onBackground),
                             )),
                       )))),
         ],

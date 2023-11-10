@@ -36,29 +36,27 @@ class DeleteDialog extends StatelessWidget {
             '${AppStrings.areYouSureYouWantToDeleteThis} $type?',textAlign: TextAlign.center,style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
           ),
           Gap(context.height * .03),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal:10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ButtonItem.outline(
-                  onTap: onDelete,
-                  text: AppStrings.delete,
-                  width: context.width * .3,
-                  fontSize: 16,
-                  height: 40,
-                ),
-                ButtonItem.filled(
-                  onTap: () {
-                    context.navigator.pop();
-                  },
-                  text: AppStrings.cancel,
-                  width: context.width * .3,
-                  fontSize: 16,
-                  height: 40,
-                )
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ButtonItem.outline(
+                onTap: onDelete,
+                text: AppStrings.delete,
+                width: context.width * .3,
+                fontSize: 16,
+                height: 40,
+              ),
+
+              ButtonItem.filled(
+                onTap: () {
+                  context.navigator.pop();
+                },
+                text: AppStrings.cancel,
+                width: context.width * .3,
+                fontSize: 16,
+                height: 40,
+              )
+            ],
           )
         ],
       ),

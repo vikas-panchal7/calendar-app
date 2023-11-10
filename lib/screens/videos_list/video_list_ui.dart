@@ -26,22 +26,21 @@ class VideoListUI extends StatelessWidget {
                 child: Text(
                   AppStrings.addVideo,
                   style: context.textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onBackground),
+                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onSecondary),
                 ))
           ]
         ],
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: context.width * .04, vertical: 10),
+      body: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: context.width * .02, vertical: 10),
         itemCount: 20,
         itemBuilder: (context, index) {
           return CommonButton.cupertino(
             onTap: () {},
-            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                  color: context.colorScheme.onBackground,
+                  color: context.colorScheme.onSecondary,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: [
                     BoxShadow(
@@ -50,46 +49,42 @@ class VideoListUI extends StatelessWidget {
                         offset: const Offset(0, 6))
                   ]),
               child: Row(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 32),
-                    child: Assets.images.video.image(height: 30),
+                    padding: const EdgeInsets.only(right: 10),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5.0),
+                        child: Image.network('https://i.ytimg.com/vi/3wBEUuV7BYg/maxresdefault.jpg',width: context.width *.35)),
                   ),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'video title ',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          'http:/usbdu sdjhbn ds sd.com',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.labelMedium?.copyWith(color: context.colorScheme.onSurface),
-                        ),
-                      ],
+                    child: Text(
+                      'Deepinder Goyal - Journey From Startup To IPO, Challenges And Achievements | TRS हिंदी 210',
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
                   if (preference.isAdminLogin) ...[
-                    EditAndDeletePopUPMenu(
-                      type: AppStrings.video,
-                      onDelete: () {
-                        context.navigator.pop();
-                      },
-                      onEdit: () {
-                        AddVideoDialog.show(context: context, addVideoArguments: AddVideoArguments(forUpdate: true));
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:10.0),
+                      child: EditAndDeletePopUPMenu(
+
+                        type: AppStrings.video,
+                        onDelete: () {
+                          context.navigator.pop();
+                        },
+                        onEdit: () {
+                          AddVideoDialog.show(context: context, addVideoArguments: AddVideoArguments(forUpdate: true));
+                        },
+                      ),
                     )
                   ]
                 ],
               ),
             ),
           );
-        },
+        }, separatorBuilder: (BuildContext context, int index) { return const Gap(5); },
       ),
     );
   }

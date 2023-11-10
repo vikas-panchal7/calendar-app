@@ -9,21 +9,19 @@ ThemeData lightTheme = ThemeData(
     dialogTheme:
         const DialogTheme(elevation: 0, shadowColor: Colors.transparent),
     // appbar theme
-    appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFFFBA9A9),
+    appBarTheme:  AppBarTheme(
+        backgroundColor: _colorScheme.primary,
         elevation: 0,
         scrolledUnderElevation: 3,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: _colorScheme.onSecondary),
         // centerTitle: true,
         titleTextStyle: TextStyle(
             fontSize: 18,
             fontFamily: FontFamily.inter,
-            color: Colors.white,
+            color: _colorScheme.onSecondary,
             fontWeight: FontWeight.w700),
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.light,
-          statusBarBrightness: Brightness.dark,
-        )
+        systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarIconBrightness: Brightness.dark)
         // surfaceTintColor: AppColors.darkGrey,
         ),
 
@@ -64,7 +62,7 @@ ThemeData lightTheme = ThemeData(
       headlineLarge: TextStyle(
           fontSize: 34, fontFamily: FontFamily.inter, color: _colorScheme.onBackground),
     ),
-    dialogBackgroundColor: Colors.white,
+    dialogBackgroundColor: _colorScheme.background,
     popupMenuTheme: const PopupMenuThemeData(
       color: Colors.white,
     ),
@@ -75,7 +73,7 @@ ThemeData lightTheme = ThemeData(
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF445CFE)),
+          borderSide:  BorderSide(color: _colorScheme.primary),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -83,7 +81,7 @@ ThemeData lightTheme = ThemeData(
         ),
         isDense: true,
         filled: true,
-        fillColor: Colors.white,
+        fillColor: _colorScheme.onSecondary,
       hintStyle: TextStyle(
           fontSize: 16, fontFamily: FontFamily.inter, color: Colors.grey.shade500) ,
       helperStyle: const TextStyle(height: 0.7,),

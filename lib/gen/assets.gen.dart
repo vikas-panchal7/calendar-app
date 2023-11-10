@@ -44,15 +44,11 @@ class $AssetsImagesGen {
   /// File path: assets/images/book.png
   AssetGenImage get book => const AssetGenImage('assets/images/book.png');
 
-  /// File path: assets/images/no_data_found.png
-  AssetGenImage get noDataFound =>
-      const AssetGenImage('assets/images/no_data_found.png');
-
   /// File path: assets/images/video.png
   AssetGenImage get video => const AssetGenImage('assets/images/video.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [book, noDataFound, video];
+  List<AssetGenImage> get values => [book, video];
 }
 
 class $AssetsTempGen {
