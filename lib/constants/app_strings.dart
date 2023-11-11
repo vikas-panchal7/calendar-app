@@ -7,6 +7,7 @@ abstract interface class AppStrings {
   static const String videos = 'Videos';
   static const String video = 'Video';
   static const String edit = 'Edit';
+  static const String editNews = 'Edit News';
   static const String delete = 'Delete';
   static const String areYouSureYouWantToDeleteThis = 'Are you sure you want to delete this';
   static const String areYouReallyWantToExitFromApp = 'Are you really want to exit from app?';
@@ -15,15 +16,18 @@ abstract interface class AppStrings {
   static const String exit = 'Exit';
   static const String cancel = 'Cancel';
   static const String addBook = 'Add Book';
+  static const String addNews = 'Add News';
   static const String editBook = 'Edit Book';
   static const String addVideo = 'Add Video';
   static const String editVideo = 'Edit Video';
   static const String bookTitle = 'Book Title';
+  static const String newsTitle = 'News Title';
   static const String title = 'Title';
   static const String inEnglish = 'In English';
   static const String inGujarati = 'In Gujarati';
   static const String writeHere = 'Write here...';
   static const String chooseBook = 'Choose Book';
+  static const String chooseFile = 'Choose File';
   static const String uploadBook = 'Upload Book';
   static const String upload = 'Upload';
   static const String fileFormatNotMatch = 'File format is not match';
@@ -38,4 +42,10 @@ abstract interface class AppStrings {
   static const String addImage = 'Add Image';
   static const String dataIsRequired = 'Data is required';
   static const String videoUrl = 'Video Url';
+  static const String news = 'News';
+  static const String selectLanguage = 'Select Language';
+  static const String donateUs = 'Donate Us';
+  static const String social = 'Social';
+  static const String shareQr = 'SHARE QR';
+  static const String downloadQr = 'DOWNLOAD QR';
 }

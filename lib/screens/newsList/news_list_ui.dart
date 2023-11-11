@@ -1,30 +1,32 @@
-part of 'book_list.dart';
+part of 'news_list.dart';
 
-class BookListUI extends StatelessWidget {
-  static Widget builder(BuildContext context) {
-    return ChangeNotifierProvider<BookListProvider>(
-      create: (context) => BookListProvider(context: context),
-      builder: (context, child) => const BookListUI(),
+class NewsListScreenUI extends StatelessWidget {
+  const NewsListScreenUI({super.key});
+  static const String routeName = '/newsList';
+  static Widget builder(BuildContext context){
+    return ChangeNotifierProvider<NewsListProvider>(create: (context) => NewsListProvider(context: context),
+
+    builder:  (context, child) => const NewsListScreenUI(),
     );
   }
 
-  const BookListUI({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     CalendarPreference preference = CalendarPreference();
     return Scaffold(
-/*      appBar: AppBar(
-        title: const Text(AppStrings.books),
+     /* appBar: AppBar(
+        title: const Text(AppStrings.news),
         actions: [
           if (preference.isAdminLogin) ...[
             CommonButton.cupertino(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 onTap: () {
-                  context.navigator.pushNamed(AddBookScreenUI.routeName);
+                  context.navigator.pushNamed(AddNewsScreenUI.routeName);
                 },
                 child: Text(
-                  AppStrings.addBook,
+                  AppStrings.addNews,
                   style: context.textTheme.titleSmall
                       ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onSecondary),
                 ))
@@ -33,7 +35,7 @@ class BookListUI extends StatelessWidget {
       ),*/
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // context.navigator.pushNamed(AddBookScreenUI.routeName);
+          context.navigator.pushNamed(AddNewsScreenUI.routeName);
         },
         child: Icon(Icons.add,color: context.colorScheme.onSecondary,),
       ),
@@ -57,37 +59,35 @@ class BookListUI extends StatelessWidget {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 32),
-                    child: Assets.images.book.image(height: 30),
+                    padding: const EdgeInsets.only(left: 8, right: 20),
+                    child: Assets.images.news.image(height: 30),
                   ),
                   Expanded(
                     child: Text(
-                      'Book Title \nin2 lines',
+                      'News Title \nin2 lines',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  if (preference.isAdminLogin) ...[
+                  if(preference.isAdminLogin)...[
                     EditAndDeletePopUPMenu(
-                      type: 'book',
+                      type: 'news',
                       onDelete: () {
                         context.navigator.pop();
                       },
                       onEdit: () {
                         context.navigator
-                            .pushNamed(AddBookScreenUI.routeName, arguments: AddBookArguments(forUpdate: true));
+                            .pushNamed(AddNewsScreenUI.routeName, arguments: AddNewsArguments(forUpdate: true));
                       },
                     )
                   ]
+
                 ],
               ),
             ),
           );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Gap(5);
-        },
+        }, separatorBuilder: (BuildContext context, int index) { return const Gap(5); },
       ),
     );
   }

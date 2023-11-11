@@ -61,6 +61,7 @@ class CommonButton extends StatelessWidget {
           onTap: onTap,
           radius: radius,
           child: child,
+          padding: padding,
         );
       case _Clicktype.cupertino:
         return _CupertinoButton(
@@ -100,22 +101,26 @@ class _MaterialButton extends StatelessWidget {
   final VoidCallback onTap;
   final Widget child;
   final double? radius;
+  final EdgeInsetsGeometry? padding;
   const _MaterialButton(
-      {required this.onTap, required this.child, this.radius});
+      {required this.onTap, required this.child, this.radius, required this.padding});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      child,
-      Positioned.fill(
-        child: MaterialButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius ?? 0)),
-          padding: EdgeInsets.zero,
-          onPressed: onTap,
+    return Padding(
+      padding: padding??EdgeInsets.zero,
+      child: Stack(children: [
+        child,
+        Positioned.fill(
+          child: MaterialButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius ?? 0)),
+            padding: EdgeInsets.zero,
+            onPressed: onTap,
+          ),
         ),
-      ),
-    ]);
+      ]),
+    );
     
   }
 }

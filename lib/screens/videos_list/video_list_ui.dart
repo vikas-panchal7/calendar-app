@@ -14,7 +14,7 @@ class VideoListUI extends StatelessWidget {
   Widget build(BuildContext context) {
     CalendarPreference preference = CalendarPreference();
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: const Text(AppStrings.videos),
         actions: [
           if (preference.isAdminLogin) ...[
@@ -30,9 +30,14 @@ class VideoListUI extends StatelessWidget {
                 ))
           ]
         ],
+      ),*/
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        AddVideoDialog.show(context: context);
+      },
+      child: Icon(Icons.add,color: context.colorScheme.onSecondary,),
       ),
       body: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: context.width * .02, vertical: 10),
+        padding: const EdgeInsets.fromLTRB(7 , 5, 7, 80),
         itemCount: 20,
         itemBuilder: (context, index) {
           return CommonButton.cupertino(

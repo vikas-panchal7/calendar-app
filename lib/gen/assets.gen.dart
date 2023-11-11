@@ -26,6 +26,9 @@ class $AssetsIconsGen {
   AssetGenImage get icGoogle =>
       const AssetGenImage('assets/icons/ic_google.png');
 
+  /// File path: assets/icons/ic_news.png
+  AssetGenImage get icNews => const AssetGenImage('assets/icons/ic_news.png');
+
   /// File path: assets/icons/ic_paste.png
   AssetGenImage get icPaste => const AssetGenImage('assets/icons/ic_paste.png');
 
@@ -35,7 +38,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [icBooks, icCalendar, icEdit, icGoogle, icPaste, icVideos];
+      [icBooks, icCalendar, icEdit, icGoogle, icNews, icPaste, icVideos];
 }
 
 class $AssetsImagesGen {
@@ -44,11 +47,27 @@ class $AssetsImagesGen {
   /// File path: assets/images/book.png
   AssetGenImage get book => const AssetGenImage('assets/images/book.png');
 
+  /// File path: assets/images/facebook.png
+  AssetGenImage get facebook =>
+      const AssetGenImage('assets/images/facebook.png');
+
+  /// File path: assets/images/instagram.png
+  AssetGenImage get instagram =>
+      const AssetGenImage('assets/images/instagram.png');
+
+  /// File path: assets/images/news.png
+  AssetGenImage get news => const AssetGenImage('assets/images/news.png');
+
   /// File path: assets/images/video.png
   AssetGenImage get video => const AssetGenImage('assets/images/video.png');
 
+  /// File path: assets/images/whatsapp.png
+  AssetGenImage get whatsapp =>
+      const AssetGenImage('assets/images/whatsapp.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [book, video];
+  List<AssetGenImage> get values =>
+      [book, facebook, instagram, news, video, whatsapp];
 }
 
 class $AssetsTempGen {
@@ -57,8 +76,11 @@ class $AssetsTempGen {
   /// File path: assets/temp/app-logo.png
   AssetGenImage get appLogo => const AssetGenImage('assets/temp/app-logo.png');
 
+  /// File path: assets/temp/qr_code.jpeg
+  AssetGenImage get qrCode => const AssetGenImage('assets/temp/qr_code.jpeg');
+
   /// List of all assets
-  List<AssetGenImage> get values => [appLogo];
+  List<AssetGenImage> get values => [appLogo, qrCode];
 }
 
 class Assets {

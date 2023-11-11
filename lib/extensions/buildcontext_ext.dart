@@ -1,5 +1,3 @@
-
-
 import 'package:calendar_app/utils/common_functions.dart';
 import 'package:calendar_app/utils/enums.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,8 @@ extension Ext on BuildContext {
   double get height => MediaQuery.of(this).size.height;
 
   double get width => MediaQuery.of(this).size.width;
+
+  EdgeInsets get mPadding => MediaQuery.of(this).padding;
 
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
 
@@ -21,7 +21,6 @@ extension Ext on BuildContext {
 
   void showSuccessSnackBar({required String message}) {
     showSnackBar(context: this, msg: message, type: SnackBarType.success);
-
   }
 
   void showErrorSnackBar({required String message}) {

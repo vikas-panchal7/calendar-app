@@ -43,7 +43,7 @@ class AddVideoDialog extends StatelessWidget {
               child: Text(
              addVideoProvider.args.forUpdate?  AppStrings.editVideo :AppStrings.addVideo,
                 style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.onBackground,
+                    color: context.colorScheme.onSecondary,
                     fontWeight: FontWeight.w600),
               )),
           const Gap(10),
