@@ -65,29 +65,29 @@ class CalenderUI extends StatelessWidget {
 
             ),
           ),
-          CommonButton.cupertino(
-            onTap: () {
-              InfoDialog.show(context: context,title:'data dsjk sdjkf dskdf sjf sjdkf dsfs dfsd fsdf dsfjk f dsj dfskfdssfdjfsfjdsjkds fdj sd jdsfk d');
-            },
-            child: Container(
-
-              padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 16),
-
-              color: context.colorScheme.background,
-            child: Row(
-              children: [
-                Icon(Icons.info_rounded,color: context.colorScheme.primary,),
-                const Gap(10),
-                Expanded(
-                  child: Text('data dsjk sdjkf dskdf sjf sjdkf dsfs dfsd fsdf dsfjk f dsj dfskfdssfdjfsfjdsjkds fdj sd jdsfk d',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis
-                    ,style: context.textTheme.titleSmall?.copyWith(),),
-                ),
-              ],
-            ),
-            ),
-          )
+          // CommonButton.cupertino(
+          //   onTap: () {
+          //     InfoDialog.show(context: context,title:'data dsjk sdjkf dskdf sjf sjdkf dsfs dfsd fsdf dsfjk f dsj dfskfdssfdjfsfjdsjkds fdj sd jdsfk d');
+          //   },
+          //   child: Container(
+          //
+          //     padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 16),
+          //
+          //     color: context.colorScheme.background,
+          //   child: Row(
+          //     children: [
+          //       Icon(Icons.info_rounded,color: context.colorScheme.primary,),
+          //       const Gap(10),
+          //       Expanded(
+          //         child: Text('data dsjk sdjkf dskdf sjf sjdkf dsfs dfsd fsdf dsfjk f dsj dfskfdssfdjfsfjdsjkds fdj sd jdsfk d',
+          //           maxLines: 2,
+          //           overflow: TextOverflow.ellipsis
+          //           ,style: context.textTheme.titleSmall?.copyWith(),),
+          //       ),
+          //     ],
+          //   ),
+          //   ),
+          // )
 
         ],
       ),

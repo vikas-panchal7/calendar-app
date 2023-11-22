@@ -5,7 +5,7 @@ class SplashScreenUI extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return ChangeNotifierProvider<SplashProvider>(
-      create: (context) => SplashProvider(context: context)..init(),
+      create: (context) => SplashProvider(context: context),
       builder: (context, child) {
         return Consumer<SplashProvider>(
           builder: (context, value, child) => const SplashScreenUI(),
@@ -81,7 +81,7 @@ class _SplashScreenUIState extends State<SplashScreenUI>
                                     .image(height: context.height * .2)),
                         const Gap(15),
                         Text(
-                          AppStrings.calendarApp,
+                          context.l10n.calendarApp,
                           style: context.textTheme.displaySmall?.copyWith(
                               color: context.colorScheme.onSecondary,
                               fontWeight: FontWeight.w600),

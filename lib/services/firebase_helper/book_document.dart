@@ -1,12 +1,10 @@
-import 'package:equatable/equatable.dart';
-
-class BookInfo extends Equatable {
+class BookInfo {
   final String id;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String fileUrl;
   final Map title;
-  final FileType fileType;
+  final BookFileType fileType;
 
   const BookInfo({
     required this.id,
@@ -17,17 +15,13 @@ class BookInfo extends Equatable {
     required this.fileType,
   });
 
-  @override
-  List<Object?> get props =>
-      [id, createdAt, updatedAt, fileUrl, title, fileType];
-
   BookInfo copyWith({
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
     String? fileUrl,
     Map? title,
-    FileType? fileType,
+    BookFileType? fileType,
   }) {
     return BookInfo(
       id: id ?? this.id,
@@ -41,12 +35,19 @@ class BookInfo extends Equatable {
 }
 
 abstract interface class BookInfoDocumentFields {
-  static const id = "id";
-  static const createdAt = "createdAt";
-  static const updatedAt = "updatedAt";
-  static const fileUrl = "fileUrl";
-  static const title = "title";
-  static const fileType = "fileType";
+  static const id = 'id';
+  static const createdAt = 'createdAt';
+  static const updatedAt = 'updatedAt';
+  static const fileUrl = 'fileUrl';
+  static const title = 'title';
+  static const fileType = 'fileType';
 }
 
-enum FileType { pdf, word }
+enum BookFileType {
+  pdf('pdf'),
+  word('doc');
+
+  final String value;
+
+  const BookFileType(this.value);
+}

@@ -1,5 +1,4 @@
 abstract interface class AppStrings {
-  static const String calendarApp = 'Calendar App';
   static const String signInWithGoogle = 'Sign in with Google';
   static const String calendar = 'Calendar';
   static const String books = 'Books';
@@ -28,7 +27,6 @@ abstract interface class AppStrings {
   static const String writeHere = 'Write here...';
   static const String chooseBook = 'Choose Book';
   static const String chooseFile = 'Choose File';
-  static const String uploadBook = 'Upload Book';
   static const String upload = 'Upload';
   static const String fileFormatNotMatch = 'File format is not match';
   static const String discard = 'Discard';

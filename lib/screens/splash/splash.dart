@@ -5,10 +5,11 @@ import 'package:calendar_app/constants/app_strings.dart';
 import 'package:calendar_app/extensions/buildcontext_ext.dart';
 import 'package:calendar_app/extensions/int_ext.dart';
 import 'package:calendar_app/gen/assets.gen.dart';
-import 'package:calendar_app/provider/base_provider.dart';
+import 'package:calendar_app/generated/l10n.dart';
+import 'package:calendar_app/core/base_provider.dart';
 import 'package:calendar_app/screens/dashboard/dashboard.dart';
 import 'package:calendar_app/services/firebase_helper/user_document.dart';
-import 'package:calendar_app/services/repositories/admin_reoisitory.dart';
+import 'package:calendar_app/services/repositories/admin_repository.dart';
 import 'package:calendar_app/services/repositories/user_repository.dart';
 
 import 'package:calendar_app/utils/commonButton/common_button.dart';

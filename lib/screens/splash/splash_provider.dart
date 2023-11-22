@@ -1,7 +1,11 @@
 part of 'splash.dart';
 
 class SplashProvider extends BaseProvider {
-  SplashProvider({required super.context});
+  SplashProvider({required super.context}){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      navigate();
+    });
+  }
 
   double? _logoContainerHeight;
 

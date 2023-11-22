@@ -3,7 +3,11 @@ part of 'video_list.dart';
 class VideoListUI extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return ChangeNotifierProvider<VideoListProvider>(
-      create: (context) => VideoListProvider(context: context),
+      create: (context) => VideoListProvider(
+        context: context,
+        loadingHandler: LoadingDialogHandler(context: context),
+        videoRepository: VideoRepository(),
+      ),
       builder: (context, child) => const VideoListUI(),
     );
   }
@@ -14,7 +18,7 @@ class VideoListUI extends StatelessWidget {
   Widget build(BuildContext context) {
     CalendarPreference preference = CalendarPreference();
     return Scaffold(
-      /*appBar: AppBar(
+        /*appBar: AppBar(
         title: const Text(AppStrings.videos),
         actions: [
           if (preference.isAdminLogin) ...[
@@ -31,66 +35,111 @@ class VideoListUI extends StatelessWidget {
           ]
         ],
       ),*/
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        AddVideoDialog.show(context: context);
-      },
-      child: Icon(Icons.add,color: context.colorScheme.onSecondary,),
-      ),
-      body: ListView.separated(
-        padding: const EdgeInsets.fromLTRB(7 , 5, 7, 80),
-        itemCount: 20,
-        itemBuilder: (context, index) {
-          return CommonButton.cupertino(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  color: context.colorScheme.onSecondary,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                        color: context.colorScheme.onTertiary.withOpacity(.04),
-                        blurRadius: 16,
-                        offset: const Offset(0, 6))
-                  ]),
-              child: Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await AddVideoDialog.show(context: context);
+          },
+          child: Icon(
+            Icons.add,
+            color: context.colorScheme.onSecondary,
+          ),
+        ),
+        body: PaginationListener(
+          onLoadMore: context.read<VideoListProvider>().onLoadMore,
+          onRefresh: context.read<VideoListProvider>().onReload,
+          child: Builder(
+            builder: (context) {
+              final list = context.select<VideoListProvider, List<VideoInfo?>>((value) => value.list);
+              final isLoading = context.select<VideoListProvider, bool>((value) => value.isLoading);
+
+              if (isLoading && list.isEmpty) {
+                return const LoadingIndicator();
+              }
+
+              if (list.isEmpty) {
+                return const EmptyPlaceHolder();
+              }
+              return Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5.0),
-                        child: Image.network('https://i.ytimg.com/vi/3wBEUuV7BYg/maxresdefault.jpg',width: context.width *.35)),
-                  ),
                   Expanded(
-                    child: Text(
-                      'Deepinder Goyal - Journey From Startup To IPO, Challenges And Achievements | TRS हिंदी 210',
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
+                    child: ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(7, 5, 7, 80),
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        VideoInfo? videoInfo = list[index];
+                        return CommonButton.cupertino(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: context.colorScheme.onSecondary,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: context.colorScheme.onTertiary.withOpacity(.04),
+                                      blurRadius: 16,
+                                      offset: const Offset(0, 6))
+                                ]),
+                            child: Row(
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      child: Image.network(
+                                        videoInfo?.thumbnailUrl ?? '',
+                                        width: context.width * .35,
+                                        height: context.width * .2,
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return Container(
+                                            width: context.width * .35,
+                                            height: context.width * .2,
+                                          );
+                                        },
+                                      )),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    videoInfo?.videoTitle ?? '',
+                                    maxLines: 4,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: context.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                if (preference.isAdminLogin) ...[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                    child: CommonButton.cupertino(
+                                      onTap: () => DeleteDialog.show(
+                                        context: context,
+                                        type: 'Video',
+                                        onDelete: () {
+                                          context.read<VideoListProvider>().deleteVideo(videoInfo?.id ?? '');
+                                        },
+                                      ),
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: context.colorScheme.primary,
+                                      ),
+                                    ),
+                                  )
+                                ]
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Gap(5);
+                      },
                     ),
                   ),
-                  if (preference.isAdminLogin) ...[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:10.0),
-                      child: EditAndDeletePopUPMenu(
-
-                        type: AppStrings.video,
-                        onDelete: () {
-                          context.navigator.pop();
-                        },
-                        onEdit: () {
-                          AddVideoDialog.show(context: context, addVideoArguments: AddVideoArguments(forUpdate: true));
-                        },
-                      ),
-                    )
-                  ]
+                  if (isLoading) ...[const LoadingIndicator(size: 80)]
                 ],
-              ),
-            ),
-          );
-        }, separatorBuilder: (BuildContext context, int index) { return const Gap(5); },
-      ),
-    );
+              );
+            },
+          ),
+        ));
   }
 }

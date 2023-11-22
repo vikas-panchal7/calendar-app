@@ -1,3 +1,4 @@
+import 'package:calendar_app/generated/l10n.dart';
 import 'package:calendar_app/utils/common_functions.dart';
 import 'package:calendar_app/utils/enums.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,10 @@ extension Ext on BuildContext {
   NavigatorState get navigator => Navigator.of(this);
 
   dynamic get args => ModalRoute.of(this)?.settings.arguments;
+
+  NavigatorState get rootNavigator => Navigator.of(this, rootNavigator: true);
+
+  S get l10n => S.of(this);
 
   void showSuccessSnackBar({required String message}) {
     showSnackBar(context: this, msg: message, type: SnackBarType.success);

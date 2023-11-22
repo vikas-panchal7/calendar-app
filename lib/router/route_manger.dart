@@ -3,6 +3,7 @@ import 'package:calendar_app/screens/addCalendarData/add_calendar_data.dart';
 import 'package:calendar_app/screens/addNews/add_news.dart';
 import 'package:calendar_app/screens/dashboard/dashboard.dart';
 import 'package:calendar_app/screens/donateUs/donate_us.dart';
+import 'package:calendar_app/screens/pdf_viewer/pdf_viewer.dart';
 
 import 'package:calendar_app/screens/splash/splash.dart';
 import 'package:calendar_app/utils/image_view.dart';
@@ -18,6 +19,7 @@ class RouteManger {
       ImageView.routeName: ImageView.builder,
       AddNewsScreenUI.routeName: AddNewsScreenUI.builder,
       DonateUsScreenUI.routeName: DonateUsScreenUI.builder,
+      CustomPdfView.routeName: CustomPdfView.builder,
     };
   }
 

@@ -1,25 +1,33 @@
 import 'dart:io';
 
+import 'package:calendar_app/constants/app_constant.dart';
+import 'package:calendar_app/core/event_bus.dart';
+import 'package:calendar_app/services/EventBus/events.dart';
 import 'package:calendar_app/services/firebase_helper/book_document.dart';
 import 'package:calendar_app/services/firebase_helper/firebase_firestore_helper.dart';
+import 'package:calendar_app/utils/pagination/pagination_helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class BookRepository {
   final bookCollectionRef = FirebaseFireStoreHelper.bookCollectionRef;
   final bookRef = FirebaseFireStoreHelper.bookRef;
 
+  // EventBus eventBus = EventBus();
+
   Future<bool> addEditBook({
     required String englishTitle,
     required String gujaratiTitle,
     required String fileUrl,
-    required FileType fileType,
+    required BookFileType fileType,
     required DateTime createdAt,
     required DateTime updatedAt,
     required String id,
+    required bool isEdit,
   }) async {
     var titleMap = {
-      "englishTitle": englishTitle,
-      "gujaratiTitle": gujaratiTitle,
+      'en': englishTitle,
+      'gu': gujaratiTitle,
     };
 
     var data = {
@@ -30,8 +38,26 @@ class BookRepository {
       BookInfoDocumentFields.fileType: fileType.name,
     };
 
-    await bookCollectionRef.doc(id).update(data).onError((error, stackTrace) => false);
-
+    await bookCollectionRef.doc(id).set(data).onError((error, stackTrace) => false);
+    if (isEdit) {
+      eventBus.fire(BookUpdateEvent(
+          bookInfo: BookInfo(
+              id: id,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              fileUrl: fileUrl,
+              title: titleMap,
+              fileType: fileType)));
+    } else {
+      eventBus.fire(BookAddEvent(
+          bookInfo: BookInfo(
+              id: id,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              fileUrl: fileUrl,
+              title: titleMap,
+              fileType: fileType)));
+    }
     return true;
   }
 
@@ -47,8 +73,10 @@ class BookRepository {
   }
 
   deleteFileFromStorage({required String url}) async {
-    final storageRef = FirebaseStorage.instance.ref(url);
-    await storageRef.delete();
+    if (url.trim().isNotEmpty) {
+      final storageRef = FirebaseStorage.instance.ref(url);
+      await storageRef.delete();
+    }
   }
 
   Future<BookInfo?> getBook({required String id}) async {
@@ -56,17 +84,34 @@ class BookRepository {
     return result.data();
   }
 
-  void deleteBook({required String id}) async {
-    await bookRef.doc(id).delete();
+  Future<bool> deleteBook({required String id}) async {
+    await bookRef.doc(id).delete().onError((error, stackTrace) => false);
+    eventBus.fire(BookDeleteEvent(id: id));
+    return true;
   }
 
-  Future<List<BookInfo>> getBookList() async {
-    var result = await bookRef.orderBy(BookInfoDocumentFields.createdAt, descending: true).get();
+  Future<PaginatedList<BookInfo>> getBookList({required DocumentSnapshot? lastDocument}) async {
+    var query = bookRef.orderBy(BookInfoDocumentFields.createdAt, descending: true);
+
+    if (lastDocument != null) {
+      query = query.startAfterDocument(lastDocument);
+    }
+    query = query.limit(AppConst.paginationLength);
+
+    var result = await query.get();
     List<BookInfo> toReturn = [];
+
+    if (result.docs.isEmpty) {
+      return PaginatedList.empty();
+    }
 
     for (var element in result.docs) {
       toReturn.add(element.data());
     }
-    return toReturn;
+    return PaginatedList(
+      data: toReturn,
+      isAvailableMore: toReturn.length == AppConst.paginationLength,
+      lastDocument: result.docs.last,
+    );
   }
 }

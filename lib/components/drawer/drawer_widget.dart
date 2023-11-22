@@ -25,28 +25,28 @@ class DrawerWidget extends StatelessWidget {
             title: AppStrings.selectLanguage,
             onTap: () {},
           ),
-          _CommonTile(
-            title: AppStrings.donateUs,
-            onTap: () {
-              context.navigator.pop();
-              context.navigator.pushNamed(DonateUsScreenUI.routeName);
-            },
-          ),
+          // _CommonTile(
+          //   title: AppStrings.donateUs,
+          //   onTap: () {
+          //     context.navigator.pop();
+          //     context.navigator.pushNamed(DonateUsScreenUI.routeName);
+          //   },
+          // ),
           // _CommonTile(
           //   title: AppStrings.social,
           //   onTap: () {},
           // ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Assets.images.whatsapp.image(width: context.width *.08),
-                Assets.images.facebook.image(width: context.width *.08),
-                Assets.images.instagram.image(width: context.width *.08),
-              ],
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 30),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //     children: [
+          //       Assets.images.whatsapp.image(width: context.width *.08),
+          //       Assets.images.facebook.image(width: context.width *.08),
+          //       Assets.images.instagram.image(width: context.width *.08),
+          //     ],
+          //   ),
+          // ),
           const Spacer(),
           Text('Version 1.0.0',style:  context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onSecondary),),
           const Gap(10),

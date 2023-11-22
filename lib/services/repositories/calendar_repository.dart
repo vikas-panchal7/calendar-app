@@ -14,12 +14,12 @@ class CalendarRepository {
     required DateTime selectedDate,
   }) async {
     var titleMap = {
-      "englishTitle": englishTitle,
-      "gujaratiTitle": gujaratiTitle,
+      "en": englishTitle,
+      "gu": gujaratiTitle,
     };
     var descMap = {
-      "englishTitle": englishTitle,
-      "gujaratiTitle": gujaratiTitle,
+      "en": englishTitle,
+      "gu": gujaratiTitle,
     };
 
     var data = {

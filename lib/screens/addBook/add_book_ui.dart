@@ -4,9 +4,13 @@ class AddBookScreenUI extends StatelessWidget {
   static String get routeName => '/add_book';
 
   static Widget builder(BuildContext context) {
-    AddBookArguments? args = context.args as AddBookArguments?;
+    BookInfo? bookInfo = context.args as BookInfo?;
     return ChangeNotifierProvider<AddBookProvider>(
-      create: (context) => AddBookProvider(context: context, args: args ?? AddBookArguments()),
+      create: (context) => AddBookProvider(
+          context: context,
+          bookInfo: bookInfo,
+          bookRepository: BookRepository(),
+          loadingHandler: LoadingDialogHandler(context: context)),
       builder: (context, child) => const AddBookScreenUI(),
     );
   }
@@ -16,15 +20,17 @@ class AddBookScreenUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AddBookProvider addBookProvider = context.read<AddBookProvider>();
+    bool isEdit = context.select<AddBookProvider, bool>((value) => value.isEdit);
+
     return WillPopScope(
       onWillPop: addBookProvider.onWillPop,
       child: Form(
         key: addBookProvider.formKey,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(addBookProvider.args.forUpdate ? AppStrings.editBook : AppStrings.addBook),
+            title: Text(isEdit ? AppStrings.editBook : AppStrings.addBook),
             actions: [
-              if (addBookProvider.args.forUpdate)
+              if (isEdit)
                 CommonButton.icon(
                     onTap: addBookProvider.handleDeleteBook,
                     child: Icon(
@@ -35,73 +41,75 @@ class AddBookScreenUI extends StatelessWidget {
           ),
           body: Padding(
             padding: EdgeInsets.all(context.width * .04),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.bookTitle,
-                  style: context.textTheme.bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
-                ),
-                Gap(context.height * .01),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.bookTitle,
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
+                  ),
+                  Gap(context.height * .01),
 
-                /// eng title
-                CustomTextField(
-                  title: AppStrings.inEnglish,
-                  controller: addBookProvider.engTitle,
-                  hintText: AppStrings.writeHere,
-                  validator: (value) {
-                    if (value != null) {
-                      if (value.isEmpty) {
-                        return AppStrings.fieldIsRequired;
+                  /// eng title
+                  CustomTextField(
+                    title: AppStrings.inEnglish,
+                    controller: addBookProvider.engTitle,
+                    hintText: AppStrings.writeHere,
+                    validator: (value) {
+                      if (value != null) {
+                        if (value.isEmpty) {
+                          return AppStrings.fieldIsRequired;
+                        }
                       }
-                    }
-                    return null;
-                  },
-                ),
-                const Gap(10),
+                      return null;
+                    },
+                  ),
+                  const Gap(10),
 
-                /// guj title
-                CustomTextField(
-                  title: AppStrings.inGujarati,
-                  controller: addBookProvider.gujTitle,
-                  hintText: AppStrings.writeHere,
-                  validator: (value) {
-                    if (value != null) {
-                      if (value.isEmpty) {
-                        return AppStrings.fieldIsRequired;
+                  /// guj title
+                  CustomTextField(
+                    title: AppStrings.inGujarati,
+                    controller: addBookProvider.gujTitle,
+                    hintText: AppStrings.writeHere,
+                    validator: (value) {
+                      if (value != null) {
+                        if (value.isEmpty) {
+                          return AppStrings.fieldIsRequired;
+                        }
                       }
-                    }
-                    return null;
-                  },
-                ),
+                      return null;
+                    },
+                  ),
 
-                const Gap(24),
+                  const Gap(24),
 
-                /// choose book
-                const _ChooseBookWidget(),
-                const Gap(5),
-                Selector<AddBookProvider, bool>(
-                  selector: (context, addBookProvider) => addBookProvider.showBookRequiredMsg,
-                  builder: (context, showBookRequiredMsg, child) {
-                    if (showBookRequiredMsg) {
-                      return Text(AppStrings.fileIsRequired,
-                          style: context.textTheme.labelMedium?.copyWith(
-                            color: context.colorScheme.error,
-                          ));
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ),
-              ],
+                  /// choose book
+                  const _ChooseBookWidget(),
+                  const Gap(5),
+                  Selector<AddBookProvider, bool>(
+                    selector: (context, addBookProvider) => addBookProvider.showBookRequiredMsg,
+                    builder: (context, showBookRequiredMsg, child) {
+                      if (showBookRequiredMsg) {
+                        return Text(AppStrings.fileIsRequired,
+                            style: context.textTheme.labelMedium?.copyWith(
+                              color: context.colorScheme.error,
+                            ));
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
 
           /// upload button
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ButtonItem.filled(onTap: addBookProvider.handleUpload, text: AppStrings.uploadBook),
+            child: ButtonItem.filled(onTap: addBookProvider.handleUpload, text: isEdit ? 'Edit book' : 'Upload Book'),
           ),
         ),
       ),
@@ -123,10 +131,10 @@ class _ChooseBookWidget extends StatelessWidget {
           style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
         ),
         const Gap(8),
-        Selector<AddBookProvider, File?>(
-          selector: (context, addBookProvider) => addBookProvider.bookFile,
-          builder: (context, bookFile, child) {
-            if (bookFile == null) {
+        Selector<AddBookProvider, String?>(
+          selector: (context, addBookProvider) => addBookProvider.selectedBookFile,
+          builder: (context, selectedBookFile, child) {
+            if (selectedBookFile == null) {
               return CommonButton.material(
                   onTap: addBookProvider.chooseBook,
                   radius: 12,
@@ -158,7 +166,7 @@ class _ChooseBookWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    bookFile.path,
+                    selectedBookFile,
                     style: context.textTheme.labelSmall,
                   ),
                   const Gap(10),

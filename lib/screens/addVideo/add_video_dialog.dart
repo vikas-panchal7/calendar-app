@@ -1,20 +1,20 @@
 part of 'add_video.dart';
 
 class AddVideoDialog extends StatelessWidget {
-  static void show({
-    required BuildContext context,
-    AddVideoArguments?addVideoArguments
-  }) {
-    showDialog(
+  static Future show({required BuildContext context, VideoInfo? videoInfo}) async {
+    return showDialog(
       context: context,
       builder: (context) {
         return Dialog(
             insetPadding: EdgeInsets.symmetric(horizontal: context.width * .05),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: ChangeNotifierProvider<AddVideoProvider>(
-              create: (context) => AddVideoProvider(context: context,args:addVideoArguments??AddVideoArguments()),
-              builder: (context, child) =>  const AddVideoDialog(),
+              create: (context) => AddVideoProvider(
+                  context: context,
+                  videoInfo: videoInfo,
+                  videoRepository: VideoRepository(),
+                  loadingHandler: LoadingDialogHandler(context: context)),
+              builder: (context, child) => const AddVideoDialog(),
             ));
       },
     );
@@ -38,13 +38,11 @@ class AddVideoDialog extends StatelessWidget {
               width: context.width,
               decoration: BoxDecoration(
                   color: context.colorScheme.primary,
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(16))),
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16))),
               child: Text(
-             addVideoProvider.args.forUpdate?  AppStrings.editVideo :AppStrings.addVideo,
-                style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.onSecondary,
-                    fontWeight: FontWeight.w600),
+                addVideoProvider.videoInfo != null ? AppStrings.editVideo : AppStrings.addVideo,
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(color: context.colorScheme.onSecondary, fontWeight: FontWeight.w600),
               )),
           const Gap(10),
 
@@ -63,16 +61,19 @@ class AddVideoDialog extends StatelessWidget {
                       if (value.isEmpty) {
                         return AppStrings.fieldIsRequired;
                       }
+                      if ((value.contains('youtu') == false) && (value.contains('yt') == false)) {
+                        return 'Please enter valid link';
+                      }
                     }
                     return null;
                   },
                 ),
 
-               /// view and delete
+                /// view and delete
                 Visibility(
-                  visible: addVideoProvider.args.forUpdate,
+                  visible: addVideoProvider.videoInfo != null,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10,bottom: 15),
+                    padding: const EdgeInsets.only(top: 10, bottom: 15),
                     child: Row(
                       children: [
                         Expanded(
@@ -96,6 +97,7 @@ class AddVideoDialog extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 /// upload video button
                 ButtonItem.filled(
                   onTap: addVideoProvider.handleUpload,

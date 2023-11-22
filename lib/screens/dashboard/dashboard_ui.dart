@@ -99,16 +99,16 @@ drawer: const DrawerWidget(),
                                     : context.colorScheme.background.withOpacity(.7)),
                           ),
                           label: 'Videos'),
-                      BottomNavigationBarItem(
-                          icon: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Assets.icons.icNews.image(
-                                height: 25,
-                                color: currentIndex == 3
-                                    ? context.colorScheme.background
-                                    : context.colorScheme.background.withOpacity(.7)),
-                          ),
-                          label: 'News'),
+                      // BottomNavigationBarItem(
+                      //     icon: Padding(
+                      //       padding: const EdgeInsets.all(5.0),
+                      //       child: Assets.icons.icNews.image(
+                      //           height: 25,
+                      //           color: currentIndex == 3
+                      //               ? context.colorScheme.background
+                      //               : context.colorScheme.background.withOpacity(.7)),
+                      //     ),
+                      //     label: 'News'),
                     ],
                   ),
                 );
@@ -131,7 +131,7 @@ drawer: const DrawerWidget(),
       case 0:
         return AppStrings.calendar;
       case 1:
-        return AppStrings.books;
+        return context.l10n.books;
       case 2:
         return AppStrings.videos;
       case 3:

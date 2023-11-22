@@ -3,7 +3,7 @@ import 'package:calendar_app/constants/app_strings.dart';
 import 'package:calendar_app/extensions/buildcontext_ext.dart';
 import 'package:calendar_app/extensions/date_time_ext.dart';
 import 'package:calendar_app/gen/assets.gen.dart';
-import 'package:calendar_app/provider/base_provider.dart';
+import 'package:calendar_app/core/base_provider.dart';
 import 'package:calendar_app/screens/addCalendarData/add_calendar_data.dart';
 import 'package:calendar_app/screens/addCalendarData/arguments.dart';
 import 'package:calendar_app/screens/calendar/widgets/info_dialog.dart';

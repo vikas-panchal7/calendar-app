@@ -9,7 +9,7 @@ class BaseProvider<T extends Object?> extends ChangeNotifier {
 
   Future<T> processApi<T>({required Future<T> Function() process, required Function(bool) loadingHandler}) async {
     loadingHandler.call(true);
-    var result = process.call();
+    var result = await process.call();
     loadingHandler.call(false);
     notifyListeners();
     return result;
