@@ -5,7 +5,8 @@ class AddCalendarDataProvider extends BaseProvider {
   final CalendarRepository calendarRepository;
   final LoadingDialogHandler loadingDialogHandler;
   final DateTime calendarDate;
-  AddCalendarDataProvider( {
+
+  AddCalendarDataProvider({
     required super.context,
     required this.calendarDataInfo,
     required this.calendarRepository,
@@ -54,9 +55,7 @@ class AddCalendarDataProvider extends BaseProvider {
   }
 
   Future<bool> onWillPop() async {
-    if (engTitle.text.isNotEmpty ||
-        gujTitle.text.isNotEmpty ||
-        gujDescription.text.isNotEmpty) {
+    if (engTitle.text.isNotEmpty || gujTitle.text.isNotEmpty || gujDescription.text.isNotEmpty) {
       DiscardDialog.show(context: context);
       return false;
     }
@@ -77,15 +76,24 @@ class AddCalendarDataProvider extends BaseProvider {
   }
 
   Future<void> addUpdateData() async {
-    bool? result = await processApi(process: () async {
-      var id = calendarDataInfo?.id ?? calendarRepository.getCalendarDetailId();
-      return await calendarRepository.addEDitDate(englishTitle: engTitle.text,
-          gujaratiTitle: gujTitle.text,
-          englishDesc: engDescription.text,
-          gujaratiDesc: gujDescription.text,
-          id: id, calendarDate: calendarDate, calendarDataType: selectedSource == 0 ? CalendarDataType.data:CalendarDataType.video, videoUrl: videoUrl.text, isEdit: _isEdit,
-      );
-    }, loadingHandler: loadingDialogHandler.handleBgDialog);
+    bool? result = await processApi(
+        process: () async {
+          var id = calendarDataInfo?.id ?? calendarRepository.getCalendarDetailId();
+          return await calendarRepository.addEditDate(
+            englishTitle: engTitle.text,
+            gujaratiTitle: gujTitle.text,
+            englishDesc: engDescription.text,
+            gujaratiDesc: gujDescription.text,
+            createdAt: calendarDataInfo?.createdAt ?? DateTime.timestamp(),
+            updatedAt: DateTime.timestamp(),
+            id: id,
+            calendarDate: calendarDate,
+            calendarDataType: selectedSource == 0 ? CalendarDataType.data : CalendarDataType.video,
+            videoUrl: videoUrl.text,
+            isEdit: _isEdit,
+          );
+        },
+        loadingHandler: loadingDialogHandler.handleBgDialog);
     if (result ?? false) {
       if (context.mounted) {
         context.showSuccessSnackBar(message: 'Data ${_isEdit ? "Edited" : "added"} successfully');
@@ -100,16 +108,10 @@ class AddCalendarDataProvider extends BaseProvider {
 
   void init() {
     _isEdit = true;
-    _engTitle.text =
-        calendarDataInfo?.title.customTranslate(SupportedLanguage.english) ??
-            '';
-    _gujTitle.text =
-        calendarDataInfo?.title.customTranslate(SupportedLanguage.gujarati) ??
-            '';
-    _gujDescription.text = calendarDataInfo?.description.customTranslate(
-        SupportedLanguage.gujarati) ?? '';
-    _engDescription.text = calendarDataInfo?.description.customTranslate(
-        SupportedLanguage.english) ?? '';
+    _engTitle.text = calendarDataInfo?.title.customTranslate(SupportedLanguage.english) ?? '';
+    _gujTitle.text = calendarDataInfo?.title.customTranslate(SupportedLanguage.gujarati) ?? '';
+    _gujDescription.text = calendarDataInfo?.description.customTranslate(SupportedLanguage.gujarati) ?? '';
+    _engDescription.text = calendarDataInfo?.description.customTranslate(SupportedLanguage.english) ?? '';
     _videoUrl.text = CalendarDateInfoDocumentFields.videoUrl ?? '';
     notifyListeners();
   }

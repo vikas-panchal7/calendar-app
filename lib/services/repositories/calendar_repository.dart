@@ -5,7 +5,7 @@ class CalendarRepository {
   final calendarCollectionRef = FirebaseFireStoreHelper.calendarCollectionRef;
   final calendarRef = FirebaseFireStoreHelper.calendarRef;
 
-  Future<bool> addEDitDate({
+  Future<bool> addEditDate({
     required String englishTitle,
     required String gujaratiTitle,
     required String englishDesc,
@@ -15,24 +15,25 @@ class CalendarRepository {
     required CalendarDataType calendarDataType,
     required String videoUrl,
     required bool isEdit,
-
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) async {
     var titleMap = {
-      "en": englishTitle,
-      "gu": gujaratiTitle,
+      'en': englishTitle,
+      'gu': gujaratiTitle,
     };
     var descMap = {
-      "en": englishTitle,
-      "gu": gujaratiTitle,
+      'en': englishTitle,
+      'gu': gujaratiTitle,
     };
 
     var data = {
       CalendarDateInfoDocumentFields.title: titleMap,
       CalendarDateInfoDocumentFields.description: descMap,
-      CalendarDateInfoDocumentFields.createdAt: DateTime.timestamp(),
-      CalendarDateInfoDocumentFields.updatedAt: DateTime.timestamp(),
+      CalendarDateInfoDocumentFields.createdAt: createdAt,
+      CalendarDateInfoDocumentFields.updatedAt: updatedAt,
       CalendarDateInfoDocumentFields.calendarDate: calendarDate,
-      CalendarDateInfoDocumentFields.dataType: calendarDataType,
+      CalendarDateInfoDocumentFields.dataType: calendarDataType.value,
       CalendarDateInfoDocumentFields.videoUrl: videoUrl
     };
 
