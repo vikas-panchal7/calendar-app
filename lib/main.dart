@@ -24,7 +24,7 @@ Future<void> main() async {
 
 // init firebase,preference etc
 void _init() {
-  CalendarPreference.init();
+  CalendarPreference.instance.init();
 }
 
 void _setOrientation() {

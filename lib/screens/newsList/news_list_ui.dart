@@ -14,7 +14,7 @@ class NewsListScreenUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CalendarPreference preference = CalendarPreference();
+    CalendarPreference preference = CalendarPreference.instance;
     return Scaffold(
      /* appBar: AppBar(
         title: const Text(AppStrings.news),

@@ -13,11 +13,16 @@ class FirebaseFireStoreHelper {
   static const _adminCollectionPath = 'adminList';
   static const _videoCollectionPath = 'videoList';
 
-  static final userCollectionRef = FirebaseFirestore.instance.collection(_userCollectionPath);
-  static final bookCollectionRef = FirebaseFirestore.instance.collection(_bookCollectionPath); // collection reference
-  static final calendarCollectionRef = FirebaseFirestore.instance.collection(_calendarCollectionPath);
-  static final adminCollectionRef = FirebaseFirestore.instance.collection(_adminCollectionPath);
-  static final videoCollectionRef = FirebaseFirestore.instance.collection(_videoCollectionPath);
+  static final userCollectionRef =
+      FirebaseFirestore.instance.collection(_userCollectionPath);
+  static final bookCollectionRef = FirebaseFirestore.instance
+      .collection(_bookCollectionPath); // collection reference
+  static final calendarCollectionRef =
+      FirebaseFirestore.instance.collection(_calendarCollectionPath);
+  static final adminCollectionRef =
+      FirebaseFirestore.instance.collection(_adminCollectionPath);
+  static final videoCollectionRef =
+      FirebaseFirestore.instance.collection(_videoCollectionPath);
 
   static final userRef = userCollectionRef.withConverter<UserInfo>(
     fromFirestore: (snapshot, options) {
@@ -28,7 +33,8 @@ class FirebaseFireStoreHelper {
         userName: snapshot.get(UserInfoDocumentFields.userName) as String,
         gmail: snapshot.get(UserInfoDocumentFields.gmail) as String,
         loginType: LoginType.values
-            .where((element) => (element.name == (snapshot.get(UserInfoDocumentFields.gmail) as String)))
+            .where((element) => (element.name ==
+                (snapshot.get(UserInfoDocumentFields.gmail) as String)))
             .first,
       );
     },
@@ -63,12 +69,15 @@ class FirebaseFireStoreHelper {
     fromFirestore: (snapshot, options) {
       return BookInfo(
         id: snapshot.id,
-        createdAt: (snapshot.get(BookInfoDocumentFields.createdAt) as Timestamp).toDate(),
-        updatedAt: (snapshot.get(BookInfoDocumentFields.updatedAt) as Timestamp).toDate(),
+        createdAt: (snapshot.get(BookInfoDocumentFields.createdAt) as Timestamp)
+            .toDate(),
+        updatedAt: (snapshot.get(BookInfoDocumentFields.updatedAt) as Timestamp)
+            .toDate(),
         fileUrl: snapshot.get(BookInfoDocumentFields.fileUrl) as String,
         title: snapshot.get(BookInfoDocumentFields.title) as Map,
         fileType: BookFileType.values
-            .where((element) => (element.name == (snapshot.get(BookInfoDocumentFields.fileType) as String)))
+            .where((element) => (element.name ==
+                (snapshot.get(BookInfoDocumentFields.fileType) as String)))
             .first,
       );
     },
@@ -84,15 +93,26 @@ class FirebaseFireStoreHelper {
     },
   );
 
-  static final calendarRef = calendarCollectionRef.withConverter<CalendarDateInfo>(
+  static final calendarRef =
+      calendarCollectionRef.withConverter<CalendarDateInfo>(
     fromFirestore: (snapshot, options) {
       return CalendarDateInfo(
         id: snapshot.id,
-        createdAt: snapshot.get(CalendarDateInfoDocumentFields.createdAt) as DateTime,
-        updatedAt: snapshot.get(CalendarDateInfoDocumentFields.updatedAt) as DateTime,
-        calendarDate: snapshot.get(CalendarDateInfoDocumentFields.calendarDate) as DateTime,
+        createdAt:
+            snapshot.get(CalendarDateInfoDocumentFields.createdAt) as DateTime,
+        updatedAt:
+            snapshot.get(CalendarDateInfoDocumentFields.updatedAt) as DateTime,
+        calendarDate: snapshot.get(CalendarDateInfoDocumentFields.calendarDate)
+            as DateTime,
         title: snapshot.get(CalendarDateInfoDocumentFields.title) as Map,
-        description: snapshot.get(CalendarDateInfoDocumentFields.description) as Map,
+        description:
+            snapshot.get(CalendarDateInfoDocumentFields.description) as Map,
+        dataType: CalendarDataType.values
+            .where((element) =>
+                (element.name ==
+                (snapshot.get(CalendarDateInfoDocumentFields.dataType) as String)))
+            .first,
+        videoUrl: snapshot.get(CalendarDateInfoDocumentFields.videoUrl) as String
       );
     },
     toFirestore: (value, options) {
@@ -111,9 +131,14 @@ class FirebaseFireStoreHelper {
     fromFirestore: (snapshot, options) {
       return VideoInfo(
         id: snapshot.id,
-        createdAt: (snapshot.get(VideoInfoDocumentFields.createdAt) as Timestamp).toDate(),
-        updatedAt: (snapshot.get(VideoInfoDocumentFields.updatedAt) as Timestamp).toDate(),
-        thumbnailUrl: snapshot.get(VideoInfoDocumentFields.thumbnailUrl) as String,
+        createdAt:
+            (snapshot.get(VideoInfoDocumentFields.createdAt) as Timestamp)
+                .toDate(),
+        updatedAt:
+            (snapshot.get(VideoInfoDocumentFields.updatedAt) as Timestamp)
+                .toDate(),
+        thumbnailUrl:
+            snapshot.get(VideoInfoDocumentFields.thumbnailUrl) as String,
         videoTitle: snapshot.get(VideoInfoDocumentFields.videoTitle) as String,
         videoUrl: snapshot.get(VideoInfoDocumentFields.videoUrl) as String,
       );

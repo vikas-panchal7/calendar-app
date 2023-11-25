@@ -1,7 +1,7 @@
 part of 'splash.dart';
 
 class SplashProvider extends BaseProvider {
-  SplashProvider({required super.context}){
+  SplashProvider({required super.context}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       navigate();
     });
@@ -43,41 +43,47 @@ class SplashProvider extends BaseProvider {
   }
 
   Future<void> handleGoogleSignIn() async {
+    LoadingDialogHandler(context: context).handleBgDialog(true);
     try {
       GoogleSignInAccount? currentUser = await GoogleSignIn().signIn();
 
       if (currentUser == null) {
-        if(context.mounted){
+        if (context.mounted) {
           context.showErrorSnackBar(message: 'failed');
         }
       } else {
-        GoogleSignInAuthentication? googleAuth = await currentUser.authentication;
-        final credential =
-            GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+        GoogleSignInAuthentication? googleAuth =
+            await currentUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
         await FirebaseAuth.instance.signInWithCredential(credential);
-        checkWhoISLogin(currentUser);
+       await checkWhoISLogin(currentUser);
       }
     } catch (error) {
       print("error: $error");
+    }
+    if (context.mounted) {
+      LoadingDialogHandler(context: context).handleBgDialog(false);
     }
   }
 
   Future<void> checkWhoISLogin(GoogleSignInAccount currentUser) async {
     AdminRepository adminRepository = AdminRepository();
 
-    bool isAdmin = await adminRepository.checkIfAdminLoggedIn(gmail: currentUser.email);
-    print("isAdmin :: $isAdmin");
+    bool isAdmin =
+        await adminRepository.checkIfAdminLoggedIn(gmail: currentUser.email);
     if (isAdmin) {
-      await calendarPreference.setIsUserLogin(true);
-      print("calendarPreference.userIsLogin :: ${calendarPreference.userIsLogin}");
-      await calendarPreference.setUserType(UserType.admin);
+      // await calendarPreference.setIsUserLogin(true);
+      calendarPreference.setUserIsLogin = true;
+      calendarPreference.setUserType = UserType.admin;
       // calendarPreference.userType = UserType.admin;
     } else {
       UserRepository userRepository = UserRepository();
-      bool isUserLogin = await userRepository.checkIfUserLoggedIn(gmail: currentUser.email);
+      bool isUserLogin =
+          await userRepository.checkIfUserLoggedIn(gmail: currentUser.email);
       if (isUserLogin) {
-      await calendarPreference.setIsUserLogin(true);
-      await calendarPreference.setUserType(UserType.user);
+        calendarPreference.setUserIsLogin = true;
+        calendarPreference.setUserType = UserType.user;
         // calendarPreference.userType = UserType.user;
       } else {
         String userId = userRepository.getUserDetailId();

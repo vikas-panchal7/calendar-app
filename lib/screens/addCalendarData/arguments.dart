@@ -1,6 +1,8 @@
-class AddCalendarDataArguments{
-  final bool forUpdate;
+import 'package:calendar_app/services/firebase_helper/calendar_document.dart';
 
-  AddCalendarDataArguments({this.forUpdate = false});
+class AddCalendarDataScreenArgument{
+  final DateTime calendarDate;
+  final CalendarDateInfo? calendarDateInfo;
 
+  AddCalendarDataScreenArgument({required this.calendarDate,  this.calendarDateInfo});
 }

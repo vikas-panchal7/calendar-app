@@ -34,7 +34,7 @@ class DateDetailsDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CalendarPreference preference = CalendarPreference();
+    CalendarPreference preference = CalendarPreference.instance;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -65,7 +65,10 @@ class DateDetailsDialog extends StatelessWidget {
                 /// add data button
                 ButtonItem.filled(
                   onTap: () {
-                    context.navigator.pushNamed(AddCalendarDataScreenUI.routeName);
+                    // close the dialog
+                    context.navigator.pop();
+
+                    context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,arguments: AddCalendarDataScreenArgument(calendarDate: date,));
                   },
                   text: AppStrings.addData,
                   height: 45,
@@ -86,7 +89,7 @@ class DateDetailsDialog extends StatelessWidget {
                             context.navigator.pop();
 
                             context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,
-                                arguments: AddCalendarDataArguments(forUpdate: true));
+                               );
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),

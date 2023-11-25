@@ -4,9 +4,17 @@ class AddCalendarDataScreenUI extends StatelessWidget {
   static const routeName = '/addCalendarData';
 
   static Widget builder(BuildContext context) {
-    AddCalendarDataArguments? args = context.args as AddCalendarDataArguments?;
+    AddCalendarDataScreenArgument? argument =
+        context.args as AddCalendarDataScreenArgument;
     return ChangeNotifierProvider<AddCalendarDataProvider>(
-      create: (context) => AddCalendarDataProvider(context: context, args: args ?? AddCalendarDataArguments()),
+      create: (context) => AddCalendarDataProvider(
+          context: context,
+           calendarDate: argument.calendarDate,
+          calendarDataInfo: argument.calendarDateInfo ,
+        calendarRepository: CalendarRepository(),
+        loadingDialogHandler: LoadingDialogHandler(context: context)
+
+      ),
       builder: (context, child) => const AddCalendarDataScreenUI(),
     );
   }
@@ -15,16 +23,19 @@ class AddCalendarDataScreenUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AddCalendarDataProvider addCalendarDataProvider = context.read<AddCalendarDataProvider>();
+    AddCalendarDataProvider addCalendarDataProvider =
+        context.read<AddCalendarDataProvider>();
     return WillPopScope(
       onWillPop: addCalendarDataProvider.onWillPop,
       child: Form(
         key: addCalendarDataProvider.formKey,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(addCalendarDataProvider.args.forUpdate ? AppStrings.editData : AppStrings.addData),
+            title: Text(addCalendarDataProvider.isEdit
+                ? AppStrings.editData
+                : AppStrings.addData),
             actions: [
-              if (addCalendarDataProvider.args.forUpdate)
+              if (addCalendarDataProvider.isEdit)
                 CommonButton.icon(
                     onTap: addCalendarDataProvider.handleDeleteData,
                     child: Icon(
@@ -39,22 +50,27 @@ class AddCalendarDataScreenUI extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Selector<AddCalendarDataProvider, int>(
-                    selector: (context, addCalendarDataProvider) => addCalendarDataProvider.selectedSource,
+                    selector: (context, addCalendarDataProvider) =>
+                        addCalendarDataProvider.selectedSource,
                     builder: (context, selectedSource, child) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomTabBar(
                             width: context.width - 40,
-                            tabList: const [AppStrings.description, AppStrings.addVideo],
+                            tabList: const [
+                              AppStrings.description,
+                              AppStrings.addVideo
+                            ],
                             onSelect: addCalendarDataProvider.toggleTab,
                             selectedTab: selectedSource,
                           ),
                           if (selectedSource == 0) ...{
                             Text(
                               AppStrings.title,
-                              style: context.textTheme.bodyLarge
-                                  ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
+                              style: context.textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: context.colorScheme.primary),
                             ),
                             Gap(context.height * .01),
 
@@ -92,14 +108,30 @@ class AddCalendarDataScreenUI extends StatelessWidget {
                             const Gap(24),
                             Text(
                               AppStrings.description,
-                              style: context.textTheme.bodyLarge
-                                  ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
+                              style: context.textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: context.colorScheme.primary),
                             ),
                             Gap(context.height * .01),
 
-                            /// Desc
+                            /// Desc eng
                             CustomTextField(
-                              controller: addCalendarDataProvider.description,
+                              controller: addCalendarDataProvider.engDescription,
+                              title: AppStrings.inEnglish,
+                              hintText: AppStrings.writeHere,
+                              validator: (value) {
+                                if (value != null) {
+                                  if (value.isEmpty) {
+                                    return AppStrings.fieldIsRequired;
+                                  }
+                                }
+                                return null;
+                              },
+                            ),
+                            /// Desc guj
+                            CustomTextField(
+                              controller: addCalendarDataProvider.gujDescription,
+                              title: AppStrings.inGujarati,
                               hintText: AppStrings.writeHere,
                               validator: (value) {
                                 if (value != null) {
@@ -113,7 +145,7 @@ class AddCalendarDataScreenUI extends StatelessWidget {
                           } else ...{
                             /// select image option
 
-                            const _SelectImageWidget()
+                            const _AddVideoWidget()
                           }
                         ],
                       );
@@ -125,7 +157,9 @@ class AddCalendarDataScreenUI extends StatelessWidget {
           /// upload button
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ButtonItem.filled(onTap: addCalendarDataProvider.handleUpload, text: AppStrings.upload),
+            child: ButtonItem.filled(
+                onTap: addCalendarDataProvider.handleUpload,
+                text: AppStrings.upload),
           ),
         ),
       ),
@@ -133,21 +167,34 @@ class AddCalendarDataScreenUI extends StatelessWidget {
   }
 }
 
-class _SelectImageWidget extends StatelessWidget {
-  const _SelectImageWidget({super.key});
+class _AddVideoWidget extends StatelessWidget {
+  const _AddVideoWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    AddCalendarDataProvider addCalendarDataProvider = context.read<AddCalendarDataProvider>();
+    AddCalendarDataProvider addCalendarDataProvider =
+        context.read<AddCalendarDataProvider>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           AppStrings.addVideo,
-          style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
+          style: context.textTheme.bodyLarge?.copyWith(
+              fontWeight: FontWeight.w600, color: context.colorScheme.primary),
         ),
         const Gap(8),
-        CustomTextField(controller: addCalendarDataProvider.videoUrl, hintText: AppStrings.writeHere)
+        CustomTextField(
+          controller: addCalendarDataProvider.videoUrl,
+          hintText: AppStrings.writeHere,
+          validator: (value) {
+            if (value != null) {
+              if (value.isEmpty) {
+                return AppStrings.fieldIsRequired;
+              }
+            }
+            return null;
+          },
+        )
       ],
     );
   }

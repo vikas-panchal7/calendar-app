@@ -21,7 +21,7 @@ class BookListUI extends StatefulWidget {
 class _BookListUIState extends State<BookListUI> {
   @override
   Widget build(BuildContext context) {
-    CalendarPreference preference = CalendarPreference();
+    CalendarPreference preference = CalendarPreference.instance;
     return Scaffold(
 /*      appBar: AppBar(
         title: const Text(AppStrings.books),
