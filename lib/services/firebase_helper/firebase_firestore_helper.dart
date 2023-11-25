@@ -99,11 +99,11 @@ class FirebaseFireStoreHelper {
       return CalendarDateInfo(
         id: snapshot.id,
         createdAt:
-            snapshot.get(CalendarDateInfoDocumentFields.createdAt) as DateTime,
+            (snapshot.get(CalendarDateInfoDocumentFields.createdAt) as Timestamp).toDate(),
         updatedAt:
-            snapshot.get(CalendarDateInfoDocumentFields.updatedAt) as DateTime,
-        calendarDate: snapshot.get(CalendarDateInfoDocumentFields.calendarDate)
-            as DateTime,
+            (snapshot.get(CalendarDateInfoDocumentFields.updatedAt) as Timestamp).toDate(),
+        calendarDate: (snapshot.get(CalendarDateInfoDocumentFields.calendarDate)
+            as Timestamp).toDate(),
         title: snapshot.get(CalendarDateInfoDocumentFields.title) as Map,
         description:
             snapshot.get(CalendarDateInfoDocumentFields.description) as Map,

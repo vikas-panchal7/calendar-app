@@ -1,5 +1,6 @@
 import 'package:calendar_app/services/firebase_helper/calendar_document.dart';
 import 'package:calendar_app/services/firebase_helper/firebase_firestore_helper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CalendarRepository {
   final calendarCollectionRef = FirebaseFireStoreHelper.calendarCollectionRef;
@@ -37,12 +38,31 @@ class CalendarRepository {
       CalendarDateInfoDocumentFields.videoUrl: videoUrl
     };
 
-    await calendarCollectionRef.doc(id).set(data).onError((error, stackTrace) => false);
+    await calendarCollectionRef
+        .doc(id)
+        .set(data)
+        .onError((error, stackTrace) => false);
 
     return true;
   }
 
   String getCalendarDetailId() => calendarCollectionRef.doc().id;
 
-  getCalendarDetails() {}
+  Future<List<CalendarDateInfo>>  getCalendarDetails({required DateTime monthFirstDate}) async {
+    final DateTime firstDate = monthFirstDate;
+    DateTime temp = monthFirstDate.add(const Duration(days: 31));
+    final DateTime lastDate = DateTime(temp.year, temp.month, 0);
+    var query = calendarRef.where(Filter.and(
+        Filter(CalendarDateInfoDocumentFields.calendarDate,
+            isGreaterThanOrEqualTo: firstDate),
+        Filter(CalendarDateInfoDocumentFields.calendarDate,
+            isLessThanOrEqualTo: lastDate)));
+
+    var result =  await query.get();
+    List<CalendarDateInfo> calendarData = [];
+        for (var element in result.docs) {
+          calendarData.add(element.data());
+        }
+        return calendarData;
+  }
 }

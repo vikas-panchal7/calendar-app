@@ -29,5 +29,9 @@ class CalendarPreference {
   set setUserType(UserType type) => prefs?.setString(PreferenceKey.userType, type.name);
 
 
-  bool get isAdminLogin => userType == UserType.admin;
+  bool get isAdminLogin {
+
+    print(prefs?.getString(PreferenceKey.userType));
+    return userType == UserType.admin;
+  }
 }

@@ -2,7 +2,7 @@ part of '../calendar.dart';
 
 class DateDetailsDialog extends StatelessWidget {
   static void show(
-      {required BuildContext context, required DateTime date, String? imagePath, String? data, String? title}) {
+      {required BuildContext context, required DateTime date, String? imagePath, String? data, String? title, CalendarDateInfo? calendarData}) {
     showDialog(
       context: context,
       builder: (context) {
@@ -11,25 +11,19 @@ class DateDetailsDialog extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             child: DateDetailsDialog(
               date: date,
-              title: title ?? '',
-              imagePath: imagePath ?? '',
-              data: data ?? '',
-            ));
+              calendarData: calendarData,
+            )
+        );
       },
     );
   }
 
   final DateTime date;
-  final String imagePath;
-  final String data;
-  final String title;
-
+  final CalendarDateInfo? calendarData;
   const DateDetailsDialog({
     super.key,
     required this.date,
-    this.imagePath = '',
-    this.data = '',
-    this.title = '',
+    this.calendarData,
   });
 
   @override
@@ -54,7 +48,7 @@ class DateDetailsDialog extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             children: [
-              if (title.isEmpty && data.isEmpty && imagePath.isEmpty) ...[
+              if (calendarData == null) ...[
                 ///show empty
 
                 Padding(padding: const EdgeInsets.symmetric(vertical: 40),child: Text(
@@ -62,50 +56,17 @@ class DateDetailsDialog extends StatelessWidget {
                   style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onBackground),
                 ),),
 
-                /// add data button
-                ButtonItem.filled(
-                  onTap: () {
-                    // close the dialog
-                    context.navigator.pop();
 
-                    context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,arguments: AddCalendarDataScreenArgument(calendarDate: date,));
-                  },
-                  text: AppStrings.addData,
-                  height: 45,
-                  fontSize: 14,
 
-                )
               ] else ...[
-                Gap(context.height * .01),
 
-                ///edit button
-                if (preference.isAdminLogin) ...[
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: CommonButton.material(
-                          radius: 5,
-                          onTap: () {
-                            //dialog close
-                            context.navigator.pop();
 
-                            context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,
-                               );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Text(
-                              AppStrings.edit,
-                              style: context.textTheme.bodySmall
-                                  ?.copyWith(color: context.colorScheme.primary, fontWeight: FontWeight.w600),
-                            ),
-                          ))),
-                ],
 
                 Gap(context.height * .01),
 
                 /// title
                 Text(
-                  title,
+                  calendarData?.title.customTranslate(SupportedLanguage.english)??'',
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -113,10 +74,26 @@ class DateDetailsDialog extends StatelessWidget {
 
                 /// data
                 Text(
-                  data,
+                  calendarData?.description.customTranslate(SupportedLanguage.english)??'',
                   textAlign: TextAlign.start,
                   style: context.textTheme.bodySmall,
                 ),
+              ],
+              if(preference.isAdminLogin)...[
+                Gap(context.height * .01),
+                /// add-edit data button
+                ButtonItem.filled(
+                  onTap: () {
+                    // close the dialog
+                    context.navigator.pop();
+
+                    context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,arguments: AddCalendarDataScreenArgument(calendarDate: date,));
+                  },
+                  text:calendarData != null? AppStrings.edit:AppStrings.addData,
+                  height: 45,
+                  fontSize: 14,
+
+                )
               ]
             ],
           ),
