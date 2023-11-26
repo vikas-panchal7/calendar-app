@@ -1,7 +1,4 @@
-import 'package:calendar_app/constants/app_strings.dart';
-import 'package:equatable/equatable.dart';
-
-class CalendarDateInfo extends Equatable {
+class CalendarDateInfo  {
   final String id;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -10,6 +7,8 @@ class CalendarDateInfo extends Equatable {
   final Map title;
   final Map description;
   final String videoUrl;
+  final String ytThumbnail;
+  final String ytTitle;
 
 
   const CalendarDateInfo( {
@@ -21,10 +20,10 @@ class CalendarDateInfo extends Equatable {
     required this.title,
     required this.description,
     required this.videoUrl,
+    required this.ytThumbnail,
+    required this.ytTitle,
   });
 
-  @override
-  List<Object?> get props => [id, createdAt, updatedAt, calendarDate, title, description,dataType,videoUrl];
 
   CalendarDateInfo copyWith({
     String? id,
@@ -35,6 +34,8 @@ class CalendarDateInfo extends Equatable {
     Map? title,
     Map? description,
     String? videoUrl,
+    String? ytThumbnail,
+    String? ytTitle,
 
   }) {
     return CalendarDateInfo(
@@ -45,7 +46,9 @@ class CalendarDateInfo extends Equatable {
       dataType: dataType ?? this.dataType,
       title: title ?? this.title,
       description: description ?? this.description,
-      videoUrl: AppStrings.videoUrl?? this.videoUrl
+      videoUrl: videoUrl?? this.videoUrl,
+      ytTitle: ytTitle?? this.ytTitle,
+      ytThumbnail: ytThumbnail?? this.ytThumbnail,
     );
   }
 }
@@ -59,6 +62,8 @@ abstract interface class CalendarDateInfoDocumentFields {
   static const title = 'title';
   static const description = 'description';
   static const videoUrl = 'videoUrl';
+  static const ytThumbnail = 'ytThumbnail';
+  static const ytTitle = 'ytTitle';
 }
 
 enum CalendarDataType{

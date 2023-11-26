@@ -2,7 +2,12 @@ part of '../calendar.dart';
 
 class DateDetailsDialog extends StatelessWidget {
   static void show(
-      {required BuildContext context, required DateTime date, String? imagePath, String? data, String? title, CalendarDateInfo? calendarData}) {
+      {required BuildContext context,
+      required DateTime date,
+      String? imagePath,
+      String? data,
+      String? title,
+      CalendarDateInfo? calendarData}) {
     showDialog(
       context: context,
       builder: (context) {
@@ -12,14 +17,14 @@ class DateDetailsDialog extends StatelessWidget {
             child: DateDetailsDialog(
               date: date,
               calendarData: calendarData,
-            )
-        );
+            ));
       },
     );
   }
 
   final DateTime date;
   final CalendarDateInfo? calendarData;
+
   const DateDetailsDialog({
     super.key,
     required this.date,
@@ -51,22 +56,46 @@ class DateDetailsDialog extends StatelessWidget {
               if (calendarData == null) ...[
                 ///show empty
 
-                Padding(padding: const EdgeInsets.symmetric(vertical: 40),child: Text(
-                  AppStrings.noDataAvailable,
-                  style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onBackground),
-                ),),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40),
+                  child: Text(
+                    AppStrings.noDataAvailable,
+                    style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onBackground),
+                  ),
+                ),
+              ] else if (calendarData?.dataType == CalendarDataType.video) ...[
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(calendarData?.ytThumbnail ?? '')),
+                    ),
+                    Text(
+                      calendarData?.ytTitle ?? '',
+                      textAlign: TextAlign.left,
+                      style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
+                    ),
+                    Gap(context.height * .01),
+                    _ViewButton(
+                      onTap: () {
+                        // close the dialog
+                        context.navigator.pop();
 
-
-
+                        openUrl(calendarData?.videoUrl ?? '');
+                      },
+                      title: 'View on Youtube',
+                    ),
+                  ],
+                )
               ] else ...[
-
-
-
                 Gap(context.height * .01),
 
                 /// title
                 Text(
-                  calendarData?.title.customTranslate(SupportedLanguage.english)??'',
+                  calendarData?.title.customTranslate(SupportedLanguage.english) ?? '',
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -74,31 +103,47 @@ class DateDetailsDialog extends StatelessWidget {
 
                 /// data
                 Text(
-                  calendarData?.description.customTranslate(SupportedLanguage.english)??'',
+                  calendarData?.description.customTranslate(SupportedLanguage.english) ?? '',
                   textAlign: TextAlign.start,
                   style: context.textTheme.bodySmall,
                 ),
               ],
-              if(preference.isAdminLogin)...[
+              if (preference.isAdminLogin) ...[
                 Gap(context.height * .01),
+
                 /// add-edit data button
-                ButtonItem.filled(
+                _ViewButton(
                   onTap: () {
                     // close the dialog
                     context.navigator.pop();
 
-                    context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,arguments: AddCalendarDataScreenArgument(calendarDate: date,));
+                    context.navigator.pushNamed(AddCalendarDataScreenUI.routeName,
+                        arguments: AddCalendarDataScreenArgument(calendarDate: date, calendarDateInfo: calendarData));
                   },
-                  text:calendarData != null? AppStrings.edit:AppStrings.addData,
-                  height: 45,
-                  fontSize: 14,
-
-                )
+                  title: calendarData != null ? AppStrings.edit : AppStrings.addData,
+                ),
               ]
             ],
           ),
         )
       ],
+    );
+  }
+}
+
+class _ViewButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
+  const _ViewButton({super.key, required this.title, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return ButtonItem.filled(
+      onTap: onTap,
+      text: title,
+      height: 45,
+      fontSize: 14,
     );
   }
 }

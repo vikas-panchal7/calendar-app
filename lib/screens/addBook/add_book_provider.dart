@@ -40,7 +40,7 @@ class AddBookProvider extends BaseProvider {
 
   Future<void> chooseBook() async {
     FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf', 'docx']);
+        await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['pdf'/*, 'docx'*/]);
 
     if (result != null) {
       File file = File(result.files.single.path!);

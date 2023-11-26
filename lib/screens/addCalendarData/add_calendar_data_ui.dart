@@ -191,6 +191,9 @@ class _AddVideoWidget extends StatelessWidget {
               if (value.isEmpty) {
                 return AppStrings.fieldIsRequired;
               }
+              if ((value.contains('youtu') == false) && (value.contains('yt') == false)) {
+                return 'Please enter valid link';
+              }
             }
             return null;
           },

@@ -40,7 +40,7 @@ class _BookListUIState extends State<BookListUI> {
           ]
         ],
       ),*/
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: preference.isAdminLogin ? FloatingActionButton(
           onPressed: () async {
             context.navigator.pushNamed(AddBookScreenUI.routeName);
           },
@@ -48,7 +48,7 @@ class _BookListUIState extends State<BookListUI> {
             Icons.add,
             color: context.colorScheme.onSecondary,
           ),
-        ),
+        ) : null,
         body: PaginationListener(
           onLoadMore: context.read<BookListProvider>().onLoadMore,
           onRefresh: context.read<BookListProvider>().onReload,

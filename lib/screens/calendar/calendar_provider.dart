@@ -22,6 +22,8 @@ class CalenderProvider extends BaseProvider {
       DateTime.now().month,
     );
     getCurrentMonthData();
+
+    listenEvent();
   }
 
   void onPageChange(DateTime date) {
@@ -50,5 +52,30 @@ class CalenderProvider extends BaseProvider {
       }
     }
     return false;
+  }
+
+  void listenEvent() {
+
+    eventBus.on<CalendarDeleteDataEvent>().listen(_onCalendarDeleteData);
+    eventBus.on<CalendarDataAddEvent>().listen(_onCalendarAddData);
+    eventBus.on<CalendarDataUpdateEvent>().listen(_onCalendarUpdateData);
+  }
+
+    void _onCalendarDeleteData(CalendarDeleteDataEvent event)  {
+    int position =  _calendarDataList.indexWhere((element) => element.id == event.id);
+    _calendarDataList = [..._calendarDataList,]..removeAt(position);
+    notifyListeners();
+  }
+
+  void _onCalendarAddData(CalendarDataAddEvent event) {
+    _calendarDataList = [..._calendarDataList,event.calendarDateInfo];
+    notifyListeners();
+  }
+
+  void _onCalendarUpdateData(CalendarDataUpdateEvent event) {
+    int position =  _calendarDataList.indexWhere((element) => element.id == event.calendarDateInfo.id);
+    _calendarDataList.removeAt(position);
+    _calendarDataList = [..._calendarDataList]..insert(position, event.calendarDateInfo);
+    notifyListeners();
   }
 }

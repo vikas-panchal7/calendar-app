@@ -35,15 +35,17 @@ class VideoListUI extends StatelessWidget {
           ]
         ],
       ),*/
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await AddVideoDialog.show(context: context);
-          },
-          child: Icon(
-            Icons.add,
-            color: context.colorScheme.onSecondary,
-          ),
-        ),
+        floatingActionButton: preference.isAdminLogin
+            ? FloatingActionButton(
+                onPressed: () async {
+                  await AddVideoDialog.show(context: context);
+                },
+                child: Icon(
+                  Icons.add,
+                  color: context.colorScheme.onSecondary,
+                ),
+              )
+            : null,
         body: PaginationListener(
           onLoadMore: context.read<VideoListProvider>().onLoadMore,
           onRefresh: context.read<VideoListProvider>().onReload,
@@ -68,7 +70,7 @@ class VideoListUI extends StatelessWidget {
                       itemBuilder: (context, index) {
                         VideoInfo? videoInfo = list[index];
                         return CommonButton.cupertino(
-                          onTap: () {},
+                          onTap: () => openUrl(videoInfo?.videoUrl ?? ''),
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(

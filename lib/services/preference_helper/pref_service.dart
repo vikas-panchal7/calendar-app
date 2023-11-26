@@ -34,4 +34,8 @@ class CalendarPreference {
     print(prefs?.getString(PreferenceKey.userType));
     return userType == UserType.admin;
   }
+
+  void clear() {
+    prefs?.clear();
+  }
 }

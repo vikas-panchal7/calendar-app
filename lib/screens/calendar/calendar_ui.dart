@@ -3,7 +3,7 @@ part of 'calendar.dart';
 class CalenderUI extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return ChangeNotifierProvider<CalenderProvider>(
-      create: (context) => CalenderProvider(context: context,calendarRepository: CalendarRepository()),
+      create: (context) => CalenderProvider(context: context, calendarRepository: CalendarRepository()),
       builder: (context, child) => Consumer<CalenderProvider>(
         builder: (context, value, child) {
           return const CalenderUI();
@@ -16,9 +16,10 @@ class CalenderUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     CalenderProvider calenderProvider = context.read<CalenderProvider>();
-    List<CalendarDateInfo> list = context.select<CalenderProvider,List<CalendarDateInfo>>((value) => value.calendarDataList);
+    List<CalendarDateInfo> list =
+        context.select<CalenderProvider, List<CalendarDateInfo>>((value) => value.calendarDataList);
+    final preference = calenderProvider.calendarPreference;
     return Scaffold(
       extendBody: false,
       body: Stack(
@@ -33,57 +34,41 @@ class CalenderUI extends StatelessWidget {
                   child: MonthView(
                     safeAreaOption: const SafeAreaOption(top: false),
                     onCellTap: (events, date) {
-                      DateDetailsDialog.show(
-                        context: context,
-                        date: date,
-                        calendarData: list.containsData(date)
-                      );
+                      if (list.containsData(date) != null || preference.isAdminLogin) {
+                        DateDetailsDialog.show(context: context, date: date, calendarData: list.containsData(date));
+                      }
                     },
                     cellBuilder: (date, event, isToday, isInMonth) {
                       return Container(
                         decoration: BoxDecoration(
                             color: context.colorScheme.onSecondary,
-                            border: Border.all(
-                                width: 0.2,
-                                color: context.colorScheme.onBackground
-                                    .withOpacity(0.2))),
+                            border: Border.all(width: 0.2, color: context.colorScheme.onBackground.withOpacity(0.2))),
                         child: Stack(
                           alignment: Alignment.bottomCenter,
                           children: [
                             Center(
-                                child:  Container(
+                                child: Container(
                               padding: const EdgeInsets.all(11),
                               decoration: BoxDecoration(
-                                    color: isToday ? context.colorScheme.primary : null,
-                                    shape: BoxShape.circle,
+                                color: isToday ? context.colorScheme.primary : null,
+                                shape: BoxShape.circle,
                               ),
                               child: Text(
-                                    '${date.day}',
-                                    style: context.textTheme.bodyLarge!.copyWith(
-                                        color: isToday
-
-                                            ? context.colorScheme.background
-                                            : (isInMonth
-                                                ? null
-                                                : context.colorScheme.onSurface
-                                                    .withOpacity(0.5))),
+                                '${date.day}',
+                                style: context.textTheme.bodyLarge!.copyWith(
+                                    color: isToday
+                                        ? context.colorScheme.background
+                                        : (isInMonth ? null : context.colorScheme.onSurface.withOpacity(0.5))),
                               ),
-                            )
-
-                            ),
-                            if(list.containsDate(date))...[
+                            )),
+                            if (list.containsDate(date)) ...[
                               Container(
                                 height: context.height * .01,
                                 width: context.height * .01,
                                 margin: EdgeInsets.only(bottom: context.height * .01),
-
-                                decoration: BoxDecoration(
-                                    color: context.colorScheme.primary,
-                                    shape: BoxShape.circle
-                                ),
+                                decoration: BoxDecoration(color: context.colorScheme.primary, shape: BoxShape.circle),
                               ),
                             ]
-
                           ],
                         ),
                       );
@@ -120,22 +105,20 @@ class CalenderUI extends StatelessWidget {
               // )
             ],
           ),
-
-          Selector<CalenderProvider,bool>( selector: (context, calendarProvider) => calendarProvider.showProgress,
+          Selector<CalenderProvider, bool>(
+            selector: (context, calendarProvider) => calendarProvider.showProgress,
             builder: (context, showProgress, child) {
-            if(showProgress){
-              return SizedBox(
-                  width: context.width,
-                  child: LinearProgressIndicator(
-                    color: context.colorScheme.onBackground,
-                  ));
-            }
-            else{
-              return const SizedBox();
-            }
+              if (showProgress) {
+                return SizedBox(
+                    width: context.width,
+                    child: LinearProgressIndicator(
+                      color: context.colorScheme.onBackground,
+                    ));
+              } else {
+                return const SizedBox();
+              }
             },
           ),
-
         ],
       ),
     );

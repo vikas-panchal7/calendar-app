@@ -49,7 +49,8 @@ class AddCalendarDataProvider extends BaseProvider {
       type: AppStrings.data,
       onDelete: () {
         context.navigator.pop();
-        context.navigator.pop();
+
+        _deleteData();
       },
     );
   }
@@ -107,12 +108,26 @@ class AddCalendarDataProvider extends BaseProvider {
   }
 
   void init() {
+    _selectedSource = calendarDataInfo?.dataType == CalendarDataType.data? 0 :1;
     _isEdit = true;
     _engTitle.text = calendarDataInfo?.title.customTranslate(SupportedLanguage.english) ?? '';
     _gujTitle.text = calendarDataInfo?.title.customTranslate(SupportedLanguage.gujarati) ?? '';
     _gujDescription.text = calendarDataInfo?.description.customTranslate(SupportedLanguage.gujarati) ?? '';
     _engDescription.text = calendarDataInfo?.description.customTranslate(SupportedLanguage.english) ?? '';
-    _videoUrl.text = CalendarDateInfoDocumentFields.videoUrl ?? '';
+    _videoUrl.text = calendarDataInfo?.videoUrl ?? '';
     notifyListeners();
+  }
+
+  Future<void> _deleteData() async {
+
+    bool result = await processApi(
+        process: () async => calendarRepository.deleteData(id: calendarDataInfo?.id ?? ''),
+        loadingHandler: loadingDialogHandler.handleBgDialog);
+    if (result) {
+      if (context.mounted) {
+        context.navigator.pop();
+        context.showSuccessSnackBar(message: 'Data Deleted Successfully');
+      }
+    }
   }
 }

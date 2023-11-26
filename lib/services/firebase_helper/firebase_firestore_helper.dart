@@ -112,7 +112,9 @@ class FirebaseFireStoreHelper {
                 (element.name ==
                 (snapshot.get(CalendarDateInfoDocumentFields.dataType) as String)))
             .first,
-        videoUrl: snapshot.get(CalendarDateInfoDocumentFields.videoUrl) as String
+        videoUrl: snapshot.get(CalendarDateInfoDocumentFields.videoUrl) as String,
+        ytTitle: snapshot.get(CalendarDateInfoDocumentFields.ytTitle) as String,
+        ytThumbnail: snapshot.get(CalendarDateInfoDocumentFields.ytThumbnail) as String
       );
     },
     toFirestore: (value, options) {
@@ -123,6 +125,8 @@ class FirebaseFireStoreHelper {
         CalendarDateInfoDocumentFields.calendarDate: value.calendarDate,
         CalendarDateInfoDocumentFields.title: value.title,
         CalendarDateInfoDocumentFields.description: value.description,
+        CalendarDateInfoDocumentFields.ytTitle: value.ytTitle,
+        CalendarDateInfoDocumentFields.ytThumbnail: value.ytThumbnail,
       };
     },
   );

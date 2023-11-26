@@ -1,7 +1,7 @@
 part of 'splash.dart';
 
 class SplashProvider extends BaseProvider {
-  SplashProvider({required super.context}) {
+  SplashProvider({required super.context,required this.loadingDialogHandler}) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       navigate();
     });
@@ -16,6 +16,8 @@ class SplashProvider extends BaseProvider {
   double _buttonOpacity = 0.0;
 
   double get buttonOpacity => _buttonOpacity;
+
+  LoadingDialogHandler loadingDialogHandler;
 
   void init() {
     // this is call after build
@@ -43,35 +45,36 @@ class SplashProvider extends BaseProvider {
   }
 
   Future<void> handleGoogleSignIn() async {
-    LoadingDialogHandler(context: context).handleBgDialog(true);
-    try {
-      GoogleSignInAccount? currentUser = await GoogleSignIn().signIn();
+    bool? result = await processApi(
+        process: () async {
+          try {
+            GoogleSignInAccount? currentUser = await GoogleSignIn().signIn();
 
-      if (currentUser == null) {
-        if (context.mounted) {
-          context.showErrorSnackBar(message: 'failed');
-        }
-      } else {
-        GoogleSignInAuthentication? googleAuth =
-            await currentUser.authentication;
-        final credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-        await FirebaseAuth.instance.signInWithCredential(credential);
-       await checkWhoISLogin(currentUser);
-      }
-    } catch (error) {
-      print("error: $error");
-    }
-    if (context.mounted) {
-      LoadingDialogHandler(context: context).handleBgDialog(false);
+            if (currentUser != null) {
+              GoogleSignInAuthentication? googleAuth = await currentUser.authentication;
+              final credential =
+              GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+              await FirebaseAuth.instance.signInWithCredential(credential);
+              await checkWhoISLogin(currentUser);
+              return true;
+            }
+            return false;
+          } catch (error) {
+            print("error: $error");
+            return false;
+          }
+        },
+        loadingHandler: loadingDialogHandler.handleBgDialog);
+
+    if (context.mounted && (result ?? false)) {
+      context.navigator.pushReplacementNamed(DashBoardUI.routeName);
     }
   }
 
   Future<void> checkWhoISLogin(GoogleSignInAccount currentUser) async {
     AdminRepository adminRepository = AdminRepository();
 
-    bool isAdmin =
-        await adminRepository.checkIfAdminLoggedIn(gmail: currentUser.email);
+    bool isAdmin = await adminRepository.checkIfAdminLoggedIn(gmail: currentUser.email);
     if (isAdmin) {
       // await calendarPreference.setIsUserLogin(true);
       calendarPreference.setUserIsLogin = true;
@@ -79,8 +82,7 @@ class SplashProvider extends BaseProvider {
       // calendarPreference.userType = UserType.admin;
     } else {
       UserRepository userRepository = UserRepository();
-      bool isUserLogin =
-          await userRepository.checkIfUserLoggedIn(gmail: currentUser.email);
+      bool isUserLogin = await userRepository.checkIfUserLoggedIn(gmail: currentUser.email);
       if (isUserLogin) {
         calendarPreference.setUserIsLogin = true;
         calendarPreference.setUserType = UserType.user;
@@ -94,10 +96,6 @@ class SplashProvider extends BaseProvider {
           id: userId,
         );
       }
-    }
-
-    if (context.mounted) {
-      context.navigator.pushReplacementNamed(DashBoardUI.routeName);
     }
   }
 }

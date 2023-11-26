@@ -3,6 +3,7 @@ import 'package:calendar_app/extensions/buildcontext_ext.dart';
 import 'package:calendar_app/gen/assets.gen.dart';
 import 'package:calendar_app/screens/donateUs/donate_us.dart';
 import 'package:calendar_app/utils/commonButton/common_button.dart';
+import 'package:calendar_app/utils/common_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -24,6 +25,12 @@ class DrawerWidget extends StatelessWidget {
           _CommonTile(
             title: AppStrings.selectLanguage,
             onTap: () {},
+          ),
+          _CommonTile(
+            title: "Logout",
+            onTap: () {
+              logout(context);
+            },
           ),
           // _CommonTile(
           //   title: AppStrings.donateUs,
@@ -48,7 +55,10 @@ class DrawerWidget extends StatelessWidget {
           //   ),
           // ),
           const Spacer(),
-          Text('Version 1.0.0',style:  context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onSecondary),),
+          Text(
+            'Version 1.0.0',
+            style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onSecondary),
+          ),
           const Gap(10),
         ],
       ),

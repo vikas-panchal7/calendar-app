@@ -45,17 +45,14 @@ class AddVideoProvider extends BaseProvider {
   Future<void> addVideo() async {
     bool? result = await processApi(
         process: () async {
-          for (int i = 0; i < 65; i++) {
-            var id = videoInfo?.id ?? videoRepository.getVideoId();
+          var id = videoInfo?.id ?? videoRepository.getVideoId();
 
-            await videoRepository.addEditVideo(
-              videoUrl: _urlText.text,
-              createdAt: videoInfo?.createdAt ?? DateTime.timestamp(),
-              updatedAt: DateTime.timestamp(),
-              id: id,
-            );
-          }
-          return true;
+          return await videoRepository.addEditVideo(
+            videoUrl: _urlText.text,
+            createdAt: videoInfo?.createdAt ?? DateTime.timestamp(),
+            updatedAt: DateTime.timestamp(),
+            id: id,
+          );
         },
         loadingHandler: loadingHandler.handleDialog);
 
