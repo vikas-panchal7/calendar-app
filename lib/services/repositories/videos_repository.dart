@@ -58,7 +58,11 @@ class VideoRepository {
   void deleteFileFromStorage({required String url}) async {
     if (url.trim().isNotEmpty) {
       final storageRef = FirebaseStorage.instance.ref(url);
-      await storageRef.delete();
+      try {
+        await storageRef.delete();
+      } on Exception catch (e) {
+        // TODO
+      }
     }
   }
 

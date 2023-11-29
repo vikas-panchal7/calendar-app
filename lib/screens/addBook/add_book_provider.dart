@@ -150,7 +150,7 @@ class AddBookProvider extends BaseProvider {
   Future<String> uploadFile() async {
     if (_bookFile != null) {
       if (_isEdit) {
-        await bookRepository.deleteFileFromStorage(url: bookInfo?.fileUrl ?? '');
+        bookRepository.deleteFileFromStorage(url: bookInfo?.fileUrl ?? '');
       }
       return await bookRepository.uploadFileToStorage(file: _bookFile!);
     } else {

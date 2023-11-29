@@ -15,15 +15,15 @@ class MyApp extends StatelessWidget {
           return GestureDetector(
             onTap: closeKeyboard,
             child: MaterialApp(
-              builder: (context, child) {
-                return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                  child: ScrollConfiguration(
-                      // ignore: deprecated_member_use
-                      behavior: const ScrollBehavior(androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
-                      child: child!),
-                );
-              },
+              // builder: (context, child) {
+              // return MediaQuery(
+              // data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              // child: ScrollConfiguration(
+              // ignore: deprecated_member_use
+              // behavior: const ScrollBehavior(androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
+              // child: child!),
+              // );
+              // },
               debugShowCheckedModeBanner: false,
               themeMode: ThemeMode.light,
               theme: lightTheme,

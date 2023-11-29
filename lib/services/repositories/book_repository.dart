@@ -72,10 +72,12 @@ class BookRepository {
     return result;
   }
 
-  deleteFileFromStorage({required String url}) async {
+  void deleteFileFromStorage({required String url}) async {
     if (url.trim().isNotEmpty) {
       final storageRef = FirebaseStorage.instance.ref(url);
-      await storageRef.delete();
+      try {
+        await storageRef.delete();
+      } catch (e) {}
     }
   }
 
