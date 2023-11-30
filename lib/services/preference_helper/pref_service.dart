@@ -1,4 +1,5 @@
 import 'package:calendar_app/utils/enums.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'pref_key.dart';
@@ -29,11 +30,12 @@ class CalendarPreference {
   set setUserType(UserType type) => prefs?.setString(PreferenceKey.userType, type.name);
 
   String get userName => prefs?.getString(PreferenceKey.userName)??'';
-  
-
+  set setUserName(String userName)=> prefs?.setString(PreferenceKey.userName, userName);
+  String get userId => prefs?.getString(PreferenceKey.userId)??'';
+  set setUserId(String userId)=> prefs?.setString(PreferenceKey.userId, userId);
   bool get isAdminLogin {
 
-    print(prefs?.getString(PreferenceKey.userType));
+    debugPrint(prefs?.getString(PreferenceKey.userType));
     return userType == UserType.admin;
   }
 
