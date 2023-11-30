@@ -32,18 +32,31 @@ class AddVideoDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-              padding: const EdgeInsets.all(15),
-              alignment: Alignment.center,
-              width: context.width,
-              decoration: BoxDecoration(
-                  color: context.colorScheme.primary,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16))),
-              child: Text(
-                addVideoProvider.videoInfo != null ? AppStrings.editVideo : AppStrings.addVideo,
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(color: context.colorScheme.onSecondary, fontWeight: FontWeight.w600),
-              )),
+          Stack(
+            alignment: Alignment.centerRight,
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  alignment: Alignment.center,
+                  width: context.width,
+                  decoration: BoxDecoration(
+                      color: context.colorScheme.primary,
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(16))),
+                  child: Text(
+                    addVideoProvider.videoInfo != null ? AppStrings.editVideo : AppStrings.addVideo,
+                    style: context.textTheme.bodyLarge
+                        ?.copyWith(color: context.colorScheme.onSecondary, fontWeight: FontWeight.w600),
+                  )),
+
+              CommonButton.cupertino(onTap: () {
+                context.navigator.pop();
+
+              }, child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                child: Icon(Icons.close,color: context.colorScheme.onSecondary,),
+              ))
+            ],
+          ),
           const Gap(10),
 
           /// eng title

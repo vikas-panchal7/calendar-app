@@ -37,18 +37,30 @@ class DateDetailsDialog extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-            padding: const EdgeInsets.all(15),
-            alignment: Alignment.center,
-            width: context.width,
-            decoration: BoxDecoration(
-                color: context.colorScheme.primary,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16))),
-            child: Text(
-              date.toDDMMMYYYY,
-              style: context.textTheme.bodyLarge
-                  ?.copyWith(color: context.colorScheme.onSecondary, fontWeight: FontWeight.w600),
-            )),
+        Stack(
+          alignment: Alignment.centerRight,
+          children: [
+            Container(
+                padding: const EdgeInsets.all(15),
+                alignment: Alignment.center,
+                width: context.width,
+                decoration: BoxDecoration(
+                    color: context.colorScheme.primary,
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16))),
+                child: Text(
+                  date.toDDMMMYYYY,
+                  style: context.textTheme.bodyLarge
+                      ?.copyWith(color: context.colorScheme.onSecondary, fontWeight: FontWeight.w600),
+                )),
+            CommonButton.cupertino(onTap: () {
+              context.navigator.pop();
+
+            }, child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+              child: Icon(Icons.close,color: context.colorScheme.onSecondary,),
+            ))
+          ],
+        ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
@@ -63,34 +75,7 @@ class DateDetailsDialog extends StatelessWidget {
                     style: context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onBackground),
                   ),
                 ),
-              ] else if (calendarData?.dataType == CalendarDataType.video) ...[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(calendarData?.ytThumbnail ?? '')),
-                    ),
-                    Text(
-                      calendarData?.ytTitle ?? '',
-                      textAlign: TextAlign.left,
-                      style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    Gap(context.height * .01),
-                    _ViewButton(
-                      onTap: () {
-                        // close the dialog
-                        context.navigator.pop();
-
-                        openUrl(calendarData?.videoUrl ?? '');
-                      },
-                      title: 'View on Youtube',
-                    ),
-                  ],
-                )
-              ] else ...[
+              ]  else ...[
                 Gap(context.height * .01),
 
                 /// title
@@ -107,6 +92,8 @@ class DateDetailsDialog extends StatelessWidget {
                   textAlign: TextAlign.start,
                   style: context.textTheme.bodySmall,
                 ),
+                if(calendarData?.videoUrl != null && (calendarData?.videoUrl??'').isNotEmpty)
+                _VideoWidget(calendarData: calendarData,),
               ],
               if (preference.isAdminLogin) ...[
                 Gap(context.height * .01),
@@ -144,6 +131,42 @@ class _ViewButton extends StatelessWidget {
       text: title,
       height: 45,
       fontSize: 14,
+    );
+  }
+}
+
+
+class _VideoWidget extends StatelessWidget {
+  final CalendarDateInfo? calendarData;
+  const _VideoWidget({this.calendarData});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(calendarData?.ytThumbnail ?? '')),
+        ),
+        Text(
+          calendarData?.ytTitle ?? '',
+          textAlign: TextAlign.left,
+          style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
+        ),
+        Gap(context.height * .01),
+        _ViewButton(
+          onTap: () {
+            // close the dialog
+            context.navigator.pop();
+
+            openUrl(calendarData?.videoUrl ?? '');
+          },
+          title: 'View on Youtube',
+        ),
+      ],
     );
   }
 }

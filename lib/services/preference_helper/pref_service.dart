@@ -28,6 +28,8 @@ class CalendarPreference {
 
   set setUserType(UserType type) => prefs?.setString(PreferenceKey.userType, type.name);
 
+  String get userName => prefs?.getString(PreferenceKey.userName)??'';
+  
 
   bool get isAdminLogin {
 
