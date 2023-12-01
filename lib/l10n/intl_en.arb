@@ -1,4 +1,7 @@
 {
   "calendarApp": "Calendar App",
-  "books": "Books"
+  "books": "Books",
+  "logout": "Logout",
+  "language": "Language",
+  "hello": "Hello"
 }

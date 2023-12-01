@@ -58,7 +58,7 @@ dev_dependencies:
 
   build_runner:
   flutter_gen_runner:
-#  injectable_generator:
+  # injectable_generator:
 
   flutter_test:
     sdk: flutter

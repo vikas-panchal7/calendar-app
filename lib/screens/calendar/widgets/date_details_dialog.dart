@@ -87,7 +87,7 @@ class DateDetailsDialog extends StatelessWidget {
                     ),
                   ] else ...[
                     Gap(context.height * .01),
-                    
+
                     /// title
                     Text(
                       calendarData?.title

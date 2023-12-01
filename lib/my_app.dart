@@ -8,22 +8,24 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<LanguageProvider>(
-            create: (context) => LanguageProvider(),
-          )
+              create: (context) => LanguageProvider())
         ],
         builder: (context, child) {
+          final provider = Provider.of<LanguageProvider>(context, listen: true);
+
           return GestureDetector(
             onTap: closeKeyboard,
             child: MaterialApp(
-              // builder: (context, child) {
-              // return MediaQuery(
-              // data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              // child: ScrollConfiguration(
-              // ignore: deprecated_member_use
-              // behavior: const ScrollBehavior(androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
-              // child: child!),
-              // );
-              // },
+              builder: (context, child) {
+                return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: ScrollConfiguration(
+                      behavior: const ScrollBehavior(
+                          androidOverscrollIndicator:
+                              AndroidOverscrollIndicator.stretch),
+                      child: child!),
+                );
+              },
               debugShowCheckedModeBanner: false,
               themeMode: ThemeMode.light,
               theme: lightTheme,
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              locale: context.read<LanguageProvider>().currentLocale,
+              locale: provider.currentLocale,
               supportedLocales: const [Locale('en'), Locale('gu')],
               initialRoute: RouteManger.initRoute(),
             ),

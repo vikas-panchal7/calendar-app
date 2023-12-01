@@ -35,7 +35,7 @@ class DashBoardUI extends StatelessWidget {
              //    getAddButton(context)
              // ]
           ),
-drawer: const DrawerWidget(),
+drawer:  DrawerWidget.open(context),
 
             body: Selector<DashboardProvider, int>(
               selector: (context, dashboardProvider) => dashboardProvider.currentSelectedIndex,
@@ -129,7 +129,7 @@ drawer: const DrawerWidget(),
     int tab = context.select<DashboardProvider, int>((value) => value.currentSelectedIndex);
     switch (tab) {
       case 0:
-        return AppStrings.calendar;
+        return 'Calendar';
       case 1:
         return context.l10n.books;
       case 2:
