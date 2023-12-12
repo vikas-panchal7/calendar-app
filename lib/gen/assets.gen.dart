@@ -44,6 +44,10 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/app_logo.png
+  AssetGenImage get appLogo =>
+      const AssetGenImage('assets/images/app_logo.png');
+
   /// File path: assets/images/book.png
   AssetGenImage get book => const AssetGenImage('assets/images/book.png');
 
@@ -67,20 +71,17 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values =>
-      [book, facebook, instagram, news, video, whatsapp];
+      [appLogo, book, facebook, instagram, news, video, whatsapp];
 }
 
-class $AssetsTempGen {
-  const $AssetsTempGen();
+class $AssetsLottieGen {
+  const $AssetsLottieGen();
 
-  /// File path: assets/temp/app-logo.png
-  AssetGenImage get appLogo => const AssetGenImage('assets/temp/app-logo.png');
-
-  /// File path: assets/temp/qr_code.jpeg
-  AssetGenImage get qrCode => const AssetGenImage('assets/temp/qr_code.jpeg');
+  /// File path: assets/lottie/loading.json
+  String get loading => 'assets/lottie/loading.json';
 
   /// List of all assets
-  List<AssetGenImage> get values => [appLogo, qrCode];
+  List<String> get values => [loading];
 }
 
 class Assets {
@@ -88,7 +89,7 @@ class Assets {
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
-  static const $AssetsTempGen temp = $AssetsTempGen();
+  static const $AssetsLottieGen lottie = $AssetsLottieGen();
 }
 
 class AssetGenImage {

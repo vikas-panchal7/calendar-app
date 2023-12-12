@@ -1,6 +1,5 @@
 import 'package:calendar_app/components/buttonItem/button_item.dart';
-import 'package:calendar_app/constants/app_strings.dart';
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -33,7 +32,7 @@ class DeleteDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '${AppStrings.areYouSureYouWantToDeleteThis} $type?',textAlign: TextAlign.center,style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+            '${context.l10n.areYouSureYouWantToDeleteThis} $type?',textAlign: TextAlign.center,style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
           ),
           Gap(context.height * .03),
           Row(
@@ -41,7 +40,7 @@ class DeleteDialog extends StatelessWidget {
             children: [
               ButtonItem.outline(
                 onTap: onDelete,
-                text: AppStrings.delete,
+                text: context.l10n.delete,
                 width: context.width * .3,
                 fontSize: 16,
                 height: 40,
@@ -51,7 +50,7 @@ class DeleteDialog extends StatelessWidget {
                 onTap: () {
                   context.navigator.pop();
                 },
-                text: AppStrings.cancel,
+                text: context.l10n.cancel,
                 width: context.width * .3,
                 fontSize: 16,
                 height: 40,

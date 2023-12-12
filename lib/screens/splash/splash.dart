@@ -1,11 +1,11 @@
 
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:calendar_app/constants/app_strings.dart';
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/components/phoneNumberAndNameDialog/phone_number_and_name_dialog.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/extensions/int_ext.dart';
 import 'package:calendar_app/gen/assets.gen.dart';
-import 'package:calendar_app/generated/l10n.dart';
 import 'package:calendar_app/core/base_provider.dart';
 import 'package:calendar_app/screens/dashboard/dashboard.dart';
 import 'package:calendar_app/services/firebase_helper/user_document.dart';

@@ -31,6 +31,7 @@ typedef DetectorBuilder<T extends Object?> = Widget Function({
 
 typedef WeekDayBuilder = Widget Function(
   int day,
+    String lang
 );
 
 typedef DateWidgetBuilder = Widget Function(DateTime date);

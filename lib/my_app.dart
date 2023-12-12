@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<LanguageProvider>(
-              create: (context) => LanguageProvider())
+              create: (context) => LanguageProvider()..init())
         ],
         builder: (context, child) {
           final provider = Provider.of<LanguageProvider>(context, listen: true);
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                 GlobalCupertinoLocalizations.delegate,
               ],
               locale: provider.currentLocale,
-              supportedLocales: const [Locale('en'), Locale('gu')],
+              supportedLocales: const [Locale('en'), Locale('gu'),Locale('hi')],
               initialRoute: RouteManger.initRoute(),
             ),
           );

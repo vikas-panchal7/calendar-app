@@ -59,6 +59,9 @@ class MonthView<T extends Object?> extends StatefulWidget {
   /// Here day will range from 0 to 6 starting from Monday to Sunday.
   final WeekDayBuilder? weekDayBuilder;
 
+
+
+
   /// Determines the lower boundary user can scroll.
   ///
   /// If not provided [CalendarConstants.epochDate] is default.
@@ -139,6 +142,9 @@ class MonthView<T extends Object?> extends StatefulWidget {
   /// Callback for the Header title
   final HeaderTitleCallback? onHeaderTitleTap;
 
+  /// app lang
+  final String lang;
+
   /// Main [Widget] to display month view.
   const MonthView({
     Key? key,
@@ -166,7 +172,7 @@ class MonthView<T extends Object?> extends StatefulWidget {
     this.weekDayStringBuilder,
     this.headerStyle = const HeaderStyle(),
     this.safeAreaOption = const SafeAreaOption(),
-    this.onHeaderTitleTap,
+    this.onHeaderTitleTap, required this.lang,
   })  : assert(!(onHeaderTitleTap != null && headerBuilder != null),
             "can't use [onHeaderTitleTap] & [headerBuilder] simultaneously"),
         super(key: key);
@@ -310,7 +316,7 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
                             (index) => Expanded(
                               child: SizedBox(
                                 width: _cellWidth,
-                                child: _weekBuilder(weekDays[index].weekday - 1),
+                                child: _weekBuilder(weekDays[index].weekday - 1,widget.lang),
                               ),
                             ),
                           ),
@@ -481,8 +487,9 @@ class MonthViewState<T extends Object?> extends State<MonthView<T>> {
   }
 
   /// Default builder for week line.
-  Widget _defaultWeekDayBuilder(int index) {
+  Widget _defaultWeekDayBuilder(int index,String lang) {
     return WeekDayTile(
+      lang: lang,
       dayIndex: index,
       weekDayStringBuilder: widget.weekDayStringBuilder,
     );

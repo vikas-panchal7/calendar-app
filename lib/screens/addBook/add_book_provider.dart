@@ -19,6 +19,7 @@ class AddBookProvider extends BaseProvider {
 
   final TextEditingController _engTitle = TextEditingController();
   final TextEditingController _gujTitle = TextEditingController();
+  final TextEditingController _hindiTitle = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _showBookRequiredMsg = false;
   File? _bookFile;
@@ -29,6 +30,7 @@ class AddBookProvider extends BaseProvider {
   TextEditingController get engTitle => _engTitle;
 
   TextEditingController get gujTitle => _gujTitle;
+  TextEditingController get hindiTitle => _hindiTitle;
 
   String? get selectedBookFile => _selectedBookFile;
 
@@ -52,7 +54,7 @@ class AddBookProvider extends BaseProvider {
         notifyListeners();
       } else {
         if (context.mounted) {
-          context.showErrorSnackBar(message: AppStrings.fileFormatNotMatch);
+          context.showErrorSnackBar(message: context.l10n.fileFormatIsNotMatch);
         }
       }
     }
@@ -62,6 +64,7 @@ class AddBookProvider extends BaseProvider {
     _isEdit = true;
     _engTitle.text = bookInfo?.title.customTranslate(SupportedLanguage.english) ?? '';
     _gujTitle.text = bookInfo?.title.customTranslate(SupportedLanguage.gujarati) ?? '';
+    _hindiTitle.text = bookInfo?.title.customTranslate(SupportedLanguage.hindi) ?? '';
     _selectedBookFile = bookInfo?.fileUrl;
     notifyListeners();
   }
@@ -76,6 +79,7 @@ class AddBookProvider extends BaseProvider {
           return await bookRepository.addEditBook(
               englishTitle: _engTitle.text,
               gujaratiTitle: _gujTitle.text,
+              hindiTitle: _hindiTitle.text,
               fileUrl: url,
               fileType: bookInfo?.fileType ?? _selectedFileType!,
               createdAt: bookInfo?.createdAt ?? DateTime.timestamp(),
@@ -106,7 +110,7 @@ class AddBookProvider extends BaseProvider {
   void handleDeleteBook() {
     DeleteDialog.show(
       context: context,
-      type: AppStrings.book,
+      type: context.l10n.book,
       onDelete: () {
         context.navigator.pop();
         deleteBook();

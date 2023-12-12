@@ -40,7 +40,7 @@ class AddNewsProvider extends BaseProvider {
   }
 
   void handleDelete() {
-    DeleteDialog.show(context: context, type: AppStrings.news, onDelete: () {
+    DeleteDialog.show(context: context, type: context.l10n.news, onDelete: () {
       context.navigator.pop();
       context.navigator.pop();
     },);

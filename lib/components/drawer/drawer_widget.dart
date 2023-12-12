@@ -1,8 +1,9 @@
 import 'package:calendar_app/core/base_provider.dart';
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/extensions/int_ext.dart';
 import 'package:calendar_app/gen/assets.gen.dart';
 import 'package:calendar_app/providers/language_provider.dart';
+import 'package:calendar_app/screens/userList/user_list.dart';
 import 'package:calendar_app/services/preference_helper/pref_service.dart';
 import 'package:calendar_app/utils/commonButton/common_button.dart';
 import 'package:calendar_app/utils/common_functions.dart';
@@ -26,9 +27,10 @@ class DrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     CalendarPreference preference = CalendarPreference.instance;
     return Drawer(
-      backgroundColor: context.colorScheme.primary,
+      backgroundColor: context.theme.scaffoldBackgroundColor,
       shape: const RoundedRectangleBorder(),
       width: context.width * .7,
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,7 +38,7 @@ class DrawerWidget extends StatelessWidget {
           Center(
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
-                child: Assets.temp.appLogo.image(width: context.width * .3)),
+                child: Assets.images.appLogo.image(width: context.width * .3)),
           ),
           const Gap(20),
           if (preference.userName.isNotEmpty) ...[
@@ -45,23 +47,33 @@ class DrawerWidget extends StatelessWidget {
               child: Text(
                 '${context.l10n.hello}, ${preference.userName}',
                 style: context.textTheme.titleMedium?.copyWith(
-                    color: context.colorScheme.onSecondary,
+                    color: context.colorScheme.primary,
                     fontWeight: FontWeight.w700),
               ),
             ),
           ],
           if (preference.userId.isNotEmpty) ...[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
-              child: Text(
-                preference.userId,
-                style: context.textTheme.titleMedium?.copyWith(
-                    color: context.colorScheme.background,
-                    fontWeight: FontWeight.w700),
+            FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+                child: Text(
+                  preference.userId,
+                  style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSurface,
+                      fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ],
           const _LanguageChangeTile(),
+          if (preference.isAdminLogin)
+            _CommonTile(
+              title: context.l10n.userList,
+              onTap: () {
+                context.navigator.pop();
+                context.navigator.pushNamed(UserListScreenUI.routeName);
+              },
+            ),
           _CommonTile(
             title: context.l10n.logout,
             onTap: () {
@@ -124,16 +136,16 @@ class _CommonTile extends StatelessWidget {
                 Text(
                   title,
                   style: context.textTheme.bodyLarge?.copyWith(
-                      color: context.colorScheme.onSecondary,
+                      color: context.colorScheme.primary,
                       fontWeight: FontWeight.w600),
                 ),
                 Icon(Icons.arrow_forward_ios_rounded,
-                    color: context.colorScheme.background, size: 15),
+                    color: context.colorScheme.primary, size: 15),
               ],
             )),
         Divider(
           height: 0,
-          color: context.colorScheme.background.withOpacity(.5),
+          color: context.colorScheme.primary.withOpacity(.5),
           endIndent: 10,
           indent: 10,
         )
@@ -141,8 +153,6 @@ class _CommonTile extends StatelessWidget {
     );
   }
 }
-
-
 
 class _LanguageChangeTile extends StatelessWidget {
   const _LanguageChangeTile();
@@ -161,24 +171,20 @@ class _LanguageChangeTile extends StatelessWidget {
                 Text(
                   context.l10n.language,
                   style: context.textTheme.bodyLarge?.copyWith(
-                      color: context.colorScheme.onSecondary,
+                      color: context.colorScheme.primary,
                       fontWeight: FontWeight.w600),
                 ),
-
-
                 RotatedBox(
-                  quarterTurns: drawerProvider.langTileExpanded?1:0,
+                  quarterTurns: drawerProvider.langTileExpanded ? 1 : 0,
                   child: Icon(Icons.arrow_forward_ios_rounded,
-                      color: context.colorScheme.background, size: 15),
+                      color: context.colorScheme.primary, size: 15),
                 ),
-
               ],
             )),
         AnimatedSize(
-          duration:  300.milliseconds,
-
+          duration: 300.milliseconds,
           child: SizedBox(
-            height: drawerProvider.langTileExpanded? null:0,
+            height: drawerProvider.langTileExpanded ? null : 0,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -190,10 +196,16 @@ class _LanguageChangeTile extends StatelessWidget {
                     title: 'English',
                   ),
                   _RadioTile(
-                    value:  SupportedLanguage.gujarati,
-                    groupValue:drawerProvider.selectedLanguage,
+                    value: SupportedLanguage.gujarati,
+                    groupValue: drawerProvider.selectedLanguage,
                     onChange: drawerProvider.changeLanguage,
                     title: 'ગુજરાતી',
+                  ),
+                  _RadioTile(
+                    value: SupportedLanguage.hindi,
+                    groupValue: drawerProvider.selectedLanguage,
+                    onChange: drawerProvider.changeLanguage,
+                    title: 'हिंदी',
                   ),
                   const Gap(10),
                 ],
@@ -203,7 +215,7 @@ class _LanguageChangeTile extends StatelessWidget {
         ),
         Divider(
           height: 0,
-          color: context.colorScheme.background.withOpacity(.5),
+          color: context.colorScheme.primary.withOpacity(.5),
           endIndent: 10,
           indent: 10,
         )
@@ -217,7 +229,12 @@ class _RadioTile extends StatelessWidget {
   final SupportedLanguage groupValue;
   final Function(SupportedLanguage?) onChange;
   final String title;
-  const _RadioTile({required this.value, required this.groupValue, required this.onChange, required this.title});
+
+  const _RadioTile(
+      {required this.value,
+      required this.groupValue,
+      required this.onChange,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -231,13 +248,12 @@ class _RadioTile extends StatelessWidget {
             onChanged: onChange,
             visualDensity: VisualDensity.compact,
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            activeColor: context.colorScheme.onSecondary,
-
+            activeColor: context.colorScheme.primary,
           ),
           Text(
             title,
             style: context.textTheme.bodyLarge?.copyWith(
-              color: context.colorScheme.onSecondary,
+              color: context.colorScheme.primary,
             ),
           ),
         ],
@@ -245,4 +261,3 @@ class _RadioTile extends StatelessWidget {
     );
   }
 }
-

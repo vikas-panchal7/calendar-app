@@ -19,14 +19,14 @@ class DonateUsScreenUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.donateUs)),
+      appBar: AppBar(title:  Text(context.l10n.donateUs)),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Gap(context.height * 0.07),
           /// qr code image
 
-          Assets.temp.qrCode.image(width: context.width *0.7),
+          // Assets.temp.qrCode.image(width: context.width *0.7),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30),
             child: Row(
@@ -40,7 +40,7 @@ class DonateUsScreenUI extends StatelessWidget {
                     children: [
                       Icon(Icons.share,color: context.colorScheme.primary,size: 18,),
                       const Gap(8),
-                      Text(AppStrings.shareQr,style:  context.textTheme.titleSmall?.copyWith(color: context.colorScheme.primary,fontWeight: FontWeight.w600),)
+                      Text(context.l10n.shareQr,style:  context.textTheme.titleSmall?.copyWith(color: context.colorScheme.primary,fontWeight: FontWeight.w600),)
                     ],
                   )),
                 ),
@@ -56,7 +56,7 @@ class DonateUsScreenUI extends StatelessWidget {
                     children: [
                       Icon(Icons.download_for_offline_sharp,color: context.colorScheme.primary,size: 18,),
                       const Gap(8),
-                      Text(AppStrings.downloadQr,style:  context.textTheme.titleSmall?.copyWith(color: context.colorScheme.primary,fontWeight: FontWeight.w600),)
+                      Text(context.l10n.downloadQr,style:  context.textTheme.titleSmall?.copyWith(color: context.colorScheme.primary,fontWeight: FontWeight.w600),)
                     ],
                   )),
                 )

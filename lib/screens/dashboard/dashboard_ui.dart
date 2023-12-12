@@ -20,25 +20,34 @@ class DashBoardUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     final provider = context.read<DashboardProvider>();
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.light, systemNavigationBarColor: context.colorScheme.primary),
+          statusBarIconBrightness: Brightness.light,
+          systemNavigationBarColor: context.colorScheme.primary),
       child: WillPopScope(
         onWillPop: () => onWillPop(context),
         child: Scaffold(
-          appBar: AppBar(
-            title:  Text(getTitle(context)),
-             //  actions: [
-             //    getAddButton(context)
-             // ]
-          ),
-drawer:  DrawerWidget.open(context),
+            appBar: AppBar(
+                backgroundColor: context.colorScheme.secondary,
+                title: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Assets.images.appLogo.image(height: 35))),
+                    Text(getTitle(context)),
+                  ],
+                ),
 
+                ),
+
+            drawer: DrawerWidget.open(context),
             body: Selector<DashboardProvider, int>(
-              selector: (context, dashboardProvider) => dashboardProvider.currentSelectedIndex,
+              selector: (context, dashboardProvider) =>
+                  dashboardProvider.currentSelectedIndex,
               builder: (context, currentSelectedIndex, child) {
                 switch (currentSelectedIndex) {
                   case 0:
@@ -54,7 +63,8 @@ drawer:  DrawerWidget.open(context),
               },
             ),
             bottomNavigationBar: Selector<DashboardProvider, int>(
-              selector: (context, dashboardProvider) => dashboardProvider.currentSelectedIndex,
+              selector: (context, dashboardProvider) =>
+                  dashboardProvider.currentSelectedIndex,
               builder: (context, currentIndex, child) {
                 return Theme(
                   data: ThemeData(
@@ -63,14 +73,14 @@ drawer:  DrawerWidget.open(context),
                     splashColor: Colors.transparent,
                   ),
                   child: BottomNavigationBar(
-
                     showSelectedLabels: true,
                     currentIndex: currentIndex,
                     type: BottomNavigationBarType.fixed,
                     onTap: provider.onBottomNavigationBarTap,
                     backgroundColor: context.colorScheme.primary,
                     selectedItemColor: context.colorScheme.background,
-                    unselectedItemColor: context.colorScheme.background.withOpacity(.7),
+                    unselectedItemColor:
+                        context.colorScheme.background.withOpacity(.7),
                     selectedFontSize: 12,
                     unselectedFontSize: 12,
                     elevation: 8,
@@ -80,15 +90,17 @@ drawer:  DrawerWidget.open(context),
                               height: 25,
                               color: currentIndex == 0
                                   ? context.colorScheme.background
-                                  : context.colorScheme.background.withOpacity(.7)),
-                          label: AppStrings.calendar),
+                                  : context.colorScheme.background
+                                      .withOpacity(.7)),
+                          label: context.l10n.calendar),
                       BottomNavigationBarItem(
                           icon: Assets.icons.icBooks.image(
                               height: 25,
                               color: currentIndex == 1
                                   ? context.colorScheme.background
-                                  : context.colorScheme.background.withOpacity(.7)),
-                          label: AppStrings.books),
+                                  : context.colorScheme.background
+                                      .withOpacity(.7)),
+                          label: context.l10n.books),
                       BottomNavigationBarItem(
                           icon: Padding(
                             padding: const EdgeInsets.all(5.0),
@@ -96,9 +108,10 @@ drawer:  DrawerWidget.open(context),
                                 height: 20,
                                 color: currentIndex == 2
                                     ? context.colorScheme.background
-                                    : context.colorScheme.background.withOpacity(.7)),
+                                    : context.colorScheme.background
+                                        .withOpacity(.7)),
                           ),
-                          label: 'Videos'),
+                          label: context.l10n.videos),
                       // BottomNavigationBarItem(
                       //     icon: Padding(
                       //       padding: const EdgeInsets.all(5.0),
@@ -126,64 +139,65 @@ drawer:  DrawerWidget.open(context),
   }
 
   String getTitle(BuildContext context) {
-    int tab = context.select<DashboardProvider, int>((value) => value.currentSelectedIndex);
+    int tab = context
+        .select<DashboardProvider, int>((value) => value.currentSelectedIndex);
     switch (tab) {
       case 0:
-        return 'Calendar';
+        return context.l10n.calendar;
       case 1:
         return context.l10n.books;
       case 2:
-        return AppStrings.videos;
+        return context.l10n.videos;
       case 3:
-        return AppStrings.news;
+        return context.l10n.news;
     }
     return '';
   }
-  //
-  // Widget getAddButton(BuildContext context) {
-  //   int tab = context.select<DashboardProvider, int>((value) => value.currentSelectedIndex);
-  //   CalendarPreference preference = CalendarPreference();
-  //   if(preference.isAdminLogin && tab!=0){
-  //     return CommonButton.cupertino(
-  //         padding: const EdgeInsets.symmetric(horizontal: 20),
-  //         onTap: () {
-  //
-  //           switch (tab) {
-  //
-  //             case 1:
-  //               context.navigator.pushNamed(AddBookScreenUI.routeName);
-  //               break;
-  //             case 2:
-  //               AddVideoDialog.show(context: context);
-  //               break;
-  //             case 3:
-  //               context.navigator.pushNamed(AddNewsScreenUI.routeName);
-  //               break;
-  //           }
-  //
-  //         },
-  //         child: Text(
-  //           getAddTitle(tab),
-  //           style: context.textTheme.titleSmall
-  //               ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onSecondary),
-  //         ));
-  //   }else{
-  //     return const SizedBox();
-  //   }
-  //
-  // }
-  //
-  //
-  // String getAddTitle(int tab){
-  //   switch (tab) {
-  //
-  //     case 1:
-  //       return AppStrings.addBook;
-  //     case 2:
-  //       return AppStrings.addVideo;
-  //     case 3:
-  //       return AppStrings.addNews;
-  //   }
-  //   return '';
-  // }
+//
+// Widget getAddButton(BuildContext context) {
+//   int tab = context.select<DashboardProvider, int>((value) => value.currentSelectedIndex);
+//   CalendarPreference preference = CalendarPreference();
+//   if(preference.isAdminLogin && tab!=0){
+//     return CommonButton.cupertino(
+//         padding: const EdgeInsets.symmetric(horizontal: 20),
+//         onTap: () {
+//
+//           switch (tab) {
+//
+//             case 1:
+//               context.navigator.pushNamed(AddBookScreenUI.routeName);
+//               break;
+//             case 2:
+//               AddVideoDialog.show(context: context);
+//               break;
+//             case 3:
+//               context.navigator.pushNamed(AddNewsScreenUI.routeName);
+//               break;
+//           }
+//
+//         },
+//         child: Text(
+//           getAddTitle(tab),
+//           style: context.textTheme.titleSmall
+//               ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onSecondary),
+//         ));
+//   }else{
+//     return const SizedBox();
+//   }
+//
+// }
+//
+//
+// String getAddTitle(int tab){
+//   switch (tab) {
+//
+//     case 1:
+//       return AppStrings.addBook;
+//     case 2:
+//       return AppStrings.addVideo;
+//     case 3:
+//       return AppStrings.addNews;
+//   }
+//   return '';
+// }
 }

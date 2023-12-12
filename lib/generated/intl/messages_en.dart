@@ -22,10 +22,85 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addBook": MessageLookupByLibrary.simpleMessage("Add Book"),
+        "addData": MessageLookupByLibrary.simpleMessage("Add Data"),
+        "addImage": MessageLookupByLibrary.simpleMessage("Add Image"),
+        "addNews": MessageLookupByLibrary.simpleMessage("Add News"),
+        "addVideo": MessageLookupByLibrary.simpleMessage("Add Video"),
+        "areYouReallyWantToExitFromApp": MessageLookupByLibrary.simpleMessage(
+            "Are you really want to exit from app?"),
+        "areYouSureYouWantToDeleteThis": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this"),
+        "book": MessageLookupByLibrary.simpleMessage("Book"),
+        "bookDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Book Deleted Successfully"),
+        "bookTitle": MessageLookupByLibrary.simpleMessage("Book Title"),
         "books": MessageLookupByLibrary.simpleMessage("Books"),
+        "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
         "calendarApp": MessageLookupByLibrary.simpleMessage("Calendar App"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "change": MessageLookupByLibrary.simpleMessage("Change"),
+        "chooseBook": MessageLookupByLibrary.simpleMessage("Choose Book"),
+        "chooseFile": MessageLookupByLibrary.simpleMessage("Choose File"),
+        "city": MessageLookupByLibrary.simpleMessage("City"),
+        "data": MessageLookupByLibrary.simpleMessage("Data"),
+        "dataIsRequired":
+            MessageLookupByLibrary.simpleMessage("Data is required"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "description": MessageLookupByLibrary.simpleMessage("Description"),
+        "discard": MessageLookupByLibrary.simpleMessage("Discard"),
+        "discardChanges":
+            MessageLookupByLibrary.simpleMessage("Discard changes?"),
+        "donateUs": MessageLookupByLibrary.simpleMessage("Donate Us"),
+        "downloadQr": MessageLookupByLibrary.simpleMessage("DOWNLOAD QR"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "editBook": MessageLookupByLibrary.simpleMessage("Edit Book"),
+        "editData": MessageLookupByLibrary.simpleMessage("Edit Data"),
+        "editNews": MessageLookupByLibrary.simpleMessage("Edit News"),
+        "editVideo": MessageLookupByLibrary.simpleMessage("Edit Video"),
+        "enterValidNumber":
+            MessageLookupByLibrary.simpleMessage("Enter valid Number"),
+        "exit": MessageLookupByLibrary.simpleMessage("Exit"),
+        "fieldIsRequired":
+            MessageLookupByLibrary.simpleMessage("Field is required!"),
+        "fileFormatIsNotMatch":
+            MessageLookupByLibrary.simpleMessage("File format is not match"),
+        "fileIsRequired":
+            MessageLookupByLibrary.simpleMessage("File is required!"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
+        "inEnglish": MessageLookupByLibrary.simpleMessage("In English"),
+        "inGujarati": MessageLookupByLibrary.simpleMessage("In Gujarati"),
+        "inHindi": MessageLookupByLibrary.simpleMessage("In Hindi"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
-        "logout": MessageLookupByLibrary.simpleMessage("Logout")
+        "link": MessageLookupByLibrary.simpleMessage("Link"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "news": MessageLookupByLibrary.simpleMessage("News"),
+        "newsTitle": MessageLookupByLibrary.simpleMessage("News Title"),
+        "noDataAvailable":
+            MessageLookupByLibrary.simpleMessage("No data available"),
+        "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
+        "profession": MessageLookupByLibrary.simpleMessage("Profession"),
+        "selectLanguage":
+            MessageLookupByLibrary.simpleMessage("Select Language"),
+        "shareQr": MessageLookupByLibrary.simpleMessage("SHARE QR"),
+        "signInWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Sign in with Google"),
+        "social": MessageLookupByLibrary.simpleMessage("Social"),
+        "submit": MessageLookupByLibrary.simpleMessage("Submit"),
+        "title": MessageLookupByLibrary.simpleMessage("Title"),
+        "upload": MessageLookupByLibrary.simpleMessage("Upload"),
+        "uploadBook": MessageLookupByLibrary.simpleMessage("Upload Book"),
+        "userList": MessageLookupByLibrary.simpleMessage("User List"),
+        "username": MessageLookupByLibrary.simpleMessage("UserName"),
+        "video": MessageLookupByLibrary.simpleMessage("Video"),
+        "videoUrl": MessageLookupByLibrary.simpleMessage("Video Url"),
+        "videos": MessageLookupByLibrary.simpleMessage("Videos"),
+        "view": MessageLookupByLibrary.simpleMessage("View"),
+        "viewOnYoutube":
+            MessageLookupByLibrary.simpleMessage("View on Youtube"),
+        "viewVideo": MessageLookupByLibrary.simpleMessage("View Video"),
+        "writeHere": MessageLookupByLibrary.simpleMessage("Write here..."),
+        "youWillLooseAllTheChanges": MessageLookupByLibrary.simpleMessage(
+            "You will loose all the changes.")
       };
 }

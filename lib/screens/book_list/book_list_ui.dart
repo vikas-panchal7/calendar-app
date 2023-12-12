@@ -23,39 +23,26 @@ class _BookListUIState extends State<BookListUI> {
   Widget build(BuildContext context) {
     CalendarPreference preference = CalendarPreference.instance;
     return Scaffold(
-/*      appBar: AppBar(
-        title: const Text(AppStrings.books),
-        actions: [
-          if (preference.isAdminLogin) ...[
-            CommonButton.cupertino(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                onTap: () {
+        floatingActionButton: preference.isAdminLogin
+            ? FloatingActionButton(
+                onPressed: () async {
                   context.navigator.pushNamed(AddBookScreenUI.routeName);
                 },
-                child: Text(
-                  AppStrings.addBook,
-                  style: context.textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.onSecondary),
-                ))
-          ]
-        ],
-      ),*/
-        floatingActionButton: preference.isAdminLogin ? FloatingActionButton(
-          onPressed: () async {
-            context.navigator.pushNamed(AddBookScreenUI.routeName);
-          },
-          child: Icon(
-            Icons.add,
-            color: context.colorScheme.onSecondary,
-          ),
-        ) : null,
+                child: Icon(
+                  Icons.add,
+                  color: context.colorScheme.onBackground,
+                ),
+              )
+            : null,
         body: PaginationListener(
           onLoadMore: context.read<BookListProvider>().onLoadMore,
           onRefresh: context.read<BookListProvider>().onReload,
           child: Builder(
             builder: (context) {
-              final list = context.select<BookListProvider, List<BookInfo?>>((value) => value.list);
-              final isLoading = context.select<BookListProvider, bool>((value) => value.isLoading);
+              final list = context.select<BookListProvider, List<BookInfo?>>(
+                  (value) => value.list);
+              final isLoading = context
+                  .select<BookListProvider, bool>((value) => value.isLoading);
 
               if (isLoading && list.isEmpty) {
                 return const LoadingIndicator();
@@ -73,23 +60,28 @@ class _BookListUIState extends State<BookListUI> {
                       itemBuilder: (context, index) {
                         BookInfo? bookInfo = list[index];
                         return CommonButton.cupertino(
-                          onTap: () => context.read<BookListProvider>().viewPdf(list[index]),
+                          onTap: () => context
+                              .read<BookListProvider>()
+                              .viewPdf(list[index]),
                           child: Container(
                             height: 80,
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                                color: context.colorScheme.onSecondary,
+                                color: context.colorScheme.onBackground,
                                 borderRadius: BorderRadius.circular(8),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: context.colorScheme.onTertiary.withOpacity(.04),
-                                      blurRadius: 16,
-                                      offset: const Offset(0, 6))
+                                    color: context.colorScheme.secondary
+                                        .withOpacity(.09),
+                                    blurRadius: 16,
+                                    offset: const Offset(0, 6),
+                                  )
                                 ]),
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 8, right: 32),
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 32),
                                   child: Assets.images.book.image(height: 30),
                                 ),
                                 Expanded(
@@ -97,18 +89,23 @@ class _BookListUIState extends State<BookListUI> {
                                     bookInfo?.title.translate(context) ?? '',
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+                                    style: context.textTheme.bodyLarge
+                                        ?.copyWith(fontWeight: FontWeight.w600,color: context.colorScheme.primary),
                                   ),
                                 ),
                                 if (preference.isAdminLogin) ...[
                                   EditAndDeletePopUPMenu(
-                                    type: 'book',
+                                    type: context.l10n.book,
                                     onDelete: () {
                                       context.navigator.pop();
-                                      context.read<BookListProvider>().deleteBook(list[index]?.id ?? '');
+                                      context
+                                          .read<BookListProvider>()
+                                          .deleteBook(list[index]?.id ?? '');
                                     },
                                     onEdit: () {
-                                      context.navigator.pushNamed(AddBookScreenUI.routeName, arguments: bookInfo);
+                                      context.navigator.pushNamed(
+                                          AddBookScreenUI.routeName,
+                                          arguments: bookInfo);
                                     },
                                   )
                                 ]

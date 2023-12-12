@@ -28,14 +28,14 @@ class AddBookScreenUI extends StatelessWidget {
         key: addBookProvider.formKey,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(isEdit ? AppStrings.editBook : AppStrings.addBook),
+            title: Text(isEdit ? context.l10n.editBook : context.l10n.addBook),
             actions: [
               if (isEdit)
                 CommonButton.icon(
                     onTap: addBookProvider.handleDeleteBook,
                     child: Icon(
                       Icons.delete,
-                      color: context.colorScheme.onSecondary,
+                      color: context.colorScheme.onBackground,
                     ))
             ],
           ),
@@ -46,7 +46,7 @@ class AddBookScreenUI extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppStrings.bookTitle,
+                    context.l10n.bookTitle,
                     style: context.textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
                   ),
@@ -54,13 +54,13 @@ class AddBookScreenUI extends StatelessWidget {
 
                   /// eng title
                   CustomTextField(
-                    title: AppStrings.inEnglish,
+                    title: context.l10n.inEnglish,
                     controller: addBookProvider.engTitle,
-                    hintText: AppStrings.writeHere,
+                    hintText: context.l10n.writeHere,
                     validator: (value) {
                       if (value != null) {
                         if (value.isEmpty) {
-                          return AppStrings.fieldIsRequired;
+                          return context.l10n.fieldIsRequired;
                         }
                       }
                       return null;
@@ -70,13 +70,29 @@ class AddBookScreenUI extends StatelessWidget {
 
                   /// guj title
                   CustomTextField(
-                    title: AppStrings.inGujarati,
+                    title: context.l10n.inGujarati,
                     controller: addBookProvider.gujTitle,
-                    hintText: AppStrings.writeHere,
+                    hintText: context.l10n.writeHere,
                     validator: (value) {
                       if (value != null) {
                         if (value.isEmpty) {
-                          return AppStrings.fieldIsRequired;
+                          return context.l10n.fieldIsRequired;
+                        }
+                      }
+                      return null;
+                    },
+                  ),
+                  const Gap(10),
+
+                  /// hindi title
+                  CustomTextField(
+                    title: context.l10n.inHindi,
+                    controller: addBookProvider.hindiTitle,
+                    hintText: context.l10n.writeHere,
+                    validator: (value) {
+                      if (value != null) {
+                        if (value.isEmpty) {
+                          return context.l10n.fieldIsRequired;
                         }
                       }
                       return null;
@@ -92,7 +108,7 @@ class AddBookScreenUI extends StatelessWidget {
                     selector: (context, addBookProvider) => addBookProvider.showBookRequiredMsg,
                     builder: (context, showBookRequiredMsg, child) {
                       if (showBookRequiredMsg) {
-                        return Text(AppStrings.fileIsRequired,
+                        return Text(context.l10n.fileIsRequired,
                             style: context.textTheme.labelMedium?.copyWith(
                               color: context.colorScheme.error,
                             ));
@@ -109,7 +125,7 @@ class AddBookScreenUI extends StatelessWidget {
           /// upload button
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ButtonItem.filled(onTap: addBookProvider.handleUpload, text: isEdit ? 'Edit book' : 'Upload Book'),
+            child: ButtonItem.filled(onTap: addBookProvider.handleUpload, text: isEdit ? context.l10n.editBook : context.l10n.uploadBook),
           ),
         ),
       ),
@@ -118,7 +134,7 @@ class AddBookScreenUI extends StatelessWidget {
 }
 
 class _ChooseBookWidget extends StatelessWidget {
-  const _ChooseBookWidget({super.key});
+  const _ChooseBookWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +143,7 @@ class _ChooseBookWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppStrings.chooseBook,
+          context.l10n.chooseBook,
           style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
         ),
         const Gap(8),
@@ -142,9 +158,8 @@ class _ChooseBookWidget extends StatelessWidget {
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
-                        color: context.colorScheme.onSecondary,
                         borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(color: context.colorScheme.surface)),
+                        border: Border.all(color: context.colorScheme.primary)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -154,7 +169,7 @@ class _ChooseBookWidget extends StatelessWidget {
                         ),
                         const Gap(5),
                         Text(
-                          AppStrings.addBook,
+                          context.l10n.addBook,
                           style: context.textTheme.bodyLarge
                               ?.copyWith(color: context.colorScheme.primary, fontWeight: FontWeight.w600),
                         ),
@@ -174,12 +189,12 @@ class _ChooseBookWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child:
-                            ButtonItem.outline(onTap: addBookProvider.viewFile, text: 'View', height: 45, fontSize: 16),
+                            ButtonItem.outline(onTap: addBookProvider.viewFile, text: context.l10n.view, height: 45, fontSize: 16),
                       ),
                       Gap(context.width * .04),
                       Expanded(
                         child: ButtonItem.filled(
-                            onTap: addBookProvider.chooseBook, text: 'Change', height: 45, fontSize: 16),
+                            onTap: addBookProvider.chooseBook, text: context.l10n.change, height: 45, fontSize: 16),
                       )
                     ],
                   )

@@ -1,4 +1,4 @@
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/gen/assets.gen.dart';
 import 'package:calendar_app/utils/commonButton/common_button.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,8 @@ class CustomTextField extends StatelessWidget {
   final Widget? suffix;
   final String? Function(String?)? validator;
   final int? maxLine;
+  final int? maxLength;
+  final TextInputType? keyboardType;
 
   const CustomTextField(
       {super.key,
@@ -19,7 +21,7 @@ class CustomTextField extends StatelessWidget {
       required this.controller,
       required this.hintText,
       this.suffix,
-      this.validator, this.maxLine});
+      this.validator, this.maxLine, this.maxLength, this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
@@ -42,18 +44,20 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           validator: validator,
           maxLines: maxLine,
+          maxLength: maxLength,
+          keyboardType: keyboardType,
           decoration: InputDecoration(
               hintText: hintText,
               helperText: '',
-
-              suffixIcon: CommonButton.cupertino(
+counterText: '',
+              suffixIcon:suffix?? CommonButton.cupertino(
                   onTap: () async {
                     ClipboardData? data = await Clipboard.getData('text/plain');
                     if (data != null) {
                       controller.text = data.text ?? '';
                     }
                   },
-                  child: Assets.icons.icPaste.image(height: 25))),
+                  child: Assets.icons.icPaste.image(height: 25,color: context.colorScheme.primary))),
         )
       ],
     );

@@ -32,7 +32,7 @@ class AddVideoProvider extends BaseProvider {
   void handleDelete() {
     DeleteDialog.show(
       context: context,
-      type: AppStrings.video,
+      type: context.l10n.video,
       onDelete: () {
         context.navigator.pop();
         context.navigator.pop();

@@ -18,6 +18,7 @@ class BookRepository {
   Future<bool> addEditBook({
     required String englishTitle,
     required String gujaratiTitle,
+    required String hindiTitle,
     required String fileUrl,
     required BookFileType fileType,
     required DateTime createdAt,
@@ -28,6 +29,7 @@ class BookRepository {
     var titleMap = {
       'en': englishTitle,
       'gu': gujaratiTitle,
+      'hi': hindiTitle,
     };
 
     var data = {

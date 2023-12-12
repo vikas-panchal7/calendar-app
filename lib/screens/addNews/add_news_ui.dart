@@ -22,7 +22,7 @@ class AddNewsScreenUI extends StatelessWidget {
         key: addNewsProvider.formKey,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(addNewsProvider.args.forUpdate ? AppStrings.editNews : AppStrings.addNews),
+            title: Text(addNewsProvider.args.forUpdate ? context.l10n.editNews : context.l10n.addNews),
             actions: [
               if (addNewsProvider.args.forUpdate)
                 CommonButton.icon(
@@ -39,7 +39,7 @@ class AddNewsScreenUI extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  AppStrings.newsTitle,
+                  context.l10n.newsTitle,
                   style: context.textTheme.bodyLarge
                       ?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
                 ),
@@ -47,13 +47,13 @@ class AddNewsScreenUI extends StatelessWidget {
 
                 /// eng title
                 CustomTextField(
-                  title: AppStrings.inEnglish,
+                  title: context.l10n.inEnglish,
                   controller: addNewsProvider.engTitle,
-                  hintText: AppStrings.writeHere,
+                  hintText: context.l10n.writeHere,
                   validator: (value) {
                     if (value != null) {
                       if (value.isEmpty) {
-                        return AppStrings.fieldIsRequired;
+                        return context.l10n.fieldIsRequired;
                       }
                     }
                     return null;
@@ -63,13 +63,13 @@ class AddNewsScreenUI extends StatelessWidget {
 
                 /// guj title
                 CustomTextField(
-                  title: AppStrings.inGujarati,
+                  title: context.l10n.inGujarati,
                   controller: addNewsProvider.gujTitle,
-                  hintText: AppStrings.writeHere,
+                  hintText: context.l10n.writeHere,
                   validator: (value) {
                     if (value != null) {
                       if (value.isEmpty) {
-                        return AppStrings.fieldIsRequired;
+                        return context.l10n.fieldIsRequired;
                       }
                     }
                     return null;
@@ -85,7 +85,7 @@ class AddNewsScreenUI extends StatelessWidget {
                   selector: (context, addBookProvider) => addBookProvider.showBookRequiredMsg,
                   builder: (context, showBookRequiredMsg, child) {
                     if (showBookRequiredMsg) {
-                      return Text(AppStrings.fileIsRequired,
+                      return Text(context.l10n.fileIsRequired,
                           style: context.textTheme.labelMedium?.copyWith(
                             color: context.colorScheme.error,
                           ));
@@ -101,7 +101,7 @@ class AddNewsScreenUI extends StatelessWidget {
           /// upload button
           bottomNavigationBar: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ButtonItem.filled(onTap: addNewsProvider.handleUpload, text: AppStrings.upload),
+            child: ButtonItem.filled(onTap: addNewsProvider.handleUpload, text: context.l10n.upload),
           ),
         ),
       ),
@@ -119,7 +119,7 @@ class _ChooseBookWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppStrings.chooseFile,
+          context.l10n.chooseFile,
           style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600, color: context.colorScheme.primary),
         ),
         const Gap(8),
@@ -146,7 +146,7 @@ class _ChooseBookWidget extends StatelessWidget {
                         ),
                         const Gap(5),
                         Text(
-                          AppStrings.addNews,
+                          context.l10n.addNews,
                           style: context.textTheme.bodyLarge
                               ?.copyWith(color: context.colorScheme.primary, fontWeight: FontWeight.w600),
                         ),

@@ -1,7 +1,7 @@
 import 'package:calendar_app/components/dialogs/delete_dialogs.dart';
 import 'package:calendar_app/components/placeholder/empty_list_placeholder.dart';
 import 'package:calendar_app/core/event_bus.dart';
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/core/base_provider.dart';
 import 'package:calendar_app/screens/addVideo/add_video.dart';
 import 'package:calendar_app/services/EventBus/events.dart';

@@ -1,6 +1,5 @@
 import 'package:calendar_app/components/buttonItem/button_item.dart';
-import 'package:calendar_app/constants/app_strings.dart';
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
@@ -31,7 +30,7 @@ class ExitDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            AppStrings.areYouReallyWantToExitFromApp,textAlign: TextAlign.center,style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+            context.l10n.areYouReallyWantToExitFromApp,textAlign: TextAlign.center,style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
           ),
           Gap(context.height * .03),
           Row(
@@ -39,7 +38,7 @@ class ExitDialog extends StatelessWidget {
             children: [
               ButtonItem.outline(
                 onTap: () {SystemNavigator.pop();},
-                text: AppStrings.exit,
+                text: context.l10n.exit,
                 width: context.width * .3,
                 fontSize: 16,
                 height: 40,
@@ -48,7 +47,7 @@ class ExitDialog extends StatelessWidget {
                 onTap: () {
                   context.navigator.pop();
                 },
-                text: AppStrings.cancel,
+                text: context.l10n.cancel,
                 width: context.width * .3,
                 fontSize: 16,
                 height: 40,

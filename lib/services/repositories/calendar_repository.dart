@@ -2,6 +2,7 @@ import 'package:calendar_app/core/event_bus.dart';
 import 'package:calendar_app/services/EventBus/events.dart';
 import 'package:calendar_app/services/firebase_helper/calendar_document.dart';
 import 'package:calendar_app/services/firebase_helper/firebase_firestore_helper.dart';
+import 'package:calendar_app/utils/common_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +13,9 @@ class CalendarRepository {
   Future<bool> addEditDate({
     required String englishTitle,
     required String gujaratiTitle,
+    required String hindiTitle,
     required String englishDesc,
+    required String hindiDesc,
     required String gujaratiDesc,
     required String id,
     required DateTime calendarDate,
@@ -25,14 +28,16 @@ class CalendarRepository {
     var titleMap = {
       'en': englishTitle,
       'gu': gujaratiTitle,
+      'hi': hindiTitle,
     };
     var descMap = {
       'en': englishDesc,
       'gu': gujaratiDesc,
+      'hi': hindiDesc,
     };
 
     (String thumbnail, String title) videoData = ('', '');
-    if (videoUrl.isNotEmpty) {
+    if (videoUrl.isNotEmpty && isYoutubeUrl(videoUrl)) {
       videoData = await getThumbnailAndUrl(videoUrl);
     }
 
@@ -109,7 +114,6 @@ class CalendarRepository {
   Future<(String thumbnail, String title)> getThumbnailAndUrl(String videoUrl) async {
     var url = Uri.parse(videoUrl);
     var response = await http.get(url);
-    print('Response status: ${response.statusCode}');
     return (_getThumbnail(response.body), _getTitle(response.body));
   }
 

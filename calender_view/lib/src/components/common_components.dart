@@ -50,52 +50,54 @@ class CalendarPageHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (headerStyle.leftIconVisible)
-              IconButton(
-                onPressed: onPreviousDay,
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                padding: headerStyle.leftIconPadding,
-                icon: headerStyle.leftIcon ??
-                    Icon(
-                      Icons.chevron_left_rounded,
-                      size: 30,
-                      color: const Color(0xFF26282C),
-                    ),
-              ),
-            Expanded(
-              child: InkWell(
-                onTap: onTitleTapped,
-                child: Text(
-                  dateStringBuilder(date, secondaryDate: secondaryDate),
-                  textAlign: headerStyle.titleAlign,
-                  style: TextStyle(color: const Color(0xFF26282C), fontSize: 16, fontWeight: FontWeight.w700),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        if (headerStyle.leftIconVisible)
+          IconButton(
+            onPressed: onPreviousDay,
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            padding: headerStyle.leftIconPadding,
+            icon: headerStyle.leftIcon ??
+                Icon(
+                  Icons.chevron_left_rounded,
+                  size: 30,
+                  color: Colors.white,
                 ),
-              ),
+          ),
+        Expanded(
+          child: InkWell(
+            onTap: onTitleTapped,
+            child: Text(
+              dateStringBuilder(date, secondaryDate: secondaryDate),
+              textAlign: headerStyle.titleAlign,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700),
             ),
-            if (headerStyle.rightIconVisible)
-              IconButton(
-                onPressed: onNextDay,
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                padding: headerStyle.rightIconPadding,
-                icon: headerStyle.rightIcon ??
-                    Icon(
-                      Icons.chevron_right_rounded,
-                      size: 30,
-                      color: const Color(0xFF26282C),
-                    ),
-              ),
-          ],
-        ));
+          ),
+        ),
+        if (headerStyle.rightIconVisible)
+          IconButton(
+            onPressed: onNextDay,
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            padding: headerStyle.rightIconPadding,
+            icon: headerStyle.rightIcon ??
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: 30,
+                  color: Colors.white,
+                ),
+          ),
+      ],
+    ));
 
     Container(
       margin: headerStyle.headerMargin,
@@ -126,7 +128,10 @@ class CalendarPageHeader extends StatelessWidget {
               child: Text(
                 dateStringBuilder(date, secondaryDate: secondaryDate),
                 textAlign: headerStyle.titleAlign,
-                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700),
               ),
             ),
           ),

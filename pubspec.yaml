@@ -51,14 +51,20 @@ dependencies:
 
   # for pdf view
   syncfusion_flutter_pdfviewer: ^23.2.4
+
   http: ^1.1.0
+
   url_launcher: ^6.2.1
+
+  flutter_gen: ^5.3.2
 
 dev_dependencies:
 
   build_runner:
   flutter_gen_runner:
   # injectable_generator:
+
+
 
   flutter_test:
     sdk: flutter
@@ -72,7 +78,6 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
-    - assets/temp/
     - assets/lottie/
 
   fonts:

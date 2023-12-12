@@ -16,13 +16,13 @@ class CalenderProvider extends BaseProvider {
   DateTime get currentMonthFirstDate => _currentMonthFirstDate;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     _currentMonthFirstDate = DateTime(
       DateTime.now().year,
       DateTime.now().month,
     );
-    getCurrentMonthData();
-
+    await getCurrentMonthData();
+    openTodayPop();
     listenEvent();
   }
 
@@ -45,9 +45,9 @@ class CalenderProvider extends BaseProvider {
     );
   }
 
-  bool containsDate(DateTime date){
-    for(int i =0;i< _calendarDataList.length ; i++){
-      if(_calendarDataList[i].calendarDate == date){
+  bool containsDate(DateTime date) {
+    for (int i = 0; i < _calendarDataList.length; i++) {
+      if (_calendarDataList[i].calendarDate == date) {
         return true;
       }
     }
@@ -55,27 +55,48 @@ class CalenderProvider extends BaseProvider {
   }
 
   void listenEvent() {
-
     eventBus.on<CalendarDeleteDataEvent>().listen(_onCalendarDeleteData);
     eventBus.on<CalendarDataAddEvent>().listen(_onCalendarAddData);
     eventBus.on<CalendarDataUpdateEvent>().listen(_onCalendarUpdateData);
   }
 
-    void _onCalendarDeleteData(CalendarDeleteDataEvent event)  {
-    int position =  _calendarDataList.indexWhere((element) => element.id == event.id);
-    _calendarDataList = [..._calendarDataList,]..removeAt(position);
+  void _onCalendarDeleteData(CalendarDeleteDataEvent event) {
+    int position =
+        _calendarDataList.indexWhere((element) => element.id == event.id);
+    _calendarDataList = [
+      ..._calendarDataList,
+    ]..removeAt(position);
     notifyListeners();
   }
 
   void _onCalendarAddData(CalendarDataAddEvent event) {
-    _calendarDataList = [..._calendarDataList,event.calendarDateInfo];
+    _calendarDataList = [..._calendarDataList, event.calendarDateInfo];
     notifyListeners();
   }
 
   void _onCalendarUpdateData(CalendarDataUpdateEvent event) {
-    int position =  _calendarDataList.indexWhere((element) => element.id == event.calendarDateInfo.id);
+    int position = _calendarDataList
+        .indexWhere((element) => element.id == event.calendarDateInfo.id);
     _calendarDataList.removeAt(position);
-    _calendarDataList = [..._calendarDataList]..insert(position, event.calendarDateInfo);
+    _calendarDataList = [..._calendarDataList]
+      ..insert(position, event.calendarDateInfo);
     notifyListeners();
+  }
+
+  Future<void> openTodayPop() async {
+    DateTime dateTime = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+
+    if (_calendarDataList.containsData(dateTime) != null&& AppConst.isUserOpenApp) {
+      await DateDetailsDialog.show(
+          context: context,
+          date: dateTime,
+          calendarData: _calendarDataList.containsData(dateTime));
+    }
+    AppConst.isUserOpenApp = false;
   }
 }

@@ -19,6 +19,12 @@ class SplashProvider extends BaseProvider {
 
   LoadingDialogHandler loadingDialogHandler;
 
+
+  String _userPhoneNumber = '';
+  String _userName = '';
+  String _userCity = '';
+  String _userProfession = '';
+
   void init() {
     // this is call after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -45,6 +51,10 @@ class SplashProvider extends BaseProvider {
   }
 
   Future<void> handleGoogleSignIn() async {
+
+     if (calendarPreference.tempUserIsLogin) {
+       _signOut();
+     }
     bool? result = await processApi(
         process: () async {
           try {
@@ -57,6 +67,7 @@ class SplashProvider extends BaseProvider {
                   accessToken: googleAuth.accessToken,
                   idToken: googleAuth.idToken);
               await FirebaseAuth.instance.signInWithCredential(credential);
+              calendarPreference.setTempUserIsLogin = true;
               await checkWhoISLogin(currentUser);
               return true;
             }
@@ -68,8 +79,10 @@ class SplashProvider extends BaseProvider {
         },
         loadingHandler: loadingDialogHandler.handleBgDialog);
 
-    if (context.mounted && (result ?? false)) {
-      context.navigator.pushReplacementNamed(DashBoardUI.routeName);
+    if (calendarPreference.userIsLogin) {
+      if (context.mounted && (result ?? false)) {
+        context.navigator.pushReplacementNamed(DashBoardUI.routeName);
+      }
     }
   }
 
@@ -86,16 +99,37 @@ class SplashProvider extends BaseProvider {
       UserRepository userRepository = UserRepository();
       bool isUserLogin =
           await userRepository.checkIfUserLoggedIn(gmail: currentUser.email);
+
+
+
       if (isUserLogin) {
+        UserDataInfo userDataInfo = await userRepository.getUserDetails(gmail: currentUser.email);
+        if (userDataInfo.phoneNo==null&&userDataInfo.phoneNo.isEmpty) {
+          bool isNumberAdded = await getPhoneNumber(currentUser.displayName??'');
+          if(!isNumberAdded) {
+            return;
+          }
+        }
+
         calendarPreference.setUserIsLogin = true;
         calendarPreference.setUserType = UserType.user;
       } else {
+
+        bool isNumberAdded = await getPhoneNumber(currentUser.displayName??'');
+        if(!isNumberAdded) {
+          return;
+        }
+
         String userId = userRepository.getUserDetailId();
         await userRepository.createUser(
-          userName: currentUser.displayName ?? '',
+          userName: _userName ?? '',
           gmail: currentUser.email,
           loginType: LoginType.googleLogin,
           id: userId,
+          imageUrl: currentUser.photoUrl??'',
+          phoneNo: _userPhoneNumber,
+          city: _userCity,
+          userProfession: _userProfession
         );
         calendarPreference.setUserIsLogin = true;
         calendarPreference.setUserType = UserType.user;
@@ -103,5 +137,29 @@ class SplashProvider extends BaseProvider {
     }
     calendarPreference.setUserId = currentUser.email;
     calendarPreference.setUserName = currentUser.displayName ?? '';
+  }
+
+  Future<bool> getPhoneNumber(String userName) async{
+   Map? info =   await PhoneNumberAndNameDialogUI.open(context, userName);
+if(info != null){
+  _userName = info['userName'];
+  _userPhoneNumber = info['phoneNo'];
+  _userCity = info['city'];
+  _userProfession = info['userProfession'];
+
+  return true;
+}
+    return false;
+  }
+
+
+  Future<void> _signOut() async {
+    try {
+
+       FirebaseAuth.instance.signOut();
+      GoogleSignIn().signOut();
+    } on Exception catch (e) {
+      // TODO
+    }
   }
 }

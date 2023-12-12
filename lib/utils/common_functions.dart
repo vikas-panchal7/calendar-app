@@ -1,4 +1,4 @@
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/extensions/int_ext.dart';
 import 'package:calendar_app/screens/splash/splash.dart';
 import 'package:calendar_app/services/preference_helper/pref_service.dart';
@@ -35,5 +35,14 @@ Future<void> logout(BuildContext context) async {
   GoogleSignIn().signOut();
   if (context.mounted) {
     context.navigator.pushNamedAndRemoveUntil(SplashScreenUI.routeName, (route) => false);
+  }
+}
+
+
+bool isYoutubeUrl(String value){
+  if((value.contains('youtu') == false) && (value.contains('yt') == false)){
+    return false;
+  }else{
+    return true;
   }
 }

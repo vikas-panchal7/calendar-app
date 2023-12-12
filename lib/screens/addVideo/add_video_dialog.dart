@@ -43,9 +43,9 @@ class AddVideoDialog extends StatelessWidget {
             height: kToolbarHeight,
             child: NavigationToolbar(
                 middle: Text(
-                  addVideoProvider.videoInfo != null ? AppStrings.editVideo : AppStrings.addVideo,
+                  addVideoProvider.videoInfo != null ? context.l10n.editVideo : context.l10n.addVideo,
                   style: context.textTheme.bodyLarge
-                      ?.copyWith(color: context.colorScheme.onSecondary, fontWeight: FontWeight.w600),
+                      ?.copyWith(color: context.colorScheme.onBackground, fontWeight: FontWeight.w600),
                 ),
                 trailing: CommonButton.cupertino(
                     onTap: () {
@@ -53,7 +53,7 @@ class AddVideoDialog extends StatelessWidget {
                     },
                     child: Icon(
                       Icons.close,
-                      color: context.colorScheme.onSecondary,
+                      color: context.colorScheme.onBackground,
                     ))),
           ),
           const Gap(10),
@@ -65,13 +65,13 @@ class AddVideoDialog extends StatelessWidget {
               children: [
                 /// add url field
                 CustomTextField(
-                  title: AppStrings.videoUrl,
+                  title: context.l10n.videoUrl,
                   controller: addVideoProvider.urlText,
-                  hintText: AppStrings.writeHere,
+                  hintText: context.l10n.writeHere,
                   validator: (value) {
                     if (value != null) {
                       if (value.isEmpty) {
-                        return AppStrings.fieldIsRequired;
+                        return context.l10n.fieldIsRequired;
                       }
                       if ((value.contains('youtu') == false) && (value.contains('yt') == false)) {
                         return 'Please enter valid link';
@@ -91,7 +91,7 @@ class AddVideoDialog extends StatelessWidget {
                         Expanded(
                           child: ButtonItem.outline(
                             onTap: addVideoProvider.handleDelete,
-                            text: AppStrings.delete,
+                            text: context.l10n.delete,
                             height: 45,
                             fontSize: 16,
                           ),
@@ -113,7 +113,7 @@ class AddVideoDialog extends StatelessWidget {
                 /// upload video button
                 ButtonItem.filled(
                   onTap: addVideoProvider.handleUpload,
-                  text: AppStrings.upload,
+                  text: context.l10n.upload,
                   height: 45,
                   fontSize: 16,
                 ),

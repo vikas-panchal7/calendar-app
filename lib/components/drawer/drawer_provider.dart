@@ -3,13 +3,21 @@ part of 'drawer_widget.dart';
 class _DrawerProvider extends BaseProvider {
   _DrawerProvider({required super.context});
 
-  SupportedLanguage selectedLanguage = SupportedLanguage.english;
+  late SupportedLanguage selectedLanguage;
   bool langTileExpanded = false;
+
+  @override
+  void initState() {
+
+    super.initState();
+    selectedLanguage = calendarPreference.appLanguage;
+    notifyListeners();
+  }
   void changeLanguage(SupportedLanguage? lang) {
     if (lang != null) {
 
       selectedLanguage = lang;
-      context.read<LanguageProvider>().changeLanguage(Locale(selectedLanguage.value));
+      context.read<LanguageProvider>().changeLanguage(selectedLanguage);
       notifyListeners();
     }
   }

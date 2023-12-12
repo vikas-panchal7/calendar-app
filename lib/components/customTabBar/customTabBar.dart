@@ -1,4 +1,4 @@
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/utils/commonButton/common_button.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +8,7 @@ class CustomTabBar extends StatelessWidget {
   final List<String> tabList;
   final void Function(int) onSelect;
   final int selectedTab;
+
   const CustomTabBar({
     super.key,
     required this.width,
@@ -18,6 +19,7 @@ class CustomTabBar extends StatelessWidget {
   });
 
   final double padding = 4;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,14 +29,15 @@ class CustomTabBar extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-          color: context.colorScheme.onSecondary,
+          border: Border.all(color: context.colorScheme.primary),
+          color: context.colorScheme.onBackground,
           borderRadius: BorderRadius.circular(36)),
       child: Stack(
         children: [
           //white box
 // (width - (padding * 2) meaning is  width - left and right side padding to get perfext width
           AnimatedPositioned(
-            left: (((width - (padding * 2)) / tabList.length) * selectedTab)
+            left: (((width - (padding * 4)) / tabList.length) * selectedTab)
                 .roundToDouble(),
             top: 0,
             bottom: 0,
@@ -50,8 +53,8 @@ class CustomTabBar extends StatelessWidget {
           Row(
               children: List.generate(
                   tabList.length,
-                      (index) => Expanded(
-                      child: CommonButton.cupertino(
+                  (index) => Expanded(
+                          child: CommonButton.cupertino(
                         onTap: () => onSelect(index),
                         child: Align(
                             alignment: Alignment.center,
@@ -60,8 +63,8 @@ class CustomTabBar extends StatelessWidget {
                               style: context.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: selectedTab == index
-                                      ? context.colorScheme.onSecondary
-                                      : context.colorScheme.onBackground),
+                                      ? context.colorScheme.onBackground
+                                      : context.colorScheme.primary),
                             )),
                       )))),
         ],

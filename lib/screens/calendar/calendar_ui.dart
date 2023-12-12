@@ -33,6 +33,7 @@ class CalenderUI extends StatelessWidget {
                   controller: EventController(),
                   child: MonthView(
                     safeAreaOption: const SafeAreaOption(top: false),
+                    lang: preference.appLanguage.value,
                     onCellTap: (events, date) {
                       if (list.containsData(date) != null || preference.isAdminLogin) {
                         DateDetailsDialog.show(context: context, date: date, calendarData: list.containsData(date));
@@ -41,8 +42,9 @@ class CalenderUI extends StatelessWidget {
                     cellBuilder: (date, event, isToday, isInMonth) {
                       return Container(
                         decoration: BoxDecoration(
-                            color: context.colorScheme.onSecondary,
-                            border: Border.all(width: 0.2, color: context.colorScheme.onBackground.withOpacity(0.2))),
+                            color: context.theme.scaffoldBackgroundColor,
+                            borderRadius: BorderRadiusDirectional.circular(16),
+                            border: Border.all(width: 0.2, color: context.colorScheme.primary.withOpacity(0.4))),
                         child: Stack(
                           alignment: Alignment.bottomCenter,
                           children: [

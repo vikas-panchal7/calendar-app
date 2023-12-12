@@ -6,6 +6,7 @@ import 'package:calendar_app/screens/donateUs/donate_us.dart';
 import 'package:calendar_app/screens/pdf_viewer/pdf_viewer.dart';
 
 import 'package:calendar_app/screens/splash/splash.dart';
+import 'package:calendar_app/screens/userList/user_list.dart';
 import 'package:calendar_app/utils/image_view.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class RouteManger {
       AddNewsScreenUI.routeName: AddNewsScreenUI.builder,
       DonateUsScreenUI.routeName: DonateUsScreenUI.builder,
       CustomPdfView.routeName: CustomPdfView.builder,
+      UserListScreenUI.routeName: UserListScreenUI.builder,
     };
   }
 

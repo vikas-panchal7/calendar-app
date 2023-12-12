@@ -1,6 +1,5 @@
 import 'package:calendar_app/components/dialogs/delete_dialogs.dart';
-import 'package:calendar_app/constants/app_strings.dart';
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -21,7 +20,7 @@ class EditAndDeletePopUPMenu extends StatelessWidget {
       color: context.colorScheme.background,
       padding: EdgeInsets.zero,
       onSelected: (value) {
-        if (value == AppStrings.delete) {
+        if (value == 'delete') {
           DeleteDialog.show(
             context: context,
             type: type,
@@ -34,20 +33,20 @@ class EditAndDeletePopUPMenu extends StatelessWidget {
       itemBuilder: (context) {
         return [
           PopupMenuItem(
-              value: AppStrings.edit,
+              value: 'edit',
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Assets.icons.icEdit.image(height: 25, color: context.colorScheme.primary),
                   const Gap(10),
                   Text(
-                    AppStrings.edit,
-                    style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+                    context.l10n.edit,
+                    style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600,color: context.colorScheme.primary),
                   )
                 ],
               )),
           PopupMenuItem(
-              value: AppStrings.delete,
+              value:'delete',
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -57,8 +56,8 @@ class EditAndDeletePopUPMenu extends StatelessWidget {
                   ),
                   const Gap(10),
                   Text(
-                    AppStrings.delete,
-                    style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+                    context.l10n.delete,
+                    style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600,color: context.colorScheme.primary),
                   )
                 ],
               ))

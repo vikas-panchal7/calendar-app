@@ -1,6 +1,5 @@
 import 'package:calendar_app/components/buttonItem/button_item.dart';
-import 'package:calendar_app/constants/app_strings.dart';
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -33,12 +32,12 @@ class DiscardDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            AppStrings.discardChanges,
+            context.l10n.discardChanges,
             textAlign: TextAlign.center,
             style: context.textTheme.bodyLarge
                 ?.copyWith(fontWeight: FontWeight.w600),
           ),
-          Text(AppStrings.youWillLooseAllTheChanges,
+          Text(context.l10n.youWillLooseAllTheChanges,
               textAlign: TextAlign.center,
               style: context.textTheme.bodyMedium
                   ?.copyWith(color: context.colorScheme.onSurface)),
@@ -51,7 +50,7 @@ class DiscardDialog extends StatelessWidget {
                   context.navigator.pop();
                   context.navigator.pop();
                 },
-                text: AppStrings.discard,
+                text: context.l10n.discard,
                 width: context.width * .3,
                 fontSize: 16,
                 height: 40,
@@ -60,7 +59,7 @@ class DiscardDialog extends StatelessWidget {
                 onTap: () {
                   context.navigator.pop();
                 },
-                text: AppStrings.cancel,
+                text: context.l10n.cancel,
                 width: context.width * .3,
                 fontSize: 16,
                 height: 40,

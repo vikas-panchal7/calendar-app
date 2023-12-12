@@ -1,14 +1,14 @@
 part of '../calendar.dart';
 
 class DateDetailsDialog extends StatelessWidget {
-  static void show(
+  static Future show(
       {required BuildContext context,
       required DateTime date,
       String? imagePath,
       String? data,
       String? title,
       CalendarDateInfo? calendarData}) {
-    showDialog(
+    return showDialog(
       context: context,
       builder: (context) {
         return Dialog(
@@ -53,7 +53,7 @@ class DateDetailsDialog extends StatelessWidget {
               middle: Text(
                 date.toDDMMMYYYY,
                 style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.onSecondary,
+                    color: context.colorScheme.onBackground,
                     fontWeight: FontWeight.w600),
               ),
               trailing: CommonButton.cupertino(
@@ -62,7 +62,7 @@ class DateDetailsDialog extends StatelessWidget {
                   },
                   child: Icon(
                     Icons.close,
-                    color: context.colorScheme.onSecondary,
+                    color: context.colorScheme.onBackground,
                   ))),
         ),
 
@@ -80,9 +80,9 @@ class DateDetailsDialog extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       child: Text(
-                        AppStrings.noDataAvailable,
+                        context.l10n.noDataAvailable,
                         style: context.textTheme.titleSmall?.copyWith(
-                            color: context.colorScheme.onBackground),
+                            color: context.colorScheme.primary),
                       ),
                     ),
                   ] else ...[
@@ -91,7 +91,7 @@ class DateDetailsDialog extends StatelessWidget {
                     /// title
                     Text(
                       calendarData?.title
-                              .customTranslate(SupportedLanguage.english) ??
+                              .customTranslate(preference.appLanguage) ??
                           '',
                       textAlign: TextAlign.center,
                       style: context.textTheme.bodyLarge
@@ -102,7 +102,7 @@ class DateDetailsDialog extends StatelessWidget {
                     /// data
                     Text(
                       calendarData?.description
-                              .customTranslate(SupportedLanguage.english) ??
+                              .customTranslate(preference.appLanguage) ??
                           '',
                       textAlign: TextAlign.start,
                       style: context.textTheme.bodySmall,
@@ -129,8 +129,8 @@ class DateDetailsDialog extends StatelessWidget {
                                 calendarDateInfo: calendarData));
                       },
                       title: calendarData != null
-                          ? AppStrings.edit
-                          : AppStrings.addData,
+                          ? context.l10n.edit
+                          : context.l10n.addData,
                     ),
                   ]
                 ],
@@ -170,19 +170,56 @@ class _VideoWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.network(calendarData?.ytThumbnail ?? '')),
-        ),
-        Text(
-          calendarData?.ytTitle ?? '',
-          textAlign: TextAlign.left,
-          style: context.textTheme.bodyLarge
-              ?.copyWith(fontWeight: FontWeight.w700),
-        ),
+        if(isYoutubeUrl(calendarData?.videoUrl??''))...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(calendarData?.ytThumbnail ?? '')),
+          ),
+          Text(
+            calendarData?.ytTitle ?? '',
+            textAlign: TextAlign.left,
+            style: context.textTheme.bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w700),
+          ),
+        ]else...[
+          const Gap(20),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              context.l10n.link,
+              textAlign: TextAlign.left,
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.w700,color: context.colorScheme.primary),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: CommonButton.material(
+              onTap: () {
+                context.navigator.pop();
+
+                openUrl(calendarData?.videoUrl ?? '');
+              },
+              child: Text(
+
+                calendarData?.videoUrl ?? '',
+                textAlign: TextAlign.left,
+
+                style: context.textTheme.bodyLarge
+                    ?.copyWith(
+                  decoration: TextDecoration.underline,decorationColor: context.colorScheme.primary,color: context.colorScheme.primary
+                ),
+              ),
+            ),
+          ),
+        ],
+
+
+
         Gap(context.height * .01),
+        if(isYoutubeUrl(calendarData?.videoUrl??''))
         _ViewButton(
           onTap: () {
             // close the dialog
@@ -190,7 +227,7 @@ class _VideoWidget extends StatelessWidget {
 
             openUrl(calendarData?.videoUrl ?? '');
           },
-          title: 'View on Youtube',
+          title: context.l10n.viewVideo,
         ),
       ],
     );

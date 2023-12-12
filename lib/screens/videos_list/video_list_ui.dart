@@ -42,7 +42,7 @@ class VideoListUI extends StatelessWidget {
                 },
                 child: Icon(
                   Icons.add,
-                  color: context.colorScheme.onSecondary,
+                  color: context.colorScheme.onBackground,
                 ),
               )
             : null,
@@ -74,13 +74,15 @@ class VideoListUI extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                                color: context.colorScheme.onSecondary,
+                                color: context.colorScheme.onBackground,
                                 borderRadius: BorderRadius.circular(8),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: context.colorScheme.onTertiary.withOpacity(.04),
-                                      blurRadius: 16,
-                                      offset: const Offset(0, 6))
+                                    color: context.colorScheme.secondary
+                                        .withOpacity(.09),
+                                    blurRadius: 16,
+                                    offset: const Offset(0, 6),
+                                  )
                                 ]),
                             child: Row(
                               // crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +117,7 @@ class VideoListUI extends StatelessWidget {
                                     child: CommonButton.cupertino(
                                       onTap: () => DeleteDialog.show(
                                         context: context,
-                                        type: 'Video',
+                                        type: context.l10n.video,
                                         onDelete: () {
                                           context.read<VideoListProvider>().deleteVideo(videoInfo?.id ?? '');
                                         },

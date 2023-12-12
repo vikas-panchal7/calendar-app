@@ -233,14 +233,18 @@ class WeekDayTile extends StatelessWidget {
   /// Style for week day string.
   final TextStyle? textStyle;
 
+  /// app lang
+  final String lang;
+
   /// Title for week day in month view.
   const WeekDayTile({
     Key? key,
     required this.dayIndex,
+
     this.backgroundColor = Constants.white,
     this.displayBorder = true,
     this.textStyle,
-    this.weekDayStringBuilder,
+    this.weekDayStringBuilder, required this.lang,
   }) : super(key: key);
 
   @override
@@ -250,7 +254,7 @@ class WeekDayTile extends StatelessWidget {
       margin: EdgeInsets.zero,
       padding: EdgeInsets.symmetric(vertical: 10.0),
       decoration: BoxDecoration(
-        color: const Color(0xFF26282C),
+        color: const Color(0xFF3654C5),
         border: displayBorder
             ? Border.all(
           color: Colors.white.withOpacity(0.2),
@@ -259,7 +263,7 @@ class WeekDayTile extends StatelessWidget {
             : null,
       ),
       child: Text(
-        Constants.weekTitles[dayIndex],
+       lang == 'gu'? Constants.weekGujTitles[dayIndex]:(lang=='hi'?Constants.weekHindiTitles[dayIndex]:Constants.weekTitles[dayIndex]),
         style: TextStyle(
           fontSize: 14,
           color: Constants.white,

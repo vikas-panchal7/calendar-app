@@ -100,7 +100,7 @@ base class BookListProvider extends BaseProvider implements PaginationHelper<Boo
         process: () async => bookRepository.deleteBook(id: id), loadingHandler: loadingHandler.handleBgDialog);
     if (result) {
       if (context.mounted) {
-        context.showSuccessSnackBar(message: 'Book Deleted Successfully');
+        context.showSuccessSnackBar(message: context.l10n.bookDeletedSuccessfully);
       }
     }
   }

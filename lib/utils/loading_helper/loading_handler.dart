@@ -1,4 +1,4 @@
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

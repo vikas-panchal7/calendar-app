@@ -32,15 +32,15 @@ class AddCalendarDataScreenUI extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text(addCalendarDataProvider.isEdit
-                ? AppStrings.editData
-                : AppStrings.addData),
+                ? context.l10n.editData
+                : context.l10n.addData),
             actions: [
               if (addCalendarDataProvider.isEdit)
                 CommonButton.icon(
                     onTap: addCalendarDataProvider.handleDeleteData,
                     child: Icon(
                       Icons.delete,
-                      color: context.colorScheme.onSecondary,
+                      color: context.colorScheme.background,
                     ))
             ],
           ),
@@ -58,16 +58,16 @@ class AddCalendarDataScreenUI extends StatelessWidget {
                         children: [
                           CustomTabBar(
                             width: context.width - 40,
-                            tabList: const [
-                              AppStrings.description,
-                              AppStrings.addVideo
+                            tabList:  [
+                              context.l10n.description,
+                              context.l10n.addVideo
                             ],
                             onSelect: addCalendarDataProvider.toggleTab,
                             selectedTab: selectedSource,
                           ),
                           if (selectedSource == 0) ...{
                             Text(
-                              AppStrings.title,
+                              context.l10n.title,
                               style: context.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: context.colorScheme.primary),
@@ -76,13 +76,13 @@ class AddCalendarDataScreenUI extends StatelessWidget {
 
                             /// eng title
                             CustomTextField(
-                              title: AppStrings.inEnglish,
+                              title: context.l10n.inEnglish,
                               controller: addCalendarDataProvider.engTitle,
-                              hintText: AppStrings.writeHere,
+                              hintText: context.l10n.writeHere,
                               validator: (value) {
                                 if (value != null) {
                                   if (value.isEmpty) {
-                                    return AppStrings.fieldIsRequired;
+                                    return context.l10n.fieldIsRequired;
                                   }
                                 }
                                 return null;
@@ -92,13 +92,28 @@ class AddCalendarDataScreenUI extends StatelessWidget {
 
                             /// guj title
                             CustomTextField(
-                              title: AppStrings.inGujarati,
+                              title: context.l10n.inGujarati,
                               controller: addCalendarDataProvider.gujTitle,
-                              hintText: AppStrings.writeHere,
+                              hintText: context.l10n.writeHere,
                               validator: (value) {
                                 if (value != null) {
                                   if (value.isEmpty) {
-                                    return AppStrings.fieldIsRequired;
+                                    return context.l10n.fieldIsRequired;
+                                  }
+                                }
+                                return null;
+                              },
+                            ),  const Gap(10),
+
+                            /// hindi title
+                            CustomTextField(
+                              title: context.l10n.inHindi,
+                              controller: addCalendarDataProvider.hindiTitle,
+                              hintText: context.l10n.writeHere,
+                              validator: (value) {
+                                if (value != null) {
+                                  if (value.isEmpty) {
+                                    return context.l10n.fieldIsRequired;
                                   }
                                 }
                                 return null;
@@ -107,7 +122,7 @@ class AddCalendarDataScreenUI extends StatelessWidget {
 
                             const Gap(24),
                             Text(
-                              AppStrings.description,
+                              context.l10n.description,
                               style: context.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: context.colorScheme.primary),
@@ -117,12 +132,12 @@ class AddCalendarDataScreenUI extends StatelessWidget {
                             /// Desc eng
                             CustomTextField(
                               controller: addCalendarDataProvider.engDescription,
-                              title: AppStrings.inEnglish,
-                              hintText: AppStrings.writeHere,
+                              title: context.l10n.inEnglish,
+                              hintText: context.l10n.writeHere,
                               validator: (value) {
                                 if (value != null) {
                                   if (value.isEmpty) {
-                                    return AppStrings.fieldIsRequired;
+                                    return context.l10n.fieldIsRequired;
                                   }
                                 }
                                 return null;
@@ -131,12 +146,26 @@ class AddCalendarDataScreenUI extends StatelessWidget {
                             /// Desc guj
                             CustomTextField(
                               controller: addCalendarDataProvider.gujDescription,
-                              title: AppStrings.inGujarati,
-                              hintText: AppStrings.writeHere,
+                              title: context.l10n.inGujarati,
+                              hintText: context.l10n.writeHere,
                               validator: (value) {
                                 if (value != null) {
                                   if (value.isEmpty) {
-                                    return AppStrings.fieldIsRequired;
+                                    return context.l10n.fieldIsRequired;
+                                  }
+                                }
+                                return null;
+                              },
+                            ),
+                            /// Desc hindi
+                            CustomTextField(
+                              controller: addCalendarDataProvider.hindiDescription,
+                              title: context.l10n.inHindi,
+                              hintText: context.l10n.writeHere,
+                              validator: (value) {
+                                if (value != null) {
+                                  if (value.isEmpty) {
+                                    return context.l10n.fieldIsRequired;
                                   }
                                 }
                                 return null;
@@ -159,7 +188,7 @@ class AddCalendarDataScreenUI extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: ButtonItem.filled(
                 onTap: addCalendarDataProvider.handleUpload,
-                text: AppStrings.upload),
+                text: context.l10n.upload),
           ),
         ),
       ),
@@ -178,22 +207,20 @@ class _AddVideoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppStrings.addVideo,
+          context.l10n.addVideo,
           style: context.textTheme.bodyLarge?.copyWith(
               fontWeight: FontWeight.w600, color: context.colorScheme.primary),
         ),
         const Gap(8),
         CustomTextField(
           controller: addCalendarDataProvider.videoUrl,
-          hintText: AppStrings.writeHere,
+          hintText: context.l10n.writeHere,
           validator: (value) {
             if (value != null) {
               if (value.isEmpty) {
-                return AppStrings.fieldIsRequired;
+                return context.l10n.fieldIsRequired;
               }
-              if ((value.contains('youtu') == false) && (value.contains('yt') == false)) {
-                return 'Please enter valid link';
-              }
+
             }
             return null;
           },

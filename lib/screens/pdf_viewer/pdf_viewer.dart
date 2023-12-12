@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:calendar_app/extensions/buildcontext_ext.dart';
+import 'package:calendar_app/extensions/buildContext_ext.dart';
 import 'package:calendar_app/extensions/string_ext.dart';
 import 'package:calendar_app/utils/arguments.dart';
 import 'package:flutter/material.dart';
