@@ -34,7 +34,7 @@ class DashBoardUI extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.only(right: 30),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Assets.images.appLogo.image(height: 35))),

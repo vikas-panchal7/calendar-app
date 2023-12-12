@@ -44,7 +44,7 @@ class CalenderUI extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: context.theme.scaffoldBackgroundColor,
                             borderRadius: BorderRadiusDirectional.circular(16),
-                            border: Border.all(width: 0.2, color: context.colorScheme.primary.withOpacity(0.4))),
+                            border: Border.all(width: 0.5, color: context.colorScheme.primary.withOpacity(0.4))),
                         child: Stack(
                           alignment: Alignment.bottomCenter,
                           children: [
