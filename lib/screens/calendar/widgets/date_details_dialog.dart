@@ -196,21 +196,14 @@ class _VideoWidget extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.centerLeft,
-            child: CommonButton.material(
-              onTap: () {
-                context.navigator.pop();
+            child: Text(
 
-                openUrl(calendarData?.videoUrl ?? '');
-              },
-              child: Text(
-
-                calendarData?.videoUrl ?? '',
-                textAlign: TextAlign.left,
-
-                style: context.textTheme.bodyLarge
-                    ?.copyWith(
-                  decoration: TextDecoration.underline,decorationColor: context.colorScheme.primary,color: context.colorScheme.primary
-                ),
+              calendarData?.videoUrl ?? '',
+              textAlign: TextAlign.left,
+    maxLines: 1,
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(
+                color: context.colorScheme.onSecondary
               ),
             ),
           ),
@@ -219,7 +212,6 @@ class _VideoWidget extends StatelessWidget {
 
 
         Gap(context.height * .01),
-        if(isYoutubeUrl(calendarData?.videoUrl??''))
         _ViewButton(
           onTap: () {
             // close the dialog
